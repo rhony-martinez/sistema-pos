@@ -83,6 +83,8 @@ docs/
 __pycache__/
 uploads/
 data/
+# Permitir el Data de Infrastructure (contiene código fuente)
+!SistemaPOS/SistemaPOS.Infrastructure/Data/
 logs/
 
 # SystemPOS-specific ignore
