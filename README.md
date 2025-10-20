@@ -67,6 +67,7 @@ dotnet add SistemaPOS.API reference SistemaPOS.Infrastructure
 dotnet add SistemaPOS.Infrastructure reference SistemaPOS.Domain
 dotnet add SistemaPOS.Application reference SistemaPOS.Domain
 ```
+---
 ## 🗃️ Fase 3 — Configuración de la base de datos Oracle
 🔹 Script base
 
@@ -99,6 +100,8 @@ Archivo:
 No incluir credenciales reales en appsettings.json.
 
 El `appsettings.Development.json` está listado en `.gitignore.`
+
+---
 
 ## 🧠 Fase 4 — Conexión API ↔ Oracle
 🔹 Paquetes NuGet instalados
@@ -207,7 +210,7 @@ namespace SistemaPOS.API.Controllers
     }
 }
 ```
-
+---
 ## 🚀 Fase 5 — Ejecución y prueba
 
 Compila la solución (Ctrl + Shift + B)

@@ -17,6 +17,8 @@ namespace SistemaPOS.Infrastructure.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Venta> Ventas { get; set; }
         public DbSet<DetalleVenta> DetallesVenta { get; set; }
+        public DbSet<RevokedToken> RevokedTokens { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -142,9 +144,21 @@ namespace SistemaPOS.Infrastructure.Data
             });
 
             //------------------------------------------------------------
+            // REVOKED_TOKEN
+            //------------------------------------------------------------
+            modelBuilder.Entity<RevokedToken>(entity =>
+            {
+                entity.ToTable("REVOKED_TOKEN");
+                entity.HasKey(r => r.Jti);
+                entity.Property(r => r.Jti).HasColumnName("JT_ID");
+                entity.Property(r => r.ExpiresAt).HasColumnName("EXPIRES_AT");
+            });
+
+            //------------------------------------------------------------
             // BASE
             //------------------------------------------------------------
             base.OnModelCreating(modelBuilder);
+
         }
     }
 }
