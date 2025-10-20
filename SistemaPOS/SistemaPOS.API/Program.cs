@@ -1,25 +1,41 @@
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaPOS.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+// Registrar los controladores (API REST)
+builder.Services.AddControllers();
+
+// Registrar el contexto con la cadena de conexión de Oracle
+builder.Services.AddDbContext<SistemaPosContext>(options =>
+    options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
+
+// Agregar soporte a Swagger para probar los endpoints
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+// Configurar el pipeline HTTP
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(); // puedes mantenerlo si algún día sirves archivos estáticos (opcional)
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+// Mapea los controladores de la API 
+app.MapControllers();
 
 app.Run();

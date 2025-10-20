@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="9.23.26000" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.26.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaPOS.Domain\SistemaPOS.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
