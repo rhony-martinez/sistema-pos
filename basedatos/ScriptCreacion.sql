@@ -145,6 +145,12 @@ ALTER TABLE DETALLE_VENTA ADD CONSTRAINT FK_DETALLE_VENTA_PRODUCTO FOREIGN KEY (
 --------------------------------------------------------
 -- FIN DEL SCRIPT
 --------------------------------------------------------
+-- Para cerrar sesión
+CREATE TABLE REVOKED_TOKEN
+(
+    JT_ID VARCHAR2(200 BYTE) PRIMARY KEY,
+    EXPIRES_AT DATE
+);
 --------------------------------------------------------
 -- SISTEMA POS - LIMPIEZA COMPLETA DE TABLAS
 --------------------------------------------------------

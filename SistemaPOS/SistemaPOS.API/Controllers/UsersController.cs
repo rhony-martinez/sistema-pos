@@ -9,7 +9,7 @@ public class UsersController : ControllerBase
     public UsersController(IUserService userService) { _userService = userService; }
 
     // Crear usuario: requiere rol ADMIN_GENERAL o ADMIN_LOCAL
-    //[Authorize(Roles = "ADMIN_GENERAL,ADMIN_LOCAL")]
+    [Authorize(Roles = "ADMIN_GENERAL,ADMIN_LOCAL")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest req)
     {

@@ -27,16 +27,33 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        // obtenemos el jti del token actual
         var jti = User.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
-        var expClaim = User.FindFirst(JwtRegisteredClaimNames.Exp)?.Value;
-        if (string.IsNullOrEmpty(jti)) return BadRequest();
+        if (string.IsNullOrEmpty(jti)) return BadRequest("Token JTI not found.");
 
-        // calcular expiración UTC desde claim exp (epoch)
-        if (!long.TryParse(expClaim, out var expEpoch)) return BadRequest();
-        var expiresAt = DateTimeOffset.FromUnixTimeSeconds(expEpoch).UtcDateTime;
+        var expClaim = User.FindFirst(JwtRegisteredClaimNames.Exp)?.Value;
+        DateTime expiresAt;
+
+        if (!string.IsNullOrEmpty(expClaim))
+        {
+            // Exp viene como epoch seconds
+            if (!long.TryParse(expClaim, out var expEpoch))
+            {
+                // fallback: usa expiración actual + 1 hora
+                expiresAt = DateTime.UtcNow.AddHours(1);
+            }
+            else
+            {
+                expiresAt = DateTimeOffset.FromUnixTimeSeconds(expEpoch).UtcDateTime;
+            }
+        }
+        else
+        {
+            // fallback si claim no existe
+            expiresAt = DateTime.UtcNow.AddHours(1);
+        }
 
         await _auth.LogoutAsync(jti, expiresAt);
         return NoContent();
     }
+
 }

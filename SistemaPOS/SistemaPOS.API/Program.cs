@@ -60,7 +60,44 @@ builder.Services.AddAuthentication(options =>
 
 // Agregar soporte a Swagger para probar los endpoints
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    // Configurar esquema de seguridad (JWT Bearer)
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "SistemaPOS API",
+        Version = "v1"
+    });
+
+    var securityScheme = new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "Introduce el token JWT así: Bearer {tu token}",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    };
+
+    c.AddSecurityDefinition("Bearer", securityScheme);
+
+    var securityRequirement = new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    };
+
+    c.AddSecurityRequirement(securityRequirement);
+});
 
 var app = builder.Build();
 
