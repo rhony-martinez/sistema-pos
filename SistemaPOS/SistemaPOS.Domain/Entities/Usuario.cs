@@ -8,6 +8,8 @@ namespace SistemaPOS.Domain.Entities
     {
         [Key]
         [Column("USU_ID")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
         public int UsuId { get; set; }
 
         [Required]
