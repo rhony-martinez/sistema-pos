@@ -1,5 +1,6 @@
 ﻿public class CreateUserRequest
 {
+    public int UsuId { get; set; }
     public string PrimerNombre { get; set; } = string.Empty;
     public string SegundoNombre { get; set; } = string.Empty;
     public string PrimerApellido { get; set; } = string.Empty;

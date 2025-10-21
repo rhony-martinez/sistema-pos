@@ -96,17 +96,23 @@ namespace SistemaPOS.Infrastructure.Data
             //------------------------------------------------------------
             // USUARIO
             //------------------------------------------------------------
+          
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.ToTable("USUARIO");
                 entity.HasKey(e => e.UsuId);
-                entity.Property(e => e.UsuId).HasColumnName("USU_ID");
+
+                entity.Property(e => e.UsuId)
+                      .HasColumnName("USU_ID")
+                      .ValueGeneratedNever(); 
+
                 entity.Property(e => e.SedeId).HasColumnName("SEDE_ID");
 
                 entity.HasOne(e => e.Sede)
                       .WithMany(s => s.Usuarios)
                       .HasForeignKey(e => e.SedeId);
             });
+
 
             //------------------------------------------------------------
             // VENTA
