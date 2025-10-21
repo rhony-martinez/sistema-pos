@@ -15,10 +15,10 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li><a href="dashboard-adm-gral.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
                     <li><a href="gestion-catalogo.html"><i class="fas fa-boxes"></i>Gestión de Catálogo</a></li>
                     <li><a href="gestion-caja.html"><i class="fas fa-cash-register"></i>Gestión de Caja</a></li>
-                    <li><a href="gestion-usuarios.html"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
+                    <li><a href="gestion-usuarios-adm-gral.html"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
                     <li><a href="gestion-ventas.html"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
                     <li><a href="gestion-sedes.html"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
                     <li><a href="#"><i class="fas fa-cogs"></i>Configuración</a></li>
@@ -32,10 +32,9 @@
                     <h1>Dashboard</h1>
                 </div>
                 <div class="header-right">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar...">
-                    </div>
+                    <button id="logoutBtn" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                    </button>
                     <div class="user-profile">
                         <img src="assets/user-avatar.png" alt="Avatar">
                         <span>Juan Díaz</span>
@@ -71,8 +70,8 @@
                 </div>
                 <div class="card card-orange">
                     <div class="card-header">
-                        <h3 class="card-title">Carritos Abiertos</h3>
-                        <div class="card-icon"><i class="fas fa-lock"></i></div>
+                        <h3 class="card-title">Sedes Activas</h3>
+                        <div class="card-icon"><i class="fas fa-store"></i></div>
                     </div>
                     <div class="card-value">7</div>
                     <p class="card-details">2 por más de 1 hora</p>

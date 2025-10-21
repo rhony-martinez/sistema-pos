@@ -20,6 +20,18 @@ builder.Services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Habilitar CORS
+// Configuración de servicios
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy
+            .WithOrigins("http://127.0.0.1:5501") // origen del frontend
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
+
 // Autenticación JWT
 builder.Services.AddAuthentication(options =>
 {
@@ -97,6 +109,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+app.UseCors("AllowFrontend");
 
 // Middleware
 if (app.Environment.IsDevelopment())
