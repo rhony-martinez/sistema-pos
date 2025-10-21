@@ -163,7 +163,7 @@ body {
 .header-right {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
 }
 
 .search-bar {
@@ -191,6 +191,7 @@ body {
     display: flex;
     align-items: center;
     cursor: pointer;
+    gap: 10px;
 }
 
 .user-profile img {
