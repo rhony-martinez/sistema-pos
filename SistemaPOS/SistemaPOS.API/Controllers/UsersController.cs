@@ -15,6 +15,7 @@ public class UsersController : ControllerBase
     {
         try
         {
+            req.Rol = req.Rol?.ToUpperInvariant();
             var user = await _userService.CreateUserAsync(req);
             return CreatedAtAction(nameof(GetById), new { id = user.UsuId }, user);
         }

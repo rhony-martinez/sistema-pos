@@ -56,4 +56,8 @@ public class AuthController : ControllerBase
         return NoContent();
     }
 
+    [Authorize]
+    [HttpGet("validate")]
+    public IActionResult Validate() => Ok(new { valid = true });
+
 }

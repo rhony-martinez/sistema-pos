@@ -7,10 +7,10 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
-// Registrar los controladores (API REST)
+// Registrar controladores (API REST)
 builder.Services.AddControllers();
 
-// Registrar el contexto con la cadena de conexión de Oracle
+// Registrar el contexto con Oracle
 builder.Services.AddDbContext<SistemaPosContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
 
@@ -20,6 +20,7 @@ builder.Services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Autenticación JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,12 +35,13 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateIssuerSigningKey = true,
+        ValidateLifetime = true, // importante
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
 
-    // Hook para validar jti revocado
+    // Validar jti revocado
     options.Events = new JwtBearerEvents
     {
         OnTokenValidated = async ctx =>
@@ -47,7 +49,6 @@ builder.Services.AddAuthentication(options =>
             var jti = ctx.Principal?.FindFirst(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti)?.Value;
             if (string.IsNullOrEmpty(jti)) { ctx.Fail("Invalid token"); return; }
 
-            // resolver el repo manualmente (no usar DI en evento directamente)
             var db = ctx.HttpContext.RequestServices.GetRequiredService<SistemaPOS.Infrastructure.Data.SistemaPosContext>();
             var exists = await db.RevokedTokens.FindAsync(jti);
             if (exists != null)
@@ -58,11 +59,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Agregar soporte a Swagger para probar los endpoints
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    // Configurar esquema de seguridad (JWT Bearer)
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Title = "SistemaPOS API",
@@ -80,8 +80,7 @@ builder.Services.AddSwaggerGen(c =>
     };
 
     c.AddSecurityDefinition("Bearer", securityScheme);
-
-    var securityRequirement = new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
     {
         {
             new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -94,14 +93,12 @@ builder.Services.AddSwaggerGen(c =>
             },
             Array.Empty<string>()
         }
-    };
-
-    c.AddSecurityRequirement(securityRequirement);
+    });
 });
 
 var app = builder.Build();
 
-// Configurar el pipeline HTTP
+// Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -114,14 +111,13 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // puedes mantenerlo si algún día sirves archivos estáticos (opcional)
+app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
+app.UseAuthentication(); // importante antes de Authorization
 app.UseAuthorization();
 
-// Mapea los controladores de la API 
 app.MapControllers();
 
 app.Run();

@@ -27,18 +27,20 @@ public class AuthService : IAuthService
         if (!BCrypt.Net.BCrypt.Verify(req.Password, user.UsuClaveHash))
             throw new UnauthorizedAccessException("Invalid credentials");
 
+        var expires = DateTime.UtcNow.AddMinutes(double.Parse(_config["Jwt:ExpireMinutes"] ?? "60"));
+
         // Build JWT
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.UsuUsername),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim("uid", user.UsuId.ToString()),
-            new Claim(ClaimTypes.Role, user.UsuRol ?? "CAJERO")
+            new Claim(ClaimTypes.Role, user.UsuRol ?? "CAJERO"),
+            new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expires).ToUnixTimeSeconds().ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expires = DateTime.UtcNow.AddMinutes(double.Parse(_config["Jwt:ExpireMinutes"] ?? "60"));
 
         var token = new JwtSecurityToken(
             issuer: _config["Jwt:Issuer"],
