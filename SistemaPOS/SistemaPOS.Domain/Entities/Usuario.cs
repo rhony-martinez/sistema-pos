@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaPOS.Domain.Entities
 {
+
     [Table("USUARIO")]
     public class Usuario
     {

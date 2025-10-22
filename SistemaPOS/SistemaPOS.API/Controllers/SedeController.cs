@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SistemaPOS.Infrastructure.Data;
-using SistemaPOS.Domain.Entities;
+using SistemaPOS.Application.Queries.Sedes;
 
 namespace SistemaPOS.API.Controllers
 {
@@ -9,19 +7,15 @@ namespace SistemaPOS.API.Controllers
     [Route("api/[controller]")]
     public class SedeController : ControllerBase
     {
-        private readonly SistemaPosContext _context;
+        private readonly ISedeQueries _queries;
 
-        public SedeController(SistemaPosContext context)
-        {
-            _context = context;
-        }
+        public SedeController(ISedeQueries queries) => _queries = queries;
+
 
         // GET: api/Sede
         [HttpGet]
         public async Task<IActionResult> GetAll()
-        {
-            var sedes = await _context.Sedes.ToListAsync();
-            return Ok(sedes);
-        }
+            => Ok(await _queries.GetAllAsync());
     }
 }
+

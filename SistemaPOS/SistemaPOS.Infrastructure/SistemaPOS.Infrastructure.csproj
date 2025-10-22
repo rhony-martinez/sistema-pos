@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SistemaPOS.Domain\SistemaPOS.Domain.csproj" />
+    <ProjectReference Include="..\SistemaPOS.Application\SistemaPOS.Application.csproj" />
   </ItemGroup>
 
 </Project>

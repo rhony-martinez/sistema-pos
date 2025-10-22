@@ -237,8 +237,15 @@ Resultado esperado:
   }
 ]
 ```
-
 ✅ Si obtienes esta respuesta o similar, la conexión Oracle ↔ .NET está verificada.
+
+## Generar y ver el reporte de cobertura
+
+1. *Eliminar reportes anteriores:* Get-ChildItem -Recurse -Directory -Filter TestResults | Remove-Item -Recurse -Force
+2. *Ejecutar pruebas con cobertura:* dotnet test --collect:"XPlat Code Coverage" --settings cover.runsettings -c Debug --results-directory ".\TestResults\cov-new"
+3. *Generar consolidado en HTML:* reportgenerator -reports:".\TestResults\cov-new\**\coverage.cobertura.xml" -targetdir:coveragereport -reporttypes:"TextSummary;Html"
+
+*Abrir reporte:* coveragereport/index.html
 
 ## Información
 Proyecto con fines educativos

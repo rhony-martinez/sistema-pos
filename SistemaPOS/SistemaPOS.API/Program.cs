@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaPOS.Application.Queries.Sedes;
 using SistemaPOS.Infrastructure.Data;
+using SistemaPOS.Infrastructure.Finders.Sedes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,10 @@ builder.Services.AddControllers();
 // Registrar el contexto con la cadena de conexión de Oracle
 builder.Services.AddDbContext<SistemaPosContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
+
+//
+builder.Services.AddScoped<ISedeQueries, SedeFinder>();
+
 
 // Agregar soporte a Swagger para probar los endpoints
 builder.Services.AddEndpointsApiExplorer();
