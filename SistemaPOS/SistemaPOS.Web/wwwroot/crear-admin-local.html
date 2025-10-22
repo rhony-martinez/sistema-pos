@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Admin Local</title>
+  <link rel="stylesheet" href="css/reg-adm-local.css">
+</head>
+<body>
+  <main class="page-wrapper">
+    <section class="register-card">
+      <!-- Encabezado -->
+      <div class="form-header">
+        <img src="assets/pos-logo.png" alt="Logo POS" class="logo">
+        <div>
+          <h1>Registrar Administrador Local</h1>
+          <p>Complete todos los campos obligatorios</p>
+        </div>
+      </div>
+
+      <form id="form-crear-admin" class="register-form">
+        <!-- Datos Personales -->
+        <h2 class="section-title">Datos Personales</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>ID Usuario*</label>
+            <input type="number" id="usuId" placeholder="Ej: 101" required>
+          </div>
+          <div class="form-group">
+            <label>ID Sede*</label>
+            <input type="number" id="sedeId" placeholder="Ej: 1" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Primer nombre*</label>
+            <input type="text" id="primerNombre" placeholder="Primer nombre" required>
+          </div>
+          <div class="form-group">
+            <label>Segundo nombre</label>
+            <input type="text" id="segundoNombre" placeholder="Segundo nombre">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Primer Apellido*</label>
+            <input type="text" id="primerApellido" placeholder="Primer apellido" required>
+          </div>
+          <div class="form-group">
+            <label>Segundo Apellido</label>
+            <input type="text" id="segundoApellido" placeholder="Segundo apellido">
+          </div>
+        </div>
+
+        <!-- Información de Contacto -->
+        <h2 class="section-title">Información de Contacto</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Correo electrónico*</label>
+            <input type="email" id="correo" placeholder="Correo electrónico" required>
+          </div>
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" id="telefono" placeholder="Teléfono">
+          </div>
+        </div>
+
+        <!-- Acceso -->
+        <h2 class="section-title">Acceso</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Usuario*</label>
+            <input type="text" id="username" placeholder="Nombre de Usuario" required>
+          </div>
+          <div class="form-group">
+            <label>Contraseña*</label>
+            <input type="password" id="password" placeholder="Contraseña" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Rol*</label>
+            <select id="rol" required>
+              <option value="ADMIN_LOCAL">ADMIN_LOCAL</option>
+              <option value="CAJERO">CAJERO</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-container">
+          <button type="submit" class="btn-primary">Registrar Administrador</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("form-crear-admin");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const payload = {
+          usuId: parseInt(document.getElementById("usuId").value),
+          primerNombre: document.getElementById("primerNombre").value.trim(),
+          segundoNombre: document.getElementById("segundoNombre").value.trim(),
+          primerApellido: document.getElementById("primerApellido").value.trim(),
+          segundoApellido: document.getElementById("segundoApellido").value.trim(),
+          correo: document.getElementById("correo").value.trim(),
+          telefono: document.getElementById("telefono").value.trim(),
+          username: document.getElementById("username").value.trim(),
+          password: document.getElementById("password").value.trim(),
+          rol: document.getElementById("rol").value,
+          sedeId: parseInt(document.getElementById("sedeId").value)
+        };
+
+        try {
+          const res = await fetch("http://localhost:5289/api/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || "Error al crear usuario");
+          }
+
+          alert("✅ Usuario creado correctamente");
+          form.reset();
+          window.location.href = "gestion-usuarios-adm-gral.html";
+        } catch (error) {
+          console.error(error);
+          alert("❌ No se pudo crear el usuario: " + error.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -66,10 +66,18 @@
                                 <button class="btn btn-action btn-danger"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>
-                        </tbody>
+                    </tbody>
                 </table>
             </section>
         </main>
     </div>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector(".btn-primary").addEventListener("click", () => {
+            window.location.href = "crear-admin-local.html";
+        });
+    });
+</script>
+
 </html>
