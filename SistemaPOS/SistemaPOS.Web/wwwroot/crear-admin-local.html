@@ -95,6 +95,7 @@
 
         <div class="btn-container">
           <button type="submit" class="btn-primary">Registrar Administrador</button>
+          <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
         </div>
       </form>
     </section>
@@ -143,6 +144,10 @@
           console.error(error);
           alert("❌ No se pudo crear el usuario: " + error.message);
         }
+      });
+      // ✅ Cancelar
+      document.getElementById("cancelBtn").addEventListener("click", () => {
+        window.location.href = "gestion-usuarios-adm-local.html";
       });
     });
   </script>
