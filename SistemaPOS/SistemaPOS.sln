@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{F0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Infrastructure", "SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj", "{4B80A582-2503-4ED2-8184-28B3083A78CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.test", "SistemaPOS.test\SistemaPOS.test.csproj", "{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{0FD3D164-D535-4517-8A48-3A20EEF4D2FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{4B80A582-2503-4ED2-8184-28B3083A78CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B80A582-2503-4ED2-8184-28B3083A78CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B80A582-2503-4ED2-8184-28B3083A78CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +61,7 @@ Global
 		{B826BFF4-0807-4139-8922-45130E8E27E6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{465ED25C-2B80-4633-8FA8-6CF5627321F2} = {F00D3BB7-4270-401D-9130-0A631B502895}
 		{4B80A582-2503-4ED2-8184-28B3083A78CA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189} = {0FD3D164-D535-4517-8A48-3A20EEF4D2FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {24919D5D-DA73-4FEA-874E-285C110D15E4}
