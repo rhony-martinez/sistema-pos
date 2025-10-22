@@ -153,6 +153,11 @@ CREATE TABLE REVOKED_TOKEN
     JT_ID VARCHAR2(200 BYTE) PRIMARY KEY,
     EXPIRES_AT DATE
 );
+-- Para único username
+CREATE UNIQUE INDEX UQ_ADMIN_LOCAL_SEDE
+ON USUARIO (
+    CASE WHEN USU_ROL = 'ADMIN_LOCAL' THEN SEDE_ID ELSE NULL END
+);
 --------------------------------------------------------
 -- SISTEMA POS - LIMPIEZA COMPLETA DE TABLAS
 --------------------------------------------------------

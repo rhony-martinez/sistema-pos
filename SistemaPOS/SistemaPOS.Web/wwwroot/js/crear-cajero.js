@@ -6,12 +6,18 @@
     const usernameInput = document.getElementById("username");
     const form = document.getElementById("form-crear-cajero");
 
-    // ✅ Mostrar modal reutilizable
+    // Modal reutilizable
     const modal = document.getElementById("modal");
     const modalText = document.getElementById("modal-text");
     const modalBtn = document.getElementById("modal-btn");
 
     function showModal(message, callback) {
+        if (!modal || !modalText || !modalBtn) {
+            // fallback si no existe modal
+            alert(message);
+            if (callback) callback();
+            return;
+        }
         modalText.textContent = message;
         modal.style.display = "flex";
         modalBtn.onclick = () => {
@@ -20,16 +26,22 @@
         };
     }
 
-    // ✅ Solo permitir números en ID
-    usuIdInput.addEventListener("keypress", (e) => {
+    // Solo permitir números en ID
+    usuIdInput?.addEventListener("keypress", (e) => {
         if (!/[0-9]/.test(e.key)) {
             e.preventDefault();
             showModal("Solo se permiten números en el campo ID.");
         }
     });
 
-    // ✅ Cargar sede automáticamente
-    const profile = await getUserProfile();
+    // Cargar sede automáticamente desde el perfil del usuario logueado
+    let profile = null;
+    try {
+        profile = await getUserProfile();
+    } catch (err) {
+        console.error("No se pudo obtener perfil:", err);
+    }
+
     if (profile && profile.sedeId) {
         sedeInput.value = profile.sedeId;
     } else {
@@ -37,8 +49,8 @@
         return;
     }
 
-    // ✅ Enviar formulario
-    form.addEventListener("submit", async (e) => {
+    // Envío del formulario
+    form?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         // Limpiar errores previos
@@ -58,25 +70,23 @@
             sedeId: parseInt(sedeInput.value)
         };
 
-        // ✅ Validación de campos vacíos
+        // Validación de campos obligatorios
         const requiredFields = ["usuId", "primerNombre", "primerApellido", "correo", "username", "password"];
         let missing = [];
         requiredFields.forEach(id => {
             const field = document.getElementById(id);
-            if (!field.value.trim()) {
-                field.classList.add("input-error");
-                missing.push(field);
+            if (!field || !field.value.trim()) {
+                field?.classList.add("input-error");
+                if (field) missing.push(field);
             }
         });
 
         if (missing.length > 0) {
-            showModal("Tienes campos vacíos. Complétalos antes de continuar.", () => {
-                missing[0].focus();
-            });
+            showModal("Tienes campos vacíos. Complétalos antes de continuar.", () => missing[0].focus());
             return;
         }
 
-        // ✅ Enviar datos al backend
+        // Llamada al backend
         try {
             const res = await fetch("http://localhost:5289/api/users", {
                 method: "POST",
@@ -84,47 +94,47 @@
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(usuario)
             });
 
             if (!res.ok) {
-                const err = await res.json();
-                const msg = err.error?.toLowerCase() || "";
+                // Intentar leer mensaje del backend (si viene JSON)
+                let err = {};
+                try { err = await res.json(); } catch (_) { err = { error: await res.text().catch(() => "") }; }
 
-                if (msg.includes("id")) {
+                const msg = (err.error || "").toString().toLowerCase();
+
+                // Detectar duplicados con coincidencias seguras
+                //  - username: buscar "usuario" o "nombre de usuario" + "existe"
+                //  - id: buscar palabra exacta "id" + "existe" o "ya existe"
+                if ((/usuario/.test(msg) || /nombre de usuario/.test(msg)) && /existe/.test(msg)) {
+                    document.getElementById("username").classList.add("input-error");
+                    showModal("Ya existe un usuario con ese nombre de usuario.");
+                } else if (/\bid\b/i.test(msg) && /existe/.test(msg)) {
                     document.getElementById("usuId").classList.add("input-error");
                     showModal("Ya existe un cajero con esa ID.");
-                }
-                else if (msg.includes("nombre de usuario")) {
-                    document.getElementById("username").classList.add("input-error");
-                    showModal("Ya existe un usuario con ese nombre.");
-                }
-                else {
-                    showModal("Error al crear cajero: " + (err.error || "Error desconocido"));
+                } else if (msg.includes("sede") && (msg.includes("no existe") || msg.includes("no encontrada"))) {
+                    document.getElementById("sedeId").classList.add("input-error");
+                    showModal("La sede ingresada no existe. Verifique el ID de la sede.");
+                } else {
+                    showModal("Error al crear cajero: " + (err.error || err.message || "Error desconocido"));
                 }
                 return;
             }
 
-
-
-
-
-
-
-            alert("✅ Usuario creado correctamente");
-            form.reset();
-            window.location.href = "gestion-usuarios-adm-gral.html";
-        } catch (error) {
-            console.error(error);
-            alert("❌ No se pudo crear el usuario: " + error.message);
-        }
- catch (error) {
-            console.error("Error en la conexión:", error);
+            // éxito
+            showModal("✅ Cajero registrado correctamente.", () => {
+                form.reset();
+                // Redirige a la vista de usuarios del admin local
+                window.location.href = "gestion-usuarios-adm-local.html";
+            });
+        } catch (networkError) {
+            console.error("Error en la conexión:", networkError);
             showModal("❌ Error de conexión con el servidor.");
         }
     });
 
-    // ✅ Botón cancelar
+    // Botón cancelar (si existe)
     const cancelBtn = document.getElementById("cancelBtn");
     if (cancelBtn) {
         cancelBtn.addEventListener("click", () => {
