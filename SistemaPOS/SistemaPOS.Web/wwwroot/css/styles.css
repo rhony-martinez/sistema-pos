@@ -428,3 +428,16 @@ tr:hover {
   opacity: 0.5;            /* Lo hace visualmente "apagado" */
   cursor: not-allowed;     /* Muestra el cursor de prohibido */
 }
+
+.input-error {
+    border: 2px solid #e63946; /* Rojo de error */
+    background-color: #ffe6e6; /* Fondo rosado suave */
+}
+
+#error-message {
+    color: #e63946;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-align: center;
+    display: none; /* Oculto por defecto */
+}

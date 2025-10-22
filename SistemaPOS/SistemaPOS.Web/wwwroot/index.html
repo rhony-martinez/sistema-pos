@@ -15,17 +15,24 @@
             </div>
             <h2>Bienvenido de vuelta</h2>
             <p>Por favor, ingresa tus datos para continuar</p>
+
             <form>
                 <div class="form-group">
                     <label for="username">Usuario</label>
                     <input type="text" id="username" name="username" placeholder="Tu usuario" required>
                 </div>
+
                 <div class="form-group">
                     <label for="password">Contraseña</label>
                     <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+
+                <!-- Mensaje de error -->
+                <p id="error-message"></p>
             </form>
+
             <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
         </div>
     </div>

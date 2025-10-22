@@ -1,14 +1,20 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const errorMsg = document.getElementById("error-message");
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const username = document.getElementById("username").value.trim();
-        const password = document.getElementById("password").value.trim();
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
 
         if (!username || !password) {
-            alert("Por favor, completa todos los campos.");
+            errorMsg.textContent = "Por favor, completa todos los campos.";
+            errorMsg.style.display = "block";
+            usernameInput.classList.add("input-error");
+            passwordInput.classList.add("input-error");
             return;
         }
 
@@ -20,22 +26,28 @@
             });
 
             if (!response.ok) {
-                alert("Credenciales incorrectas o error en el servidor.");
+                // Mostrar error visual
+                errorMsg.textContent = "Usuario o contraseña incorrectos.";
+                errorMsg.style.display = "block";
+                usernameInput.classList.add("input-error");
+                passwordInput.classList.add("input-error");
                 return;
             }
+
+            // Si inicia sesión correctamente, limpiamos errores
+            usernameInput.classList.remove("input-error");
+            passwordInput.classList.remove("input-error");
+            errorMsg.style.display = "none";
 
             const data = await response.json();
             console.log("Token recibido:", data.accessToken);
 
-            // Guardar token y expiración en sessionStorage
             sessionStorage.setItem("token", data.accessToken);
             sessionStorage.setItem("expiresAt", data.expiresAt);
 
-            // Decodificar token para obtener el rol
             const payload = JSON.parse(atob(data.accessToken.split(".")[1]));
             const userRole = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
-            // Redirigir según el rol
             switch (userRole) {
                 case "ADMIN_GENERAL":
                     window.location.href = "dashboard-adm-gral.html";
@@ -44,14 +56,16 @@
                     window.location.href = "dashboard-adm-local.html";
                     break;
                 case "CAJERO":
-                    window.location.href = "dashboard-cajero.html";
+                    window.location.href = "gestion-cajero.html";
                     break;
                 default:
-                    alert("Rol no reconocido.");
+                    errorMsg.textContent = "Rol no reconocido.";
+                    errorMsg.style.display = "block";
             }
         } catch (error) {
             console.error("Error de conexión:", error);
-            alert("Error de conexión con el servidor.");
+            errorMsg.textContent = "Error de conexión con el servidor.";
+            errorMsg.style.display = "block";
         }
     });
 });
