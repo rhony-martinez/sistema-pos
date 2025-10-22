@@ -422,3 +422,9 @@ tr:hover {
     border-radius: 8px;
     font-size: 1em;
 }
+
+.disabled {
+  pointer-events: none;     /* Desactiva clics */
+  opacity: 0.5;            /* Lo hace visualmente "apagado" */
+  cursor: not-allowed;     /* Muestra el cursor de prohibido */
+}

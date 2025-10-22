@@ -10,10 +10,10 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", async () => {
-        // ✅ Verificar sesión
+        // Verificar sesión
         if (typeof checkAuth === "function" && !checkAuth()) return;
 
-        // ✅ Obtener el perfil del usuario logueado
+        // Obtener el perfil del usuario logueado
         let profile = null;
         try {
             if (typeof getUserProfile === "function") {
@@ -31,7 +31,7 @@
 
         console.log("✅ Perfil recibido:", profile);
 
-        // ✅ Actualizar nombre del usuario en el encabezado
+        // Actualizar nombre del usuario en el encabezado
         const nameTag = document.getElementById("user-name");
         if (nameTag && profile) {
             const nombre = profile.usuPrimerNombre ?? "";
@@ -45,7 +45,7 @@
             }
         }
 
-        // ✅ Botón de cerrar sesión
+        // Botón de cerrar sesión
         document.getElementById("logoutBtn").addEventListener("click", () => logout());
     });
     </script>
@@ -53,7 +53,7 @@
 
 <body>
     <div class="app-container">
-        <!-- 🔹 SIDEBAR -->
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-logo">
                 <img src="assets/pos-logo.png" alt="POS Logo">
@@ -61,35 +61,26 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="dashboard-adm-gral.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-                    <li><a href="gestion-catalogo.html"><i class="fas fa-boxes"></i>Gestión de Catálogo</a></li>
-                    <li><a href="gestion-caja.html"><i class="fas fa-cash-register"></i>Gestión de Caja</a></li>
-                    <li><a href="gestion-usuarios-adm-gral.html"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
-                    <li><a href="gestion-ventas.html"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
                     <li><a href="gestion-sedes.html"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
+                    <li><a href="gestion-usuarios-adm-gral.html"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
+                    <li><a href="gestion-catalogo.html" class="disabled"><i class="fas fa-boxes"></i>Gestión de Catálogo</a></li>
+                    <li><a href="gestion-caja.html" class="disabled"><i class="fas fa-cash-register"></i>Gestión de Caja</a></li>
+                    <li><a href="gestion-ventas.html" class="disabled"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- 🔹 CONTENIDO PRINCIPAL -->
+        <!-- CONTENIDO PRINCIPAL -->
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
                     <h1>Dashboard</h1>
                 </div>
                 <div class="header-right">
-<<<<<<< HEAD
                     <div class="user-profile">
-                        <!-- 👇 Este span se actualiza dinámicamente -->
+                        <!-- Este span se actualiza dinámicamente -->
                         <span id="user-name">Cargando...</span>
                         <i class="fas fa-user-circle fa-2x"></i>
-=======
-
-                    <div class="user-profile">
-
-                        <span>Juan Díaz</span>
-                        <i class="fas fa-user-circle fa-2x"></i>
-
->>>>>>> a72fdf4a994f562714157fdfa1350d3ffd374afd
                     </div>
                     <button id="logoutBtn" class="btn btn-danger">
                         <i class="fas fa-sign-out-alt"></i> Cerrar sesión
@@ -97,7 +88,7 @@
                 </div>
             </header>
 
-            <!-- 🔹 TARJETAS DEL DASHBOARD -->
+            <!-- TARJETAS DEL DASHBOARD -->
             <section class="dashboard-cards">
                 <div class="card card-blue">
                     <div class="card-header">
