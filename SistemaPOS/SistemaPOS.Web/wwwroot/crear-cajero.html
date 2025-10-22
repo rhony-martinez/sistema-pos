@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registrar Cajero</title>
   <link rel="stylesheet" href="css/registrar-user.css">
+<<<<<<< HEAD
   <script src="js/auth.js"></script>
+=======
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
 </head>
 <body>
   <main class="page-wrapper">
@@ -19,12 +22,17 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <form id="form-crear-cajero" class="register-form">
+=======
+      <form id="form-crear-admin" class="register-form">
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
         <!-- Datos Personales -->
         <h2 class="section-title">Datos Personales</h2>
 
         <div class="form-row">
           <div class="form-group">
+<<<<<<< HEAD
             <label>ID Sede*</label>
             <input type="number" id="sedeId" readonly>
           </div>
@@ -35,17 +43,42 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group">
-            <label>Segundo nombre</label>
-            <input type="text" id="segundoNombre" placeholder="Segundo nombre">
+=======
+            <label>ID Usuario*</label>
+            <input type="number" id="usuId" placeholder="Ej: 101" required>
           </div>
           <div class="form-group">
-            <label>Primer Apellido*</label>
-            <input type="text" id="primerApellido" placeholder="Primer apellido" required>
+            <label>ID Sede*</label>
+            <input type="number" id="sedeId" placeholder="Ej: 1" required>
           </div>
         </div>
 
         <div class="form-row">
+          <div class="form-group">
+            <label>Primer nombre*</label>
+            <input type="text" id="primerNombre" placeholder="Primer nombre" required>
+          </div>
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
+          <div class="form-group">
+            <label>Segundo nombre</label>
+            <input type="text" id="segundoNombre" placeholder="Segundo nombre">
+          </div>
+<<<<<<< HEAD
+=======
+        </div>
+
+        <div class="form-row">
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
+          <div class="form-group">
+            <label>Primer Apellido*</label>
+            <input type="text" id="primerApellido" placeholder="Primer apellido" required>
+          </div>
+<<<<<<< HEAD
+        </div>
+
+        <div class="form-row">
+=======
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
           <div class="form-group">
             <label>Segundo Apellido</label>
             <input type="text" id="segundoApellido" placeholder="Segundo apellido">
@@ -80,18 +113,34 @@
           </div>
         </div>
 
+<<<<<<< HEAD
         <!-- El rol no se muestra, se asigna automáticamente -->
         <input type="hidden" id="rol" value="CAJERO">
 
         <div class="btn-container">
           <button type="submit" class="btn-primary">Registrar Cajero</button>
           <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+=======
+        <div class="form-row">
+          <div class="form-group">
+            <label>Rol*</label>
+            <select id="rol" required>
+              <option value="ADMIN_LOCAL">ADMIN_LOCAL</option>
+              <option value="CAJERO">CAJERO</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-container">
+          <button type="submit" class="btn-primary">Registrar Administrador</button>
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
         </div>
       </form>
     </section>
   </main>
 
   <script>
+<<<<<<< HEAD
     document.addEventListener("DOMContentLoaded", async () => {
       // ✅ Verifica sesión
       if (!checkAuth()) return;
@@ -111,10 +160,19 @@
 
       // ✅ Envío del formulario
       const form = document.getElementById("form-crear-cajero");
+=======
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("form-crear-admin");
+
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const payload = {
+<<<<<<< HEAD
+=======
+          usuId: parseInt(document.getElementById("usuId").value),
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
           primerNombre: document.getElementById("primerNombre").value.trim(),
           segundoNombre: document.getElementById("segundoNombre").value.trim(),
           primerApellido: document.getElementById("primerApellido").value.trim(),
@@ -123,7 +181,11 @@
           telefono: document.getElementById("telefono").value.trim(),
           username: document.getElementById("username").value.trim(),
           password: document.getElementById("password").value.trim(),
+<<<<<<< HEAD
           rol: "CAJERO",
+=======
+          rol: document.getElementById("rol").value,
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
           sedeId: parseInt(document.getElementById("sedeId").value)
         };
 
@@ -142,6 +204,7 @@
             throw new Error(err.error || "Error al crear usuario");
           }
 
+<<<<<<< HEAD
           alert("✅ Cajero creado correctamente");
           form.reset();
           window.location.href = "gestion-usuarios-adm-local.html";
@@ -155,6 +218,16 @@
       document.getElementById("cancelBtn").addEventListener("click", () => {
         window.location.href = "gestion-usuarios-adm-local.html";
       });
+=======
+          alert("✅ Usuario creado correctamente");
+          form.reset();
+          window.location.href = "gestion-usuarios-adm-gral.html";
+        } catch (error) {
+          console.error(error);
+          alert("❌ No se pudo crear el usuario: " + error.message);
+        }
+      });
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
     });
   </script>
 </body>

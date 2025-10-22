@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿<!DOCTYPE html>
+=======
+<!DOCTYPE html>
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +10,7 @@
     <title>Gestión de Usuarios - Sistema POS</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<<<<<<< HEAD
     <script src="js/auth.js"></script>
 
     <style>
@@ -81,6 +86,11 @@
 <body>
     <div class="app-container">
         <!-- 🔹 SIDEBAR -->
+=======
+</head>
+<body>
+    <div class="app-container">
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
         <aside class="sidebar">
             <div class="sidebar-logo">
                 <img src="assets/pos-logo.png" alt="POS Logo">
@@ -92,12 +102,19 @@
                     <li><a href="gestion-caja.html"><i class="fas fa-cash-register"></i>Gestión de Caja</a></li>
                     <li><a href="gestion-usuarios-adm-local.html" class="active"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
                     <li><a href="gestion-ventas.html"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
+<<<<<<< HEAD
                     <li><a href="#" class="disabled-link"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
+=======
+                    <li><a href="gestion-sedes.html" class="disabled"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
                 </ul>
             </nav>
         </aside>
 
+<<<<<<< HEAD
         <!-- 🔹 CONTENIDO PRINCIPAL -->
+=======
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
@@ -108,11 +125,18 @@
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Buscar usuario...">
                     </div>
+<<<<<<< HEAD
                     <button class="btn-primary"><i class="fas fa-plus"></i> Crear Cajero</button>
                 </div>
             </header>
 
             <!-- 🔹 TABLA DE USUARIOS -->
+=======
+                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Crear Cajero</button>
+                </div>
+            </header>
+
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
             <section class="data-table-container">
                 <table>
                     <thead>
@@ -126,10 +150,17 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
+<<<<<<< HEAD
                     <tbody id="tablaUsuarios">
                         <tr>
                             <td>JD</td>
                             <td>Juan Díaz</td>
+=======
+                    <tbody>
+                        <tr>
+                            <td>JD</td>
+                            <td>Juan Diaz</td>
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
                             <td>juan.diaz@ejemplo.com</td>
                             <td>Administrador</td>
                             <td><i class="fas fa-circle text-green"></i> Activo</td>
@@ -145,4 +176,16 @@
         </main>
     </div>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector(".btn-primary").addEventListener("click", () => {
+            window.location.href = "crear-admin-local.html";
+        });
+    });
+</script>
+
+</html>
+>>>>>>> 9cc8151ef4c649cdfa00dbf3956388f18c657ef0
