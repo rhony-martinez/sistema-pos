@@ -25,22 +25,38 @@ public class UsersController : ControllerBase
         }
     }
 
-    // opcional: ver mi perfil
+    // Obtener perfil del usuario logueado
     [Authorize]
     [HttpGet("me")]
     public async Task<IActionResult> Me()
     {
         var uidClaim = User.FindFirst("uid")?.Value;
-        if (!int.TryParse(uidClaim, out var uid)) return Unauthorized();
-        // necesitarías un repo para obtener por id (o UserService)
-        return Ok(new { userId = uid });
+        if (!int.TryParse(uidClaim, out var uid))
+            return Unauthorized();
+
+        var user = await _userService.GetUserByIdAsync(uid);
+        if (user == null)
+            return NotFound(new { message = "Usuario no encontrado" });
+
+        return Ok(new
+        {
+            user.UsuId,
+            user.UsuPrimerNombre,
+            user.UsuPrimerApellido,
+            user.UsuCorreo,
+            user.UsuRol,
+            user.SedeId
+        });
     }
 
     [Authorize(Roles = "ADMIN_GENERAL")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        // implementa lectura en IUserRepository o UserService
-        return Ok(); // placeholder
+        var user = await _userService.GetUserByIdAsync(id);
+        if (user == null)
+            return NotFound();
+
+        return Ok(user);
     }
 }

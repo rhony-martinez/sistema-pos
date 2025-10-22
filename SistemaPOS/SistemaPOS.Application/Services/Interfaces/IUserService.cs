@@ -3,4 +3,5 @@
 public interface IUserService
 {
     Task<Usuario> CreateUserAsync(CreateUserRequest dto);
+    Task<Usuario?> GetUserByIdAsync(int id); // agregado
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -10,10 +10,10 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", async () => {
-        // ✅ Verificar sesión
+        // ✅ Verificar autenticación
         if (typeof checkAuth === "function" && !checkAuth()) return;
 
-        // ✅ Obtener el perfil del usuario logueado
+        // ✅ Obtener perfil del usuario autenticado
         let profile = null;
         try {
             if (typeof getUserProfile === "function") {
@@ -34,19 +34,22 @@
         // ✅ Actualizar nombre del usuario en el encabezado
         const nameTag = document.getElementById("user-name");
         if (nameTag && profile) {
-            const nombre = profile.usuPrimerNombre ?? "";
-            const apellido = profile.usuPrimerApellido ?? "";
-            const username = profile.usuUsername ?? "";
+            const nombre = profile.usuPrimerNombre || profile.primerNombre || "";
+            const apellido = profile.usuPrimerApellido || profile.primerApellido || "";
+            const username = profile.usuUsername || "";
 
             if (nombre || apellido) {
                 nameTag.textContent = `${nombre} ${apellido}`.trim();
             } else {
-                nameTag.textContent = username || "Usuario";
+                nameTag.textContent = username || "Administrador General";
             }
         }
 
-        // ✅ Botón de cerrar sesión
-        document.getElementById("logoutBtn").addEventListener("click", () => logout());
+        // ✅ Logout
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", () => logout());
+        }
     });
     </script>
 </head>
@@ -75,7 +78,7 @@
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <h1>Dashboard</h1>
+                    <h1>Dashboard - Administrador General</h1>
                 </div>
                 <div class="header-right">
                     <div class="user-profile">

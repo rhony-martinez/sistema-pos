@@ -7,10 +7,10 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
-// Registrar controladores (API REST)
+// Controladores (API REST)
 builder.Services.AddControllers();
 
-// Registrar el contexto con Oracle
+// Contexto con Oracle
 builder.Services.AddDbContext<SistemaPosContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
 
@@ -20,19 +20,16 @@ builder.Services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-// Habilitar CORS
-// Configuración de servicios
+// 🔹 CORS: permitir ambos dominios de desarrollo
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy => policy
-            .WithOrigins("http://127.0.0.1:5501") // origen del frontend
-            .AllowAnyHeader()
-            .AllowAnyMethod());
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins("http://127.0.0.1:5501", "http://localhost:5501")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
 });
 
-
-// Autenticación JWT
+// 🔹 Autenticación JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -42,36 +39,40 @@ builder.Services.AddAuthentication(options =>
 {
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateIssuerSigningKey = true,
-        ValidateLifetime = true, // importante
+        ValidateLifetime = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(key)
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ClockSkew = TimeSpan.Zero // 🔹 evita tolerancia de tiempo
     };
 
-    // Validar jti revocado
+    // 🔹 Validar tokens revocados
     options.Events = new JwtBearerEvents
     {
         OnTokenValidated = async ctx =>
         {
             var jti = ctx.Principal?.FindFirst(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti)?.Value;
-            if (string.IsNullOrEmpty(jti)) { ctx.Fail("Invalid token"); return; }
+            if (string.IsNullOrEmpty(jti))
+            {
+                ctx.Fail("Invalid token");
+                return;
+            }
 
-            var db = ctx.HttpContext.RequestServices.GetRequiredService<SistemaPOS.Infrastructure.Data.SistemaPosContext>();
+            var db = ctx.HttpContext.RequestServices.GetRequiredService<SistemaPosContext>();
             var exists = await db.RevokedTokens.FindAsync(jti);
             if (exists != null)
-            {
                 ctx.Fail("Token revoked");
-            }
         }
     };
 });
 
-// Swagger
+// 🔹 Swagger con esquema de seguridad JWT
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -109,9 +110,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// 🔹 Usar CORS ANTES del pipeline
 app.UseCors("AllowFrontend");
 
-// Middleware
+// Middleware HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -128,7 +131,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // importante antes de Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

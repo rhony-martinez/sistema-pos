@@ -11,7 +11,6 @@ public class UserService : IUserService
 
     public async Task<Usuario> CreateUserAsync(CreateUserRequest dto)
     {
-        // --- Validaciones básicas ---
         if (string.IsNullOrWhiteSpace(dto.Username))
             throw new ArgumentException("El nombre de usuario es obligatorio.");
 
@@ -21,20 +20,17 @@ public class UserService : IUserService
         if (dto.UsuId <= 0)
             throw new ArgumentException("El ID del usuario debe ser mayor que 0.");
 
-        // --- Validar que no exista otro usuario con el mismo username ---
         var existingUser = await _userRepo.GetByUsernameAsync(dto.Username);
         if (existingUser != null)
             throw new InvalidOperationException($"El nombre de usuario '{dto.Username}' ya existe.");
 
-        // --- Validar que no exista otro usuario con el mismo ID ---
         var existingId = await _userRepo.GetByIdAsync(dto.UsuId);
         if (existingId != null)
             throw new InvalidOperationException($"El ID '{dto.UsuId}' ya existe.");
 
-        // --- Crear objeto Usuario ---
         var user = new Usuario
         {
-            UsuId = dto.UsuId,  // ID ingresado manualmente
+            UsuId = dto.UsuId,
             UsuPrimerNombre = dto.PrimerNombre,
             UsuSegundoNombre = dto.SegundoNombre,
             UsuPrimerApellido = dto.PrimerApellido,
@@ -48,10 +44,15 @@ public class UserService : IUserService
             SedeId = dto.SedeId
         };
 
-        // --- Guardar en base de datos ---
         await _userRepo.AddAsync(user);
         await _userRepo.SaveChangesAsync();
 
         return user;
+    }
+
+    // Nuevo método para obtener usuario por ID
+    public async Task<Usuario?> GetUserByIdAsync(int id)
+    {
+        return await _userRepo.GetByIdAsync(id);
     }
 }
