@@ -4,27 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Caja - Sistema POS</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<!-- Botón flotante de cerrar sesión -->
+<button id="logoutBtn" class="btn-logout">
+    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+</button>
+
+<script src="js/auth.js"></script>
+<script>
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+        sessionStorage.clear();
+        window.location.href = "index.html";
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:5289/api/auth/logout", {
+            method: "POST",
+            headers: { 
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        // Limpiar sesión y redirigir sin importar el estado
+        sessionStorage.clear();
+        window.location.href = "index.html";
+    } catch (err) {
+        console.error("Error al cerrar sesión:", err);
+        alert("Error al cerrar sesión. Intenta nuevamente.");
+    }
+});
+</script>
+
 <body>
     <div class="app-container">
-       <aside class="sidebar">
-            <div class="sidebar-logo">
-                <img src="assets/pos-logo.png" alt="POS Logo">
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-                    <li><a href="gestion-catalogo.html"><i class="fas fa-boxes"></i>Gestión de Catálogo</a></li>
-                    <li><a href="gestion-caja.html" class="active"><i class="fas fa-cash-register"></i>Gestión de Caja</a></li>
-                    <li><a href="gestion-usuarios.html"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
-                    <li><a href="gestion-ventas.html"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
-                    <li><a href="gestion-sedes.html"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
-                    <li><a href="#"><i class="fas fa-cogs"></i>Configuración</a></li>
-                </ul>
-            </nav>
-        </aside>
 
         <main class="main-content">
             <header class="header">

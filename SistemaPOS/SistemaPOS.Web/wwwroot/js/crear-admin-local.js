@@ -1,6 +1,6 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("form-crear-admin");
-    const cancelarBtn = document.getElementById("cancelar");
+    const cancelarBtn = document.getElementById("cancelBtn");
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();

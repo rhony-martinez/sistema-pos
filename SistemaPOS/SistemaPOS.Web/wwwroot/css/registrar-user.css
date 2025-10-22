@@ -147,10 +147,28 @@ input, select {
     letter-spacing: 0.3px;
 }
 
-    .btn-primary:hover {
-        background: linear-gradient(45deg, #2381e6, #0099e9);
-        transform: translateY(-2px);
-    }
+.btn-primary:hover {
+    background: linear-gradient(45deg, #2381e6, #0099e9);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+background: var(--soft-red);
+color: #fff;
+border: none;
+padding: 0.9rem 2.8rem;
+border-radius: 10px;
+font-size: 1rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s ease;
+letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #db2b0c, #ff8974);
+    transform: translateY(-2px);
+}
 
 /* === Responsivo === */
 @media (max-width: 768px) {

@@ -56,7 +56,7 @@
                     window.location.href = "dashboard-adm-local.html";
                     break;
                 case "CAJERO":
-                    window.location.href = "gestion-cajero.html";
+                    window.location.href = "gestion-caja.html";
                     break;
                 default:
                     errorMsg.textContent = "Rol no reconocido.";
