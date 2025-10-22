@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+:root {
+    --primary-blue: #2C8EF9;
+    --dark-gray: #1A1A1A;
+    --light-gray: #F4F4F4;
+    --soft-red: #FF6347;
+    --text-color: #333;
+    --border-color: #e0e0e0;
+    --card-bg: #fff;
+    --sidebar-bg: #f7f7f7;
+    --blue-gradient: linear-gradient(45deg, #2C8EF9, #00A9FF);
+}
+
+/* === Reset general === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--card-bg);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* === Contenedor principal === */
+.page-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* === Tarjeta del formulario === */
+.register-card {
+    background: var(--card-bg);
+    padding: 2rem 3.5rem;
+    width: 100%;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease;
+}
+
+.register-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* === Encabezado === */
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+}
+
+.form-header .logo {
+    height: 100px;
+}
+
+.form-header h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--dark-gray);
+}
+
+.form-header p {
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 400;
+}
+
+/* === Títulos de sección === */
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* === Campos === */
+.form-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.small {
+    flex: 0.35;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+    color: var(--text-color);
+}
+
+input, select {
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+input:focus, select:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(44, 142, 249, 0.15);
+    outline: none;
+}
+
+/* === Botón principal === */
+.btn-container {
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+.btn-primary {
+    background: var(--blue-gradient);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2.8rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #2381e6, #0099e9);
+    transform: translateY(-2px);
+}
+
+/* === Responsivo === */
+@media (max-width: 768px) {
+    .register-card {
+        padding: 2rem;
+    }
+
+    .form-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+}
