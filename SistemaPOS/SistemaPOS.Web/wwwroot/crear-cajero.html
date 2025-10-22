@@ -6,11 +6,13 @@
   <title>Registrar Cajero</title>
   <link rel="stylesheet" href="css/registrar-user.css">
   <script src="js/auth.js"></script>
+
+
 </head>
+
 <body>
   <main class="page-wrapper">
     <section class="register-card">
-      <!-- Encabezado -->
       <div class="form-header">
         <img src="assets/pos-logo.png" alt="Logo POS" class="logo">
         <div>
@@ -19,8 +21,8 @@
         </div>
       </div>
 
-      <form id="form-crear-cajero" class="register-form">
-        <!-- Datos Personales -->
+      <form id="form-crear-cajero" class="register-form" novalidate>
+
         <h2 class="section-title">Datos Personales</h2>
 
         <div class="form-row">
@@ -56,7 +58,6 @@
           </div>
         </div>
 
-        <!-- Información de Contacto -->
         <h2 class="section-title">Información de Contacto</h2>
 
         <div class="form-row">
@@ -70,7 +71,6 @@
           </div>
         </div>
 
-        <!-- Acceso -->
         <h2 class="section-title">Acceso</h2>
 
         <div class="form-row">
@@ -84,7 +84,6 @@
           </div>
         </div>
 
-        <!-- Rol oculto -->
         <input type="hidden" id="rol" value="CAJERO">
 
         <div class="btn-container">
@@ -95,26 +94,73 @@
     </section>
   </main>
 
+  <!-- 🔹 Modal para mensajes -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <p id="modal-text"></p>
+      <button id="modal-btn" class="btn-modal">Aceptar</button>
+    </div>
+  </div>
+
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
       if (!checkAuth()) return;
 
-      // ✅ Cargar sede automáticamente del usuario logueado
+      const modal = document.getElementById("modal");
+      const modalText = document.getElementById("modal-text");
+      const modalBtn = document.getElementById("modal-btn");
+
+      function showModal(message, callback) {
+        modalText.textContent = message;
+        modal.style.display = "flex";
+        modalBtn.onclick = () => {
+          modal.style.display = "none";
+          if (callback) callback();
+        };
+      }
+
+      // 🔸 Solo permitir números en ID
+      const idInput = document.getElementById("usuId");
+      idInput.addEventListener("keypress", (e) => {
+        if (!/[0-9]/.test(e.key)) {
+          e.preventDefault();
+          showModal("Solo se permiten números en el campo ID.");
+        }
+      });
+
+      // 🔹 Cargar sede automáticamente
       try {
         const profile = await getUserProfile();
         if (profile?.sedeId) {
           document.getElementById("sedeId").value = profile.sedeId;
-        } else {
-          alert("⚠️ No se pudo obtener el ID de sede del usuario actual.");
         }
       } catch (error) {
         console.error("Error al obtener sede:", error);
       }
 
-      // ✅ Enviar formulario
       const form = document.getElementById("form-crear-cajero");
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        // 🔸 Limpiar errores previos
+        document.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
+
+        const requiredFields = ["usuId", "primerNombre", "primerApellido", "correo", "username", "password"];
+        let missing = [];
+
+        requiredFields.forEach(id => {
+          const field = document.getElementById(id);
+          if (!field.value.trim()) {
+            field.classList.add("input-error");
+            missing.push(id);
+          }
+        });
+
+        if (missing.length > 0) {
+          showModal("Tienes campos vacíos. Complétalos antes de continuar.");
+          return;
+        }
 
         const payload = {
           usuId: parseInt(document.getElementById("usuId").value),
@@ -142,19 +188,26 @@
 
           if (!res.ok) {
             const err = await res.json();
-            throw new Error(err.error || "Error al crear cajero");
+            if (err.error?.includes("ya existe")) {
+              document.getElementById("usuId").classList.add("input-error");
+              showModal("Ya existe un cajero con esa ID.");
+            } else {
+              showModal("Error al crear cajero: " + (err.error || "Error desconocido"));
+            }
+            return;
           }
 
-          alert("✅ Cajero creado correctamente");
-          form.reset();
-          window.location.href = "gestion-usuarios-adm-local.html";
+          showModal("✅ Cajero creado correctamente.", () => {
+            window.location.href = "gestion-usuarios-adm-local.html";
+          });
+
         } catch (error) {
           console.error(error);
-          alert("❌ No se pudo crear el cajero: " + error.message);
+          showModal("❌ Error de conexión con el servidor.");
         }
       });
 
-      // ✅ Cancelar
+      // 🔹 Botón cancelar
       document.getElementById("cancelBtn").addEventListener("click", () => {
         window.location.href = "gestion-usuarios-adm-local.html";
       });

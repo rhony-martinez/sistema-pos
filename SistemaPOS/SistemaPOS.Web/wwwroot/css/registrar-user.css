@@ -190,3 +190,45 @@ letter-spacing: 0.3px;
         width: 100%;
     }
 }
+
+/* 🔹 Modal general */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+  width: 350px;
+  animation: showModal 0.3s ease;
+}
+@keyframes showModal {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.btn-modal {
+  margin-top: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-modal:hover {
+  background-color: #0056b3;
+}
+.input-error {
+  border: 2px solid #e63946;
+  background-color: #ffe6e6;
+}
+
+

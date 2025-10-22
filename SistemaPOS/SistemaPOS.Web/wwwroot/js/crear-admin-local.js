@@ -1,18 +1,51 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("form-crear-admin");
-    const cancelarBtn = document.getElementById("cancelBtn");
+    const modal = document.getElementById("modal");
+    const modalText = document.getElementById("modal-text");
+    const modalBtn = document.getElementById("modal-btn");
+
+    function showModal(message, callback) {
+        modalText.textContent = message;
+        modal.style.display = "flex";
+        modalBtn.onclick = () => {
+            modal.style.display = "none";
+            if (callback) callback();
+        };
+    }
+
+    // Solo permitir números en campos ID
+    ["usuId", "sedeId"].forEach(id => {
+        document.getElementById(id).addEventListener("keypress", (e) => {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+                showModal("Solo se permiten números en los campos de ID.");
+            }
+        });
+    });
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const token = sessionStorage.getItem("token");
-        if (!token) {
-            alert("No hay sesión activa. Inicia sesión nuevamente.");
-            window.location.href = "index.html";
+        // Limpiar errores previos
+        document.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
+
+        // Validar campos obligatorios
+        const required = ["usuId", "primerNombre", "primerApellido", "correo", "username", "password", "sedeId"];
+        let vacios = [];
+        required.forEach(id => {
+            const field = document.getElementById(id);
+            if (!field.value.trim()) {
+                field.classList.add("input-error");
+                vacios.push(field);
+            }
+        });
+
+        if (vacios.length > 0) {
+            showModal("Tienes campos vacíos. Complétalos antes de continuar.", () => vacios[0].focus());
             return;
         }
 
-        const usuario = {
+        const payload = {
             usuId: parseInt(document.getElementById("usuId").value),
             primerNombre: document.getElementById("primerNombre").value.trim(),
             segundoNombre: document.getElementById("segundoNombre").value.trim(),
@@ -27,29 +60,53 @@
         };
 
         try {
-            const response = await fetch("http://localhost:5289/api/users", {
+            const res = await fetch("http://localhost:5289/api/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 },
-                body: JSON.stringify(usuario)
+                body: JSON.stringify(payload)
             });
 
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.error || "Error al crear el usuario");
+            if (!res.ok) {
+                const err = await res.json();
+                const msg = err.error?.toLowerCase() || "";
+
+                if (msg.includes("id") && msg.includes("existe")) {
+                    document.getElementById("usuId").classList.add("input-error");
+                    showModal("Ya existe un usuario con ese ID.");
+                } else if (msg.includes("usuario") && msg.includes("existe")) {
+                    document.getElementById("username").classList.add("input-error");
+                    showModal("Ya existe un usuario con ese nombre.");
+                } else if (msg.includes("entity changes")) {
+                    const sedeVal = parseInt(document.getElementById("sedeId").value);
+                    if (sedeVal > 1000) {
+                        document.getElementById("sedeId").classList.add("input-error");
+                        showModal("La sede ingresada no existe. Verifique el ID de la sede.");
+                    } else {
+                        document.getElementById("sedeId").classList.add("input-error");
+                        showModal("Esta sede ya tiene un administrador asignado.");
+                    }
+                } else {
+                    showModal("Error al crear administrador: " + (err.error || "Error desconocido"));
+                }
+                return;
             }
 
-            alert("✅ Administrador local creado correctamente.");
-            window.location.href = "gestion-usuarios-adm-gral.html";
-        } catch (err) {
-            console.error("Error:", err);
-            alert(`❌ No se pudo crear el usuario: ${err.message}`);
+            showModal("✅ Administrador local creado correctamente.", () => {
+                form.reset();
+                window.location.href = "gestion-usuarios-adm-gral.html";
+            });
+
+        } catch (error) {
+            console.error("Error de conexión:", error);
+            showModal("❌ Error de conexión con el servidor.");
         }
     });
 
-    cancelarBtn.addEventListener("click", () => {
+    // Botón cancelar
+    document.getElementById("cancelBtn").addEventListener("click", () => {
         window.location.href = "gestion-usuarios-adm-gral.html";
     });
 });
