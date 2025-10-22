@@ -1,0 +1,21 @@
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+
+          <!-- Un Exclude POR patrón -->
+          <Exclude>[SistemaPOS.API]*Program*</Exclude>
+          <Exclude>[SistemaPOS.API]SistemaPOS.API.Pages.*</Exclude>
+          <Exclude>[*.Tests]*</Exclude>
+          <Exclude>[*.Test]*</Exclude>
+          <Exclude>[*]*Migrations*</Exclude>
+
+          <!-- Estos sí aceptan múltiples con ';' -->
+          <ExcludeByFile>**/Pages/**/*.cs;**/Program.cs;**/*Migrations*/*.cs</ExcludeByFile>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

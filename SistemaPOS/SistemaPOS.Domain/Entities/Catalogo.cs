@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SistemaPOS.Domain.Entities
 {
+    [ExcludeFromCodeCoverage]
     [Table("CATALOGO")]
     public class Catalogo
     {

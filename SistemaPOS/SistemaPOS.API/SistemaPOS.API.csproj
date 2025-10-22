@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SistemaPOS.Application\SistemaPOS.Application.csproj" />
-    <ProjectReference Include="..\SistemaPOS.Domain\SistemaPOS.Domain.csproj" />
-    <ProjectReference Include="..\SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+    <ProjectReference Include="..\SistemaPOS.Application\SistemaPOS.Application.csproj" />
+    <ProjectReference Include="..\SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

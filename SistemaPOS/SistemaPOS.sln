@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36603.0 d17.14
+VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.API", "SistemaPOS.API\SistemaPOS.API.csproj", "{72D0DE89-B906-4363-8BBC-176ABA6E8D95}"
 EndProject
@@ -12,6 +12,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Application", "SistemaPOS.Application\SistemaPOS.Application.csproj", "{366D0F98-4F4B-43C7-A77D-00C79B659A1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Infrastructure", "SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj", "{26896E7F-401E-4B03-B298-B49454E7CB07}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Infrastructure.Test", "SistemaPOS.Infrastructure.Test\SistemaPOS.Infrastructure.Test.csproj", "{AAFC3021-29A0-41FC-8972-7F33B0EC8F87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Application.Test", "SistemaPOS.Application.Test\SistemaPOS.Application.Test.csproj", "{6D62EA47-540C-4A9B-AF1F-BCE30B1F39B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.API.Test", "SistemaPOS.API.Test\SistemaPOS.API.Test.csproj", "{7DDD1027-73EF-4B7F-B146-6140351839E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Domain.Test", "SistemaPOS.Domain.Test\SistemaPOS.Domain.Test.csproj", "{1605E5A8-5D61-493A-A09A-D3DB7077185F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +49,31 @@ Global
 		{26896E7F-401E-4B03-B298-B49454E7CB07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26896E7F-401E-4B03-B298-B49454E7CB07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26896E7F-401E-4B03-B298-B49454E7CB07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAFC3021-29A0-41FC-8972-7F33B0EC8F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAFC3021-29A0-41FC-8972-7F33B0EC8F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAFC3021-29A0-41FC-8972-7F33B0EC8F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAFC3021-29A0-41FC-8972-7F33B0EC8F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D62EA47-540C-4A9B-AF1F-BCE30B1F39B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D62EA47-540C-4A9B-AF1F-BCE30B1F39B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D62EA47-540C-4A9B-AF1F-BCE30B1F39B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D62EA47-540C-4A9B-AF1F-BCE30B1F39B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DDD1027-73EF-4B7F-B146-6140351839E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DDD1027-73EF-4B7F-B146-6140351839E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DDD1027-73EF-4B7F-B146-6140351839E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DDD1027-73EF-4B7F-B146-6140351839E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1605E5A8-5D61-493A-A09A-D3DB7077185F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1605E5A8-5D61-493A-A09A-D3DB7077185F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1605E5A8-5D61-493A-A09A-D3DB7077185F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1605E5A8-5D61-493A-A09A-D3DB7077185F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AAFC3021-29A0-41FC-8972-7F33B0EC8F87} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{6D62EA47-540C-4A9B-AF1F-BCE30B1F39B8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7DDD1027-73EF-4B7F-B146-6140351839E9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{1605E5A8-5D61-493A-A09A-D3DB7077185F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {219199CE-76FA-41B1-B9D7-72443C263474}
