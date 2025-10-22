@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios - Sistema POS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="js/auth.js"></script>
+
+    <style>
+        /* 🔧 Corrección del layout del encabezado */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+            width: 200px;
+        }
+
+        .btn-primary {
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(45deg, #2C8EF9, #00A9FF);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #1d78e0, #0090d8);
+            transform: translateY(-1px);
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (!checkAuth()) return;
+
+            const profile = await getUserProfile();
+            const nameTag = document.querySelector(".user-profile span");
+            if (nameTag && profile?.usuPrimerNombre && profile?.usuPrimerApellido) {
+                nameTag.textContent = `${profile.usuPrimerNombre} ${profile.usuPrimerApellido}`;
+            }
+
+            // Botón para crear cajero
+            document.querySelector(".btn-primary").addEventListener("click", () => {
+                window.location.href = "crear-cajero.html";
+            });
+
+            // Botón cerrar sesión
+            document.getElementById("logoutBtn").addEventListener("click", () => logout());
+        });
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- 🔹 SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/pos-logo.png" alt="POS Logo">
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard-adm-local.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li><a href="gestion-catalogo.html"><i class="fas fa-boxes"></i>Gestión de Catálogo</a></li>
+                    <li><a href="gestion-caja.html"><i class="fas fa-cash-register"></i>Gestión de Caja</a></li>
+                    <li><a href="gestion-usuarios-adm-local.html" class="active"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
+                    <li><a href="gestion-ventas.html"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
+                    <li><a href="#" class="disabled-link"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- 🔹 CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <h1>Gestión de Usuarios</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar usuario...">
+                    </div>
+                    <button class="btn-primary"><i class="fas fa-plus"></i> Crear Cajero</button>
+                </div>
+            </header>
+
+            <!-- 🔹 TABLA DE USUARIOS -->
+            <section class="data-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre Completo</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Último Acceso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaUsuarios">
+                        <tr>
+                            <td>JD</td>
+                            <td>Juan Díaz</td>
+                            <td>juan.diaz@ejemplo.com</td>
+                            <td>Administrador</td>
+                            <td><i class="fas fa-circle text-green"></i> Activo</td>
+                            <td>Hace 2 horas</td>
+                            <td class="table-actions">
+                                <button class="btn btn-action"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-action btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

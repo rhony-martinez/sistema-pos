@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrar Admin Local</title>
+  <title>Registrar Cajero</title>
   <link rel="stylesheet" href="css/registrar-user.css">
+  <script src="js/auth.js"></script>
 </head>
 <body>
   <main class="page-wrapper">
@@ -13,42 +14,38 @@
       <div class="form-header">
         <img src="assets/pos-logo.png" alt="Logo POS" class="logo">
         <div>
-          <h1>Registrar Administrador Local</h1>
+          <h1>Registrar Cajero</h1>
           <p>Complete todos los campos obligatorios</p>
         </div>
       </div>
 
-      <form id="form-crear-admin" class="register-form">
+      <form id="form-crear-cajero" class="register-form">
         <!-- Datos Personales -->
         <h2 class="section-title">Datos Personales</h2>
 
         <div class="form-row">
           <div class="form-group">
-            <label>ID Usuario*</label>
-            <input type="number" id="usuId" placeholder="Ej: 101" required>
-          </div>
-          <div class="form-group">
             <label>ID Sede*</label>
-            <input type="number" id="sedeId" placeholder="Ej: 1" required>
+            <input type="number" id="sedeId" readonly>
           </div>
-        </div>
-
-        <div class="form-row">
           <div class="form-group">
             <label>Primer nombre*</label>
             <input type="text" id="primerNombre" placeholder="Primer nombre" required>
           </div>
-          <div class="form-group">
-            <label>Segundo nombre</label>
-            <input type="text" id="segundoNombre" placeholder="Segundo nombre">
-          </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
+            <label>Segundo nombre</label>
+            <input type="text" id="segundoNombre" placeholder="Segundo nombre">
+          </div>
+          <div class="form-group">
             <label>Primer Apellido*</label>
             <input type="text" id="primerApellido" placeholder="Primer apellido" required>
           </div>
+        </div>
+
+        <div class="form-row">
           <div class="form-group">
             <label>Segundo Apellido</label>
             <input type="text" id="segundoApellido" placeholder="Segundo apellido">
@@ -83,32 +80,41 @@
           </div>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Rol*</label>
-            <select id="rol" required>
-              <option value="ADMIN_LOCAL">ADMIN_LOCAL</option>
-              <option value="CAJERO">CAJERO</option>
-            </select>
-          </div>
-        </div>
+        <!-- El rol no se muestra, se asigna automáticamente -->
+        <input type="hidden" id="rol" value="CAJERO">
 
         <div class="btn-container">
-          <button type="submit" class="btn-primary">Registrar Administrador</button>
+          <button type="submit" class="btn-primary">Registrar Cajero</button>
+          <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
         </div>
       </form>
     </section>
   </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("form-crear-admin");
+    document.addEventListener("DOMContentLoaded", async () => {
+      // ✅ Verifica sesión
+      if (!checkAuth()) return;
 
+      // ✅ Obtener el perfil del usuario logueado (admin local)
+      try {
+        const profile = await getUserProfile();
+        if (profile && profile.sedeId) {
+          document.getElementById("sedeId").value = profile.sedeId;
+        } else {
+          document.getElementById("sedeId").value = "—";
+          alert("⚠️ No se pudo obtener el ID de sede del usuario.");
+        }
+      } catch (error) {
+        console.error("Error al cargar la sede:", error);
+      }
+
+      // ✅ Envío del formulario
+      const form = document.getElementById("form-crear-cajero");
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const payload = {
-          usuId: parseInt(document.getElementById("usuId").value),
           primerNombre: document.getElementById("primerNombre").value.trim(),
           segundoNombre: document.getElementById("segundoNombre").value.trim(),
           primerApellido: document.getElementById("primerApellido").value.trim(),
@@ -117,7 +123,7 @@
           telefono: document.getElementById("telefono").value.trim(),
           username: document.getElementById("username").value.trim(),
           password: document.getElementById("password").value.trim(),
-          rol: document.getElementById("rol").value,
+          rol: "CAJERO",
           sedeId: parseInt(document.getElementById("sedeId").value)
         };
 
@@ -136,13 +142,18 @@
             throw new Error(err.error || "Error al crear usuario");
           }
 
-          alert("✅ Usuario creado correctamente");
+          alert("✅ Cajero creado correctamente");
           form.reset();
-          window.location.href = "gestion-usuarios-adm-gral.html";
+          window.location.href = "gestion-usuarios-adm-local.html";
         } catch (error) {
           console.error(error);
-          alert("❌ No se pudo crear el usuario: " + error.message);
+          alert("❌ No se pudo crear el cajero: " + error.message);
         }
+      });
+
+      // ✅ Cancelar
+      document.getElementById("cancelBtn").addEventListener("click", () => {
+        window.location.href = "gestion-usuarios-adm-local.html";
       });
     });
   </script>
