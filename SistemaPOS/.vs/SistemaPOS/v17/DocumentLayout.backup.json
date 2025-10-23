@@ -1,0 +1,343 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\controllers\\sedescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\controllers\\sedescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F666633-59B1-4EE8-9A7A-37FC53407BD3}|SistemaPOS.Application\\SistemaPOS.Application.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.application\\sedes\\commands\\crearsedecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F666633-59B1-4EE8-9A7A-37FC53407BD3}|SistemaPOS.Application\\SistemaPOS.Application.csproj|solutionrelative:sistemapos.application\\sedes\\commands\\crearsedecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\sistemapos.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\sistemapos.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F64D5EEE-8D92-42F7-A521-0FE6594DD205}|SistemaPOS.API\\SistemaPOS.API.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.api\\controllers\\sedescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F64D5EEE-8D92-42F7-A521-0FE6594DD205}|SistemaPOS.API\\SistemaPOS.API.csproj|solutionrelative:sistemapos.api\\controllers\\sedescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F64D5EEE-8D92-42F7-A521-0FE6594DD205}|SistemaPOS.API\\SistemaPOS.API.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F64D5EEE-8D92-42F7-A521-0FE6594DD205}|SistemaPOS.API\\SistemaPOS.API.csproj|solutionrelative:sistemapos.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7820A6B8-77F1-4EB6-B141-949D504C29B8}|SistemaPOS.Infrastructure\\SistemaPOS.Infrastructure.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7820A6B8-77F1-4EB6-B141-949D504C29B8}|SistemaPOS.Infrastructure\\SistemaPOS.Infrastructure.csproj|solutionrelative:sistemapos.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F64D5EEE-8D92-42F7-A521-0FE6594DD205}|SistemaPOS.API\\SistemaPOS.API.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F64D5EEE-8D92-42F7-A521-0FE6594DD205}|SistemaPOS.API\\SistemaPOS.API.csproj|solutionrelative:sistemapos.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C043E7A-40E0-40F5-B7E2-698844041599}|SistemaPOS.Domain\\SistemaPOS.Domain.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.domain\\entities\\sedes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C043E7A-40E0-40F5-B7E2-698844041599}|SistemaPOS.Domain\\SistemaPOS.Domain.csproj|solutionrelative:sistemapos.domain\\entities\\sedes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7820A6B8-77F1-4EB6-B141-949D504C29B8}|SistemaPOS.Infrastructure\\SistemaPOS.Infrastructure.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.infrastructure\\sedes\\oraclesederepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7820A6B8-77F1-4EB6-B141-949D504C29B8}|SistemaPOS.Infrastructure\\SistemaPOS.Infrastructure.csproj|solutionrelative:sistemapos.infrastructure\\sedes\\oraclesederepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F666633-59B1-4EE8-9A7A-37FC53407BD3}|SistemaPOS.Application\\SistemaPOS.Application.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.application\\sedes\\isedesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F666633-59B1-4EE8-9A7A-37FC53407BD3}|SistemaPOS.Application\\SistemaPOS.Application.csproj|solutionrelative:sistemapos.application\\sedes\\isedesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F666633-59B1-4EE8-9A7A-37FC53407BD3}|SistemaPOS.Application\\SistemaPOS.Application.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.application\\sedes\\sededto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F666633-59B1-4EE8-9A7A-37FC53407BD3}|SistemaPOS.Application\\SistemaPOS.Application.csproj|solutionrelative:sistemapos.application\\sedes\\sededto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F666633-59B1-4EE8-9A7A-37FC53407BD3}|SistemaPOS.Application\\SistemaPOS.Application.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.application\\sedes\\queries\\listarsedesquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F666633-59B1-4EE8-9A7A-37FC53407BD3}|SistemaPOS.Application\\SistemaPOS.Application.csproj|solutionrelative:sistemapos.application\\sedes\\queries\\listarsedesquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\wwwroot\\css\\pos.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\wwwroot\\css\\pos.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\views\\sedes\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\views\\sedes\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\views\\sedes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\views\\sedes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|c:\\users\\jors solarte\\source\\repos\\sistemapos\\sistemapos.web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{C6C06505-1CC3-46B1-B563-E16BFAC5794C}|SistemaPOS.Web\\SistemaPOS.Web.csproj|solutionrelative:sistemapos.web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SistemaPOS.Web",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\SistemaPOS.Web.csproj",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\SistemaPOS.Web.csproj",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\SistemaPOS.Web.csproj",
+              "RelativeToolTip": "SistemaPOS.Web\\SistemaPOS.Web.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-23T02:54:49.63Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SedesController.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.API\\Controllers\\SedesController.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.API\\Controllers\\SedesController.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.API\\Controllers\\SedesController.cs",
+              "RelativeToolTip": "SistemaPOS.API\\Controllers\\SedesController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:23:46.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.API\\appsettings.json",
+              "RelativeDocumentMoniker": "SistemaPOS.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.API\\appsettings.json",
+              "RelativeToolTip": "SistemaPOS.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-23T02:17:06.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Program.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\Program.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Program.cs",
+              "RelativeToolTip": "SistemaPOS.Web\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:18:58.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\appsettings.json",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\appsettings.json",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\appsettings.json",
+              "RelativeToolTip": "SistemaPOS.Web\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-21T22:40:43.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Sedes.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Domain\\Entities\\Sedes.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Domain\\Entities\\Sedes.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Domain\\Entities\\Sedes.cs",
+              "RelativeToolTip": "SistemaPOS.Domain\\Entities\\Sedes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:15:59.253Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CrearSedeCommand.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Application\\Sedes\\Commands\\CrearSedeCommand.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Application\\Sedes\\Commands\\CrearSedeCommand.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Application\\Sedes\\Commands\\CrearSedeCommand.cs",
+              "RelativeToolTip": "SistemaPOS.Application\\Sedes\\Commands\\CrearSedeCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:11:44.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SedesController.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Controllers\\SedesController.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\Controllers\\SedesController.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Controllers\\SedesController.cs",
+              "RelativeToolTip": "SistemaPOS.Web\\Controllers\\SedesController.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAQwH4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T22:17:44.308Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.API\\Program.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.API\\Program.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.API\\Program.cs",
+              "RelativeToolTip": "SistemaPOS.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:16:38.596Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Infrastructure\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Infrastructure\\DependencyInjection.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Infrastructure\\DependencyInjection.cs",
+              "RelativeToolTip": "SistemaPOS.Infrastructure\\DependencyInjection.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABgAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:14:59.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "OracleSedeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Infrastructure\\Sedes\\OracleSedeRepository.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Infrastructure\\Sedes\\OracleSedeRepository.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Infrastructure\\Sedes\\OracleSedeRepository.cs",
+              "RelativeToolTip": "SistemaPOS.Infrastructure\\Sedes\\OracleSedeRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:14:21.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IsedesRepository.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Application\\Sedes\\IsedesRepository.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Application\\Sedes\\IsedesRepository.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Application\\Sedes\\IsedesRepository.cs",
+              "RelativeToolTip": "SistemaPOS.Application\\Sedes\\IsedesRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:13:43.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SedeDto.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Application\\Sedes\\SedeDto.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Application\\Sedes\\SedeDto.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Application\\Sedes\\SedeDto.cs",
+              "RelativeToolTip": "SistemaPOS.Application\\Sedes\\SedeDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:13:23.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ListarSedesQuery.cs",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Application\\Sedes\\Queries\\ListarSedesQuery.cs",
+              "RelativeDocumentMoniker": "SistemaPOS.Application\\Sedes\\Queries\\ListarSedesQuery.cs",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Application\\Sedes\\Queries\\ListarSedesQuery.cs",
+              "RelativeToolTip": "SistemaPOS.Application\\Sedes\\Queries\\ListarSedesQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T02:12:03.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "pos.css",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\wwwroot\\css\\pos.css",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\wwwroot\\css\\pos.css",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\wwwroot\\css\\pos.css",
+              "RelativeToolTip": "SistemaPOS.Web\\wwwroot\\css\\pos.css",
+              "ViewState": "AgIAAFcAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-10-21T22:33:16.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Views\\Sedes\\Create.cshtml",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\Views\\Sedes\\Create.cshtml",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Views\\Sedes\\Create.cshtml",
+              "RelativeToolTip": "SistemaPOS.Web\\Views\\Sedes\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-21T22:14:14.022Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Views\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\Views\\_ViewImports.cshtml",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Views\\_ViewImports.cshtml",
+              "RelativeToolTip": "SistemaPOS.Web\\Views\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-21T22:13:30.056Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "additional-methods.js",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+              "RelativeToolTip": "SistemaPOS.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAAwJcAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-21T21:20:22.091Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Views\\Sedes\\Index.cshtml",
+              "RelativeDocumentMoniker": "SistemaPOS.Web\\Views\\Sedes\\Index.cshtml",
+              "ToolTip": "C:\\Users\\JORS SOLARTE\\source\\repos\\SistemaPOS\\SistemaPOS.Web\\Views\\Sedes\\Index.cshtml",
+              "RelativeToolTip": "SistemaPOS.Web\\Views\\Sedes\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-21T17:42:11.631Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\bin\Debug\net8.0\SistemaPOS.Application.deps.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\bin\Debug\net8.0\SistemaPOS.Application.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\bin\Debug\net8.0\SistemaPOS.Application.pdb
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\bin\Debug\net8.0\SistemaPOS.Domain.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\bin\Debug\net8.0\SistemaPOS.Domain.pdb
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\SistemaPOS.Application.csproj.AssemblyReference.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\SistemaPOS.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\SistemaPOS.Application.AssemblyInfoInputs.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\SistemaPOS.Application.AssemblyInfo.cs
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\SistemaPOS.Application.csproj.CoreCompileInputs.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\SistemaP.07DEE01A.Up2Date
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\SistemaPOS.Application.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\refint\SistemaPOS.Application.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\SistemaPOS.Application.pdb
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.Application\obj\Debug\net8.0\ref\SistemaPOS.Application.dll

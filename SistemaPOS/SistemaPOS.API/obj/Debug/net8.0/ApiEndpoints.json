@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "SistemaPOS.API.Controllers.SedesController",
+    "Method": "GetAll",
+    "RelativePath": "api/Sedes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaPOS.API.Controllers.SedesController",
+    "Method": "Create",
+    "RelativePath": "api/Sedes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaPOS.API.Controllers.SedesController\u002BSedeCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
