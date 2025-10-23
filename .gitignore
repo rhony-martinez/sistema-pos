@@ -1,0 +1,98 @@
+# Visual Studio / .NET
+##############################
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.swp
+*.bak
+*.backup
+*.tmp
+*.log
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Tt]emp/
+[Tt]est[Rr]esult*/
+
+# Visual Studio 2022 cache files
+.vscode/
+_ReSharper*/
+*.DotSettings.user
+
+# ASP.NET temporary files
+aspnet_client/
+node_modules/
+bower_components/
+
+# Publish and build artifacts
+publish/
+out/
+dist/
+tmp/
+artifacts/
+
+# Configuration and secrets
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+.env
+secrets.json
+*.db
+*.sqlite
+*.mdf
+*.ldf
+
+# Oracle client or tools
+oracle/
+C:/Oracle/
+*.ora
+*.dmp
+
+# Git and package managers
+*.nupkg
+*.snupkg
+*.vsix
+packages/
+.nuget/
+*.lock.json
+
+# Logs and diagnostic files
+*.tlog
+*.trace
+*.etl
+*.nlog
+*.log
+*.cache
+*.DS_Store
+
+# IIS and hosting
+iisexpress/
+*.vspscc
+*.vssscc
+
+# JetBrains Rider
+.idea/
+*.iml
+
+# Custom folders
+docs/
+__pycache__/
+uploads/
+data/
+# Permitir el Data de Infrastructure (contiene código fuente)
+!SistemaPOS/SistemaPOS.Infrastructure/Data/
+logs/
+
+# SystemPOS-specific ignore
+SistemaPOS.API/wwwroot/lib/
+SistemaPOS.Web/wwwroot/lib/
+SistemaPOS.Web/wwwroot/node_modules/
+
+# Optional backups
+*.old
+*.orig
+*.rej
