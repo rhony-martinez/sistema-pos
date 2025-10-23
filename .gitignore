@@ -1,102 +1,142 @@
-# Visual Studio / .NET
-##############################
-.vs/
-*.user
+##############################################
+# SistemaPOS - Proyecto .NET + Frontend
+# Basado en VisualStudio.gitignore oficial + personalizaciones
+##############################################
+
+# ─── Archivos de usuario y configuración local ────────────────────────────────
+*.rsuser
 *.suo
+*.user
 *.userosscache
 *.sln.docstates
-*.swp
-*.bak
-*.backup
-*.tmp
-*.log
+*.userprefs
+*.DotSettings.user
+.vs/
+.vscode/
+.idea/
+_ReSharper*/
+_TeamCity*
+*.iml
 
-# Build results
+# ─── Resultados de compilación ────────────────────────────────────────────────
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-[Tt]emp/
-[Tt]est[Rr]esult*/
-
-# Visual Studio 2022 cache files
-.vscode/
-_ReSharper*/
-*.DotSettings.user
-
-# ASP.NET temporary files
-aspnet_client/
-node_modules/
-bower_components/
-
-# Publish and build artifacts
+[Ll]ogs/
+[Dd]ebug*/
+[Rr]elease*/
+x64/
+x86/
+[Aa][Rr][Mm]*/
+bld/
+artifacts/
 publish/
+tmp/
 out/
 dist/
-tmp/
-artifacts/
 
-# Configuration and secrets
+# ─── Archivos temporales y de caché ───────────────────────────────────────────
+*.cache
+*.tmp
+*.bak
+*.backup
+*.temp
+*.log
+*.tlog
+*.trace
+*.etl
+
+# ─── Archivos de dependencias ─────────────────────────────────────────────────
+node_modules/
+bower_components/
+packages/
+.nuget/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+vite.config.*
+
+# ─── Archivos de configuración sensibles ──────────────────────────────────────
 appsettings.Development.json
 appsettings.Local.json
 appsettings.*.json
 .env
 secrets.json
+
+# ─── Archivos binarios y ejecutables ──────────────────────────────────────────
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.so
+*.a
+*.lib
+
+# ─── Bases de datos y dumps ───────────────────────────────────────────────────
 *.db
 *.sqlite
 *.mdf
 *.ldf
-
-# Oracle client or tools
+*.ndf
+*.dmp
 oracle/
 C:/Oracle/
 *.ora
-*.dmp
 
-# Git and package managers
+# ─── Archivos de publicación y build ──────────────────────────────────────────
+*.Publish.xml
+*.pubxml
+*.publishproj
+project.lock.json
+project.fragment.lock.json
+*.nuget.props
+*.nuget.targets
 *.nupkg
 *.snupkg
 *.vsix
-packages/
-.nuget/
-*.lock.json
+*.pidb
 
-# Logs and diagnostic files
-*.tlog
-*.trace
-*.etl
+# ─── Pruebas y cobertura ──────────────────────────────────────────────────────
+[Tt]est[Rr]esult*/
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# ─── Logs y diagnósticos ──────────────────────────────────────────────────────
+logs/
 *.nlog
+*.trace
 *.log
-*.cache
-*.DS_Store
 
-# IIS and hosting
-iisexpress/
-*.vspscc
-*.vssscc
-
-# JetBrains Rider
-.idea/
-*.iml
-
-# Custom folders
+# ─── Carpetas personalizadas del proyecto ─────────────────────────────────────
 docs/
-__pycache__/
 uploads/
 data/
-# Permitir el Data de Infrastructure (contiene código fuente)
-!SistemaPOS/SistemaPOS.Infrastructure/Data/
-logs/
 
-# SystemPOS-specific ignore
+# 🔹 Mantener el Data del Context en Infrastructure (importante)
+!SistemaPOS/SistemaPOS.Infrastructure/Data/
+
+# ─── Archivos de Frontend ─────────────────────────────────────────────────────
 SistemaPOS.API/wwwroot/lib/
 SistemaPOS.Web/wwwroot/lib/
 SistemaPOS.Web/wwwroot/node_modules/
+SistemaPOS.Web/wwwroot/dist/
 
-# Optional backups
+# ─── Archivos de sistema operativo ────────────────────────────────────────────
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ─── Visual Studio Code (solo configuraciones útiles) ─────────────────────────
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ─── Backups o merges ─────────────────────────────────────────────────────────
 *.old
 *.orig
 *.rej
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/feature/jsolarte/crear-sedes
+Backup*/
