@@ -517,6 +517,11 @@ tr:hover {
     cursor: pointer;
 }
 
-    .btn-secondary:hover {
-        background-color: #b3b3b3;
-    }
+.btn-secondary:hover {
+    background-color: #b3b3b3;
+}
+
+.btn-filter {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}

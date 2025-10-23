@@ -9,24 +9,19 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- 🔹 Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <img src="assets/pos-logo.png" alt="POS Logo">
-      </div>
-      <nav class="sidebar-nav">
-        <ul>
-          <li><a href="dashboard-adm-gral.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-          <li><a href="gestion-sedes.html" class="active"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- 🔹 Contenido principal -->
     <main class="main-content">
       <header class="header">
+        <div class="header-right">
+          <div class="logo">
+            <img src="assets/pos-logo.png" alt="POS Logo">
+          </div>
+          <h1 class="header-title">Consultar Sede</h1>
+        </div>
+
         <div class="header-left">
-          <h1>Consultar Sede</h1>
+          <a href="gestion-sedes.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver a Gestión de Sedes
+          </a>
         </div>
       </header>
 
@@ -38,7 +33,7 @@
           <div class="form-row">
             <div class="form-group">
               <label for="nombreSede">Nombre de la Sede</label>
-              <input type="text" id="nombreSede" placeholder="Ej: Bogotá">
+              <input type="text" id="nombreSede" placeholder="Ej: Sede Central">
             </div>
 
             <div class="form-group">
@@ -57,41 +52,6 @@
     </main>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("formBuscar");
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const id = document.getElementById("idSede").value.trim();
-        const nombre = document.getElementById("nombreSede").value.trim();
-
-        if (!id && !nombre) {
-          alert("Por favor ingresa un ID o un nombre de sede.");
-          return;
-        }
-
-        const params = new URLSearchParams();
-        if (id) params.append("id", id);
-        if (nombre) params.append("nombre", nombre);
-
-        const url = `http://localhost:5289/api/Sede/buscar?${params.toString()}`;
-        console.log("🌐 Solicitando:", url);
-
-        try {
-          const response = await fetch(url);
-          if (!response.ok) throw new Error(await response.text());
-          const sede = await response.json();
-
-          localStorage.setItem("sedeEncontrada", JSON.stringify(sede));
-          window.location.href = `consultar_sede_resultado.html?id=${sede.sedE_ID}`;
-        } catch (error) {
-          alert("❌ " + error.message);
-          console.error(error);
-        }
-      });
-    });
-  </script>
+  <script src="js/consultar_sede.js"></script>
 </body>
 </html>

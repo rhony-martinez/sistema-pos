@@ -1,52 +1,75 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
-    console.log("consultar_sede.js cargado correctamente");
+    const form = document.getElementById("formBuscar");
 
-    const form = document.getElementById("form-consulta");
-    const resultadoDiv = document.getElementById("resultado");
+    // 🔹 Crear el modal de error dinámicamente si no existe
+    if (!document.getElementById("modalError")) {
+        const modalHTML = `
+            <div id="modalError" class="modal">
+                <div class="modal-content">
+                    <h3 id="modalErrorTitulo">Error</h3>
+                    <p id="modalErrorMensaje">Mensaje de error</p>
+                    <button id="btnCerrarModal" class="btn-modal">Entendido</button>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML("beforeend", modalHTML);
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+        const modal = document.getElementById("modalError");
+        const btnCerrar = document.getElementById("btnCerrarModal");
+        btnCerrar.addEventListener("click", () => modal.style.display = "none");
+        modal.addEventListener("click", e => {
+            if (e.target === modal) modal.style.display = "none";
+        });
+    }
 
-        const id = parseInt(document.getElementById("codigoSede").value.trim()) || null;
+    const modal = document.getElementById("modalError");
+    const modalTitulo = document.getElementById("modalErrorTitulo");
+    const modalMensaje = document.getElementById("modalErrorMensaje");
+
+    function mostrarModal(titulo, mensaje) {
+        modalTitulo.textContent = titulo;
+        modalMensaje.textContent = mensaje;
+        modal.style.display = "flex";
+    }
+
+    // 🔹 Evento principal del formulario
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const id = document.getElementById("idSede").value.trim();
         const nombre = document.getElementById("nombreSede").value.trim();
 
-        console.log("📤 Datos capturados del formulario:", { id, nombre });
+        if (!id && !nombre) {
+            mostrarModal("Campos vacíos", "Por favor ingresa un ID o un nombre de sede para continuar.");
+            return;
+        }
 
-        resultadoDiv.textContent = "Buscando sede...";
-        resultadoDiv.style.color = "red";
+        const params = new URLSearchParams();
+        if (id) params.append("id", id);
+        if (nombre) params.append("nombre", nombre);
+
+        const url = `http://localhost:5289/api/Sede/buscar?${params.toString()}`;
+        console.log("🌐 Solicitando:", url);
 
         try {
-            const url = new URL("https://localhost:/api/Sede/buscar");
-            if (id) url.searchParams.append("id", id);
-            if (nombre) url.searchParams.append("nombre", nombre);
-
-            console.log("🌐 Enviando petición a:", url.toString());
-
             const response = await fetch(url);
-
-            console.log("📥 Respuesta recibida:", response);
-
             if (!response.ok) {
-                resultadoDiv.textContent = `❌ Error: ${response.status} ${response.statusText}`;
+                if (response.status === 404) {
+                    mostrarModal("No encontrada", "No se encontró ninguna sede con los criterios proporcionados.");
+                } else {
+                    mostrarModal("Error", `Error ${response.status}: ${response.statusText}`);
+                }
                 return;
             }
 
-            const data = await response.json();
-            console.log("📦 Datos del servidor:", data);
+            const sede = await response.json();
 
-            resultadoDiv.innerHTML = `
-                ✅ <strong>Sede encontrada:</strong><br>
-                ID: ${data.sedE_ID}<br>
-                Nombre: ${data.sedE_NOMBRE}<br>
-                Ciudad: ${data.sedE_CIUDAD || "N/A"}<br>
-                Departamento: ${data.sedE_DEPARTAMENTO || "N/A"}<br>
-                Estado: ${data.sedE_ESTADO || "N/A"}
-            `;
-            resultadoDiv.style.color = "green";
+            localStorage.setItem("sedeEncontrada", JSON.stringify(sede));
+            window.location.href = `consultar_sede_resultado.html?id=${sede.SedeId}`;
+
         } catch (error) {
-            console.error("❌ Error en fetch:", error);
-            resultadoDiv.textContent = "Ocurrió un error al consultar la sede.";
+            console.error("❌ Error en la solicitud:", error);
+            mostrarModal("Error del servidor", "Ocurrió un error al procesar la solicitud. Verifica tu conexión o intenta nuevamente.");
         }
     });
 });
-
