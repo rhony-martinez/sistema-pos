@@ -1,34 +1,51 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SistemaPOS.Infrastructure.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using SistemaPOS.Infrastructure.Persistence;
-using SistemaPOS.Domain.Repositories;
-using SistemaPOS.Infrastructure.Repositories;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using System.IO;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using SistemaPOS.Application.Sedes;
 
+using SistemaPOS.Infrastructure;
+using SistemaPOS.Infrastructure.Data;
+using SistemaPOS.Infrastructure.Persistence;
+using SistemaPOS.Infrastructure.Repositories;
+using System.Text;
+
+// Crear el builder
 var builder = WebApplication.CreateBuilder(args);
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
-// Controladores (API REST)
-builder.Services.AddControllers();
+// ----------------------------------------------------
+// 🔹 Configuración de servicios
+// ----------------------------------------------------
 
-// Contexto con Oracle
+// Controladores y endpoints
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+// ----------------------------------------------------
+// 🔹 Configurar conexión a Oracle
 builder.Services.AddDbContext<SistemaPosContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
 
-// Repos y servicios
+// ----------------------------------------------------
+// 🔹 Repositorios y servicios personalizados
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISedeRepository, SedeRepository>();
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-// 🔹 CORS: permitir ambos dominios de desarrollo
+
+// 🔹 Registrar casos de uso de “crear sede”
+builder.Services.AddScoped<ListarSedesQuery>();
+builder.Services.AddScoped<CrearSedeCommand>();
+
+// 🔹 Cargar infraestructura (de la rama de jsolarte)
+builder.Services.AddInfrastructure(builder.Configuration);
+
+// ----------------------------------------------------
+// 🔹 Configuración de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -37,6 +54,7 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod());
 });
 
+// ----------------------------------------------------
 // 🔹 Autenticación JWT
 builder.Services.AddAuthentication(options =>
 {
@@ -47,7 +65,6 @@ builder.Services.AddAuthentication(options =>
 {
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
-
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -57,10 +74,10 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(key),
-        ClockSkew = TimeSpan.Zero // 🔹 evita tolerancia de tiempo
+        ClockSkew = TimeSpan.Zero // evitar tolerancia temporal
     };
 
-    // 🔹 Validar tokens revocados
+    // Validación de tokens revocados
     options.Events = new JwtBearerEvents
     {
         OnTokenValidated = async ctx =>
@@ -80,35 +97,35 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// 🔹 Swagger con esquema de seguridad JWT
-builder.Services.AddEndpointsApiExplorer();
+// ----------------------------------------------------
+// 🔹 Swagger con autenticación Bearer
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "SistemaPOS API",
         Version = "v1"
     });
 
-    var securityScheme = new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    var securityScheme = new OpenApiSecurityScheme
     {
         Name = "Authorization",
         Description = "Introduce el token JWT así: Bearer {tu token}",
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT"
     };
 
     c.AddSecurityDefinition("Bearer", securityScheme);
-    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
-            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            new OpenApiSecurityScheme
             {
-                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                Reference = new OpenApiReference
                 {
-                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Type = ReferenceType.SecurityScheme,
                     Id = "Bearer"
                 }
             },
@@ -117,28 +134,37 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// ----------------------------------------------------
+// 🔹 Construir aplicación
 var app = builder.Build();
 
-// 🔹 Usar CORS ANTES del pipeline
+// ----------------------------------------------------
+// 🔹 Middleware
+// ----------------------------------------------------
+
+// CORS debe ir antes del pipeline
 app.UseCors("AllowFrontend");
 
+// HTTPS y archivos estáticos
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
+// Ruteo
+app.UseRouting();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Autenticación y autorización
+app.UseAuthentication();
+app.UseAuthorization();
 
-// 🔹 Configurar conexión a Oracle
-/*var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<SistemaPOSDbContext>(options =>
-    options.UseOracle(connectionString)
-);
-
-*/
-
-// 🔹 Habilitar Swagger solo en desarrollo
+// Swagger (solo en desarrollo)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "SistemaPOS API v1");
+        options.RoutePrefix = string.Empty;
+    });
 }
 else
 {
@@ -146,43 +172,8 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-
-app.UseCors("AllowLocalFront");
-app.UseDefaultFiles();
-
-/*
-// 🔹 Servir archivos del frontend (SistemaPOS.web/wwwroot)
-var frontendPath = Path.Combine(
-    @"C:\Users\Carlos E. Dorado\Desktop\Eduardo\Carlos Software\sistema-pos\SistemaPOS\SistemaPOS.web",
-    "wwwroot"
-);
-
-if (Directory.Exists(frontendPath))
-{
-    app.UseStaticFiles(new StaticFileOptions
-    {
-        FileProvider = new PhysicalFileProvider(frontendPath),
-        RequestPath = ""
-    });
-
-    // Si no encuentra una ruta, devuelve el archivo principal del frontend
-    app.MapFallbackToFile("consultar_sede.html");
-}
-else
-{
-    Console.WriteLine($"⚠️ No se encontró la carpeta del frontend en: {frontendPath}");
-}
-app.UseCors("AllowFrontend");
-// 🔹 Mapear controladores (API)
-*/
+// Mapeo de controladores
 app.MapControllers();
 
+// Ejecutar aplicación
 app.Run();

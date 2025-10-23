@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemaPOS.Infrastructure.Data;
-using SistemaPOS.Domain.Entities;
-using SistemaPOS.Domain.Repositories;
 
 namespace SistemaPOS.API.Controllers
 {

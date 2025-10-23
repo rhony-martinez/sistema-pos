@@ -6,8 +6,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- 🔹 Carpetas estáticas del proyecto -->
   <ItemGroup>
     <Folder Include="wwwroot\assets\" />
   </ItemGroup>
+
+  <!-- 🔹 Dependencias necesarias para desarrollo y compilación dinámica de vistas -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaPOS.Application\SistemaPOS.Application.csproj" />
+  </ItemGroup>
+
+  <!-- 🔹 Referencias a capas de la solución -->
 
 </Project>

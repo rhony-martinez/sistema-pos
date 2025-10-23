@@ -1,25 +1,48 @@
+using Microsoft.Extensions.FileProviders;
+using SistemaPOS.Application.Sedes;// si usas comandos/queries
+using SistemaPOS.Infrastructure; // si usas AddInfrastructure
+
+using System.IO;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+// 🔹 Si este proyecto necesita servicios de tu capa Application/Infrastructure:
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddScoped<ListarSedesQuery>();
+builder.Services.AddScoped<CrearSedeCommand>();
+
+// 🔹 Si planeas tener controladores API dentro del proyecto Web
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 🔹 Configurar el pipeline HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
+// 🔹 Servir archivos estáticos desde wwwroot (por ejemplo, HTML, JS, CSS)
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+    RequestPath = ""
+});
 
 app.UseRouting();
 
+// (Descomenta si agregas autenticación luego)
+// app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
+// 🔹 Exponer controladores API
+app.MapControllers();
+
+// 🔹 Fallback para archivos HTML (por ejemplo consultar_sede.html)
+app.MapFallbackToFile("consultar_sede.html");
 
 app.Run();

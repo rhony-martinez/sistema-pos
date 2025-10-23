@@ -1,0 +1,157 @@
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\appsettings.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.staticwebassets.runtime.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.staticwebassets.endpoints.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.exe
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.deps.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.runtimeconfig.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.pdb
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Dapper.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Oracle.ManagedDataAccess.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\linux\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\osx\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Application.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Domain.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Infrastructure.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Application.pdb
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Infrastructure.pdb
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Domain.pdb
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.csproj.AssemblyReference.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.AssemblyInfoInputs.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.AssemblyInfo.cs
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.csproj.CoreCompileInputs.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.RazorAssemblyInfo.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.RazorAssemblyInfo.cs
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\scopedcss\bundle\SistemaPOS.API.styles.css
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\scopedcss\projectbundle\SistemaPOS.API.bundle.scp.css
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaP.F8DFA279.Up2Date
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\refint\SistemaPOS.API.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.pdb
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.genruntimeconfig.cache
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\ref\SistemaPOS.API.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\JORS SOLARTE\source\repos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\refint\SistemaPOS.API.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.pdb
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.csproj.AssemblyReference.cache
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.AssemblyInfoInputs.cache
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.AssemblyInfo.cs
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.csproj.CoreCompileInputs.cache
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.RazorAssemblyInfo.cache
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.RazorAssemblyInfo.cs
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.sourcelink.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\appsettings.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.staticwebassets.runtime.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.staticwebassets.endpoints.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.exe
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.deps.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.runtimeconfig.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.API.pdb
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Azure.Core.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Dapper.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Oracle.EntityFrameworkCore.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Oracle.ManagedDataAccess.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Runtime.Caching.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\linux\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\osx\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Application.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Domain.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Infrastructure.dll
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Application.pdb
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Domain.pdb
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\bin\Debug\net8.0\SistemaPOS.Infrastructure.pdb
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\scopedcss\bundle\SistemaPOS.API.styles.css
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\scopedcss\projectbundle\SistemaPOS.API.bundle.scp.css
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaP.F8DFA279.Up2Date
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\SistemaPOS.API.genruntimeconfig.cache
+C:\Users\LENOVO\OneDrive\Escritorio\Proyecto\sistema-pos\SistemaPOS\SistemaPOS.API\obj\Debug\net8.0\ref\SistemaPOS.API.dll

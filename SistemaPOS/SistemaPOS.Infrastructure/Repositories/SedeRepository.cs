@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SistemaPOS.Domain.Entities;
-using SistemaPOS.Domain.Repositories;
+
 using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Infrastructure.Persistence;
 
@@ -73,6 +73,28 @@ namespace SistemaPOS.Infrastructure.Repositories
             }
 
             return await query.FirstOrDefaultAsync();
+        }
+        // ✅ 1. Listar todas las sedes
+        public async Task<IEnumerable<Sede>> ListarAsync()
+        {
+            return await _context.Sedes.ToListAsync();
+        }
+
+        // ✅ 2. Verificar si existe una sede duplicada
+        public async Task<bool> ExisteDuplicadaAsync(string nombre, string ciudad)
+        {
+            return await _context.Sedes
+                .AnyAsync(s =>
+                    EF.Functions.Like(s.SedeNombre.ToUpper(), nombre.ToUpper()) &&
+                    EF.Functions.Like(s.SedeCiudad!.ToUpper(), ciudad.ToUpper()));
+        }
+
+        // ✅ 3. Crear una nueva sede y retornar su ID
+        public async Task<long> CrearAsync(Sede sede)
+        {
+            await _context.Sedes.AddAsync(sede);
+            await _context.SaveChangesAsync();
+            return sede.SedeId; // EF asigna automáticamente el ID al guardar
         }
     }
 }

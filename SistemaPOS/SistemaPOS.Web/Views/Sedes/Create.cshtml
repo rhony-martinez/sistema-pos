@@ -1,0 +1,147 @@
+﻿@model SistemaPOS.Web.Controllers.SedesController.SedeCreateVm
+@{
+    Layout = null;
+    var modal = TempData["Modal"]?.ToString() ?? "";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registrar Sede - Sistema POS</title>
+    <link rel="stylesheet" href="~/css/pos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="~/img/pos-logo.png" alt="POS Logo" />
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a asp-controller="Sedes" asp-action="Index" class="active">
+                            <i class="fa-solid fa-store"></i>Gestión de Sedes
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <h1>Registrar Sede</h1>
+                    <div class="help">Llene los campos para la nueva sede</div>
+                </div>
+            </header>
+
+            <section class="form-card">
+                <form method="post" novalidate>
+                    <div class="section-title">Datos de la Sede</div>
+                    <div class="grid">
+                        <div>
+                            <div class="label">Nombre de la Sede</div>
+                            <input asp-for="Nombre" class="input" placeholder="Sede Central" required />
+                            <span asp-validation-for="Nombre" class="feedback"></span>
+                        </div>
+                        <div>
+                            <div class="label">Código de la Sede</div>
+                            <input class="input" value="@Model.CodigoUi" readonly />
+                        </div>
+                    </div>
+
+                    <div class="section-title" style="margin-top:18px">Información de la Sede</div>
+                    <div class="grid">
+                        <div>
+                            <div class="label">Dirección</div>
+                            <input asp-for="Direccion" class="input" placeholder="Av. Principal" />
+                        </div>
+                        <div>
+                            <div class="label">Ciudad</div>
+                            <select asp-for="Ciudad" class="input">
+                                <option>Cali</option>
+                                <option>Bogotá</option>
+                                <option>Medellín</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="label">Departamento</div>
+                            <select asp-for="Departamento" class="input">
+                                <option>Valle del Cauca</option>
+                                <option>Cundinamarca</option>
+                                <option>Antioquia</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="label">Código Postal</div>
+                            <input class="input" placeholder="Código Postal" />
+                        </div>
+                        <div>
+                            <div class="label">Teléfono</div>
+                            <input asp-for="Telefono" class="input" placeholder="555-1234" />
+                        </div>
+                        <div>
+                            <div class="label">Correo electrónico</div>
+                            <input asp-for="Correo" class="input" placeholder="contacto@sede.com" />
+                            <span asp-validation-for="Correo" class="feedback"></span>
+                        </div>
+                        <div>
+                            <div class="label">Administrador Responsable</div>
+                            <input class="input" value="@Model.AdministradorResponsable" readonly />
+                        </div>
+                        <div>
+                            <div class="label">Estado</div>
+                            <div class="badge">Activo <span class="dot"></span></div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;justify-content:center;margin-top:20px">
+                        <button class="btn btn-primary" type="submit">Registrar Sede</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODALES -->
+    <div id="modal-success" class="modal-backdrop @(modal == "success" ? "modal-show" : "")">
+        <div class="modal">
+            <h3>¡Sede Registrada!</h3>
+            <p>La sede se ha registrado con éxito.</p>
+            <a class="btn ok" asp-controller="Sedes" asp-action="Index" id="btnOk">Aceptar</a>
+        </div>
+    </div>
+
+    <div id="modal-fail" class="modal-backdrop @(modal == "fail" ? "modal-show" : "")">
+        <div class="modal">
+            <h3>¡Registro Fallido!</h3>
+            <p>La sede no se ha podido crear.</p>
+            <a class="btn error" href="#" onclick="closeFail()">Intenta nuevamente</a>
+        </div>
+    </div>
+
+    <div id="modal-invalid" class="modal-backdrop @(modal == "invalid" ? "modal-show" : "")">
+        <div class="modal">
+            <h3>¡Registro Fallido!</h3>
+            <p>Uno o más campos tienen datos incompatibles o vacíos.</p>
+            <a class="btn error" href="#" onclick="closeInvalid()">Intenta nuevamente</a>
+        </div>
+    </div>
+
+    <div id="modal-dup" class="modal-backdrop @(modal == "duplicate" ? "modal-show" : "")">
+        <div class="modal">
+            <h3>¡Registro Fallido!</h3>
+            <p>Ya existe una sede registrada con esa identificación.</p>
+            <a class="btn error" href="#" onclick="closeDup()">Intenta nuevamente</a>
+        </div>
+    </div>
+
+    <script>
+        function closeFail()   { document.getElementById('modal-fail').classList.remove('modal-show'); }
+        function closeInvalid(){ document.getElementById('modal-invalid').classList.remove('modal-show'); }
+        function closeDup()    { document.getElementById('modal-dup').classList.remove('modal-show'); }
+    </script>
+</body>
+</html>

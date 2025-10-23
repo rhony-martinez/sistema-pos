@@ -1,4 +1,4 @@
-﻿namespace SistemaPos.Domain
+﻿namespace SistemaPOS.Domain
 {
     public class Class1
     {

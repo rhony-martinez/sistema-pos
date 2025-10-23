@@ -1,0 +1,90 @@
+﻿@model IEnumerable<SistemaPOS.Application.Sedes.SedeDto>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión de Sedes - Sistema POS</title>
+    <link rel="stylesheet" href="~/css/pos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="~/img/pos-logo.png" alt="POS Logo" />
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a><i class="fa-solid fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li><a><i class="fa-solid fa-boxes"></i>Gestión de Catálogo</a></li>
+                    <li><a><i class="fa-solid fa-cash-register"></i>Gestión de Caja</a></li>
+                    <li><a><i class="fa-solid fa-users"></i>Gestión de Usuarios</a></li>
+                    <li><a><i class="fa-solid fa-chart-line"></i>Gestión de Ventas</a></li>
+                    <li>
+                        <a class="active" asp-controller="Sedes" asp-action="Index">
+                            <i class="fa-solid fa-store"></i>Gestión de Sedes
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div><h1>Gestión de Sedes</h1></div>
+                <div>
+                    <a class="btn btn-primary" asp-controller="Sedes" asp-action="Create">
+                        <i class="fa fa-plus"></i> Crear Sede
+                    </a>
+                </div>
+            </header>
+
+            <section class="data-table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID de Sede</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
+                            <th>Administrador</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td>@s.CodigoTablaUi</td>
+                                    <td>@s.Nombre</td>
+                                    <td>@s.Direccion</td>
+                                    <td>@s.Telefono</td>
+                                    <td>Juan Pérez</td>
+                                    <td>
+                                        <a class="btn btn-action" title="Editar"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-action btn-danger" title="Eliminar"><i class="fa fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" style="padding:32px;color:#6b7280;text-align:center;">
+                                    No hay sedes registradas aún.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

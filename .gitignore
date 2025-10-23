@@ -96,4 +96,7 @@ SistemaPOS.Web/wwwroot/node_modules/
 *.old
 *.orig
 *.rej
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/feature/jsolarte/crear-sedes
