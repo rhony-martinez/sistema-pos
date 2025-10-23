@@ -165,8 +165,8 @@ transition: all 0.2s ease;
 letter-spacing: 0.3px;
 }
 
-.btn-primary:hover {
-    background: linear-gradient(45deg, #db2b0c, #ff8974);
+.btn-secondary:hover {
+    background: linear-gradient(45deg, #db2b0c, #f45337);
     transform: translateY(-2px);
 }
 

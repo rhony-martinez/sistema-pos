@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaPOS.Domain.Entities;
 using SistemaPOS.Infrastructure.Data;
+using System.Linq.Expressions;
 
 public class UserRepository : IUserRepository
 {
@@ -25,4 +26,11 @@ public class UserRepository : IUserRepository
 
     public async Task SaveChangesAsync() =>
         await _ctx.SaveChangesAsync();
+
+    public async Task<List<Usuario>> FindAsync(Expression<Func<Usuario, bool>> predicate)
+    {
+        return await _ctx.Usuarios
+            .Where(predicate)
+            .ToListAsync();
+    }
 }

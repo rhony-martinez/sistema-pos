@@ -55,4 +55,11 @@ public class UserService : IUserService
     {
         return await _userRepo.GetByIdAsync(id);
     }
+
+    public async Task<List<Usuario>> GetCajerosActivosPorSedeAsync(int sedeId)
+    {
+        return await _userRepo
+            .FindAsync(u => u.UsuRol == "CAJERO" && u.SedeId == sedeId && u.UsuEstado == "ACTIVO");
+    }
+
 }

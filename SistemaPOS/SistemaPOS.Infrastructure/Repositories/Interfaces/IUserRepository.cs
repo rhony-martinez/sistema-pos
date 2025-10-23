@@ -1,4 +1,5 @@
 ﻿using SistemaPOS.Domain.Entities;
+using System.Linq.Expressions;
 
 public interface IUserRepository
 {
@@ -6,4 +7,5 @@ public interface IUserRepository
     Task<Usuario?> GetByIdAsync(int id);
     Task AddAsync(Usuario user);
     Task SaveChangesAsync();
+    Task<List<Usuario>> FindAsync(Expression<Func<Usuario, bool>> predicate);
 }

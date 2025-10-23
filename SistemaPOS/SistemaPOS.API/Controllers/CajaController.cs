@@ -55,5 +55,28 @@ namespace SistemaPOS.API.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        // Devuelve true si hay alguna caja abierta en una sede
+        [HttpGet("abierta/{sedeId}")]
+        public async Task<IActionResult> HayCajaAbierta(int sedeId)
+        {
+            try
+            {
+                // 🔹 Normaliza el valor y usa Trim() para evitar espacios de CHAR
+                var abierta = await _context.Cajas
+                    .Where(c => c.SedeId == sedeId && c.CajaEstado.Trim().ToUpper() == "ABIERTA")
+                    .Select(c => c.CajaId)
+                    .FirstOrDefaultAsync();
+
+                bool hayAbierta = abierta != 0;
+
+                return Ok(new { abierta = hayAbierta });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al verificar caja abierta: {ex.Message}");
+            }
+        }
+
     }
 }

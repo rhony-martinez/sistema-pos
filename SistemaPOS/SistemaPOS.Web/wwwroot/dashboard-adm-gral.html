@@ -7,48 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/auth.js"></script>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-        // Verificar sesión
-        if (typeof checkAuth === "function" && !checkAuth()) return;
-
-        // Obtener el perfil del usuario logueado
-        let profile = null;
-        try {
-            if (typeof getUserProfile === "function") {
-                profile = await getUserProfile();
-            } else {
-                const token = sessionStorage.getItem("token");
-                const res = await fetch("http://localhost:5289/api/Users/me", {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                if (res.ok) profile = await res.json();
-            }
-        } catch (err) {
-            console.error("❌ Error obteniendo perfil:", err);
-        }
-
-        console.log("✅ Perfil recibido:", profile);
-
-        // Actualizar nombre del usuario en el encabezado
-        const nameTag = document.getElementById("user-name");
-        if (nameTag && profile) {
-            const nombre = profile.usuPrimerNombre ?? "";
-            const apellido = profile.usuPrimerApellido ?? "";
-            const username = profile.usuUsername ?? "";
-
-            if (nombre || apellido) {
-                nameTag.textContent = `${nombre} ${apellido}`.trim();
-            } else {
-                nameTag.textContent = username || "Usuario";
-            }
-        }
-
-        // Botón de cerrar sesión
-        document.getElementById("logoutBtn").addEventListener("click", () => logout());
-    });
-    </script>
+    <script src="js/dashboard-adm-gral.js"></script>
 </head>
 
 <body>
@@ -120,21 +79,21 @@
                         <div class="card-icon"><i class="fas fa-store"></i></div>
                     </div>
                     <div class="card-value">7</div>
-                    <p class="card-details">2 por más de 1 hora</p>
+                    <p class="card-details">0 inactivas</p>
                 </div>
             </section>
         </main>
     </div>
-   <!-- Modal de confirmación de cierre de sesión -->
-                <div id="logoutModal" class="modal">
-            <div class="modal-content">
-             <h3>¿Deseas cerrar sesión?</h3>
-             <div class="modal-buttons">
-                 <button id="confirmLogout" class="btn btn-danger">Cerrar sesión</button>
-                 <button id="cancelLogout" class="btn btn-secondary">Cancelar</button>
+    <!-- Modal de confirmación de cierre de sesión -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <h3>¿Deseas cerrar sesión?</h3>
+            <div class="modal-buttons">
+                <button id="confirmLogout" class="btn btn-danger">Cerrar sesión</button>
+                <button id="cancelLogout" class="btn btn-secondary">Cancelar</button>
             </div>
-         </div>
         </div>
+    </div>
 
     <script src="js/logout.js"></script>
 </body>

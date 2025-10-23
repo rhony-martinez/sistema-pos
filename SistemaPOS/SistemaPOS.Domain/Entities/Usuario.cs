@@ -49,9 +49,10 @@ namespace SistemaPOS.Domain.Entities
         [StringLength(255)]
         public string UsuClaveHash { get; set; } = string.Empty;
 
+        [Required]
         [Column("USU_ESTADO")]
         [StringLength(20)]
-        public string? UsuEstado { get; set; }
+        public string UsuEstado { get; set; } = string.Empty;
 
         [Column("USU_ROL")]
         [StringLength(30)]

@@ -23,9 +23,10 @@ namespace SistemaPOS.Domain.Entities
         [Column("CAJA_MONTO_FINAL")]
         public decimal? CajaMontoFinal { get; set; }
 
+        [Required]
         [Column("CAJA_ESTADO")]
         [StringLength(20)]
-        public string? CajaEstado { get; set; }
+        public string CajaEstado { get; set; } = string.Empty;
 
         [Column("SEDE_ID")]
         public int SedeId { get; set; }

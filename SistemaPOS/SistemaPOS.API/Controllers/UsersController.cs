@@ -59,4 +59,12 @@ public class UsersController : ControllerBase
 
         return Ok(user);
     }
+
+    [Authorize(Roles = "ADMIN_LOCAL")]
+    [HttpGet("cajeros/activos/{sedeId}")]
+    public async Task<IActionResult> GetCajerosActivosPorSede(int sedeId)
+    {
+        var cajeros = await _userService.GetCajerosActivosPorSedeAsync(sedeId);
+        return Ok(new { cantidad = cajeros.Count });
+    }
 }
