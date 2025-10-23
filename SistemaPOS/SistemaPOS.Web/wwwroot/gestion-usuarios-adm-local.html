@@ -8,55 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/auth.js"></script>
 
-    <style>
-        /* Corrección del layout del encabezado */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 0.4rem 0.8rem;
-        }
-
-        .search-bar input {
-            border: none;
-            outline: none;
-            margin-left: 0.5rem;
-            font-size: 0.9rem;
-            width: 200px;
-        }
-
-        .btn-primary {
-            padding: 0.7rem 1.2rem;
-            border-radius: 10px;
-            border: none;
-            background: linear-gradient(45deg, #2C8EF9, #00A9FF);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(45deg, #1d78e0, #0090d8);
-            transform: translateY(-1px);
-        }
-    </style>
-
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             if (!checkAuth()) return;
