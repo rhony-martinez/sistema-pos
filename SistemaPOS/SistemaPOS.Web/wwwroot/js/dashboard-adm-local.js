@@ -1,8 +1,8 @@
 ﻿document.addEventListener("DOMContentLoaded", async () => {
-    // ✅ Verificar autenticación
+    // Verificar autenticación
     if (typeof checkAuth === "function" && !checkAuth()) return;
 
-    // ✅ Obtener perfil del usuario autenticado
+    // Obtener perfil del usuario autenticado
     let profile = null;
     try {
         if (typeof getUserProfile === "function") {
