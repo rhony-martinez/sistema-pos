@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.10" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
@@ -15,6 +16,24 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SistemaPOS.Domain\SistemaPOS.Domain.csproj" />
+=======
+    <Compile Remove="DTOSs\**" />
+    <Compile Remove="NewFolder1\**" />
+    <Compile Remove="NewFolder3\**" />
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="DTOSs\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="NewFolder3\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="DTOSs\**" />
+    <None Remove="NewFolder1\**" />
+    <None Remove="NewFolder3\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaPos.Domain\SistemaPos.Domain.csproj" />
+>>>>>>> origin/feature_cedj.dacg_consultar_sede
     <ProjectReference Include="..\SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj" />
   </ItemGroup>
 

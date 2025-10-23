@@ -3,6 +3,11 @@ using SistemaPOS.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SistemaPOS.Infrastructure.Persistence;
+using SistemaPOS.Domain.Repositories;
+using SistemaPOS.Infrastructure.Repositories;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
@@ -19,7 +24,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
-
+builder.Services.AddScoped<ISedeRepository, SedeRepository>();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 // 🔹 CORS: permitir ambos dominios de desarrollo
 builder.Services.AddCors(options =>
 {
@@ -114,7 +122,19 @@ var app = builder.Build();
 // 🔹 Usar CORS ANTES del pipeline
 app.UseCors("AllowFrontend");
 
-// Middleware HTTP
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 🔹 Configurar conexión a Oracle
+/*var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<SistemaPOSDbContext>(options =>
+    options.UseOracle(connectionString)
+);
+
+*/
+
+// 🔹 Habilitar Swagger solo en desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -134,6 +154,35 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+app.UseCors("AllowLocalFront");
+app.UseDefaultFiles();
+
+/*
+// 🔹 Servir archivos del frontend (SistemaPOS.web/wwwroot)
+var frontendPath = Path.Combine(
+    @"C:\Users\Carlos E. Dorado\Desktop\Eduardo\Carlos Software\sistema-pos\SistemaPOS\SistemaPOS.web",
+    "wwwroot"
+);
+
+if (Directory.Exists(frontendPath))
+{
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(frontendPath),
+        RequestPath = ""
+    });
+
+    // Si no encuentra una ruta, devuelve el archivo principal del frontend
+    app.MapFallbackToFile("consultar_sede.html");
+}
+else
+{
+    Console.WriteLine($"⚠️ No se encontró la carpeta del frontend en: {frontendPath}");
+}
+app.UseCors("AllowFrontend");
+// 🔹 Mapear controladores (API)
+*/
 app.MapControllers();
 
 app.Run();

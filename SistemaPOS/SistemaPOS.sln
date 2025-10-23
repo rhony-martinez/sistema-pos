@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
+<<<<<<< HEAD
 VisualStudioVersion = 17.14.36603.0 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.API", "SistemaPOS.API\SistemaPOS.API.csproj", "{72D0DE89-B906-4363-8BBC-176ABA6E8D95}"
@@ -12,6 +13,27 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Application", "SistemaPOS.Application\SistemaPOS.Application.csproj", "{366D0F98-4F4B-43C7-A77D-00C79B659A1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Infrastructure", "SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj", "{26896E7F-401E-4B03-B298-B49454E7CB07}"
+=======
+VisualStudioVersion = 17.14.36603.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.API", "SistemaPOS.API\SistemaPOS.API.csproj", "{F00834B0-7201-437D-B39E-28144BC4F677}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPos.Domain", "SistemaPos.Domain\SistemaPos.Domain.csproj", "{04D58FFC-FDB5-43CF-8601-A787F4D444A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Application", "SistemaPOS.Application\SistemaPOS.Application.csproj", "{B826BFF4-0807-4139-8922-45130E8E27E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.web", "SistemaPOS.web\SistemaPOS.web.csproj", "{465ED25C-2B80-4633-8FA8-6CF5627321F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{F00D3BB7-4270-401D-9130-0A631B502895}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.Infrastructure", "SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj", "{4B80A582-2503-4ED2-8184-28B3083A78CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaPOS.test", "SistemaPOS.test\SistemaPOS.test.csproj", "{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{0FD3D164-D535-4517-8A48-3A20EEF4D2FE}"
+>>>>>>> origin/feature_cedj.dacg_consultar_sede
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +41,7 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
 		{72D0DE89-B906-4363-8BBC-176ABA6E8D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72D0DE89-B906-4363-8BBC-176ABA6E8D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72D0DE89-B906-4363-8BBC-176ABA6E8D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,11 +62,50 @@ Global
 		{26896E7F-401E-4B03-B298-B49454E7CB07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26896E7F-401E-4B03-B298-B49454E7CB07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26896E7F-401E-4B03-B298-B49454E7CB07}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{F00834B0-7201-437D-B39E-28144BC4F677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00834B0-7201-437D-B39E-28144BC4F677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00834B0-7201-437D-B39E-28144BC4F677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00834B0-7201-437D-B39E-28144BC4F677}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D58FFC-FDB5-43CF-8601-A787F4D444A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D58FFC-FDB5-43CF-8601-A787F4D444A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D58FFC-FDB5-43CF-8601-A787F4D444A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D58FFC-FDB5-43CF-8601-A787F4D444A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B826BFF4-0807-4139-8922-45130E8E27E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B826BFF4-0807-4139-8922-45130E8E27E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B826BFF4-0807-4139-8922-45130E8E27E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B826BFF4-0807-4139-8922-45130E8E27E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{465ED25C-2B80-4633-8FA8-6CF5627321F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{465ED25C-2B80-4633-8FA8-6CF5627321F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{465ED25C-2B80-4633-8FA8-6CF5627321F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{465ED25C-2B80-4633-8FA8-6CF5627321F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B80A582-2503-4ED2-8184-28B3083A78CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B80A582-2503-4ED2-8184-28B3083A78CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B80A582-2503-4ED2-8184-28B3083A78CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B80A582-2503-4ED2-8184-28B3083A78CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> origin/feature_cedj.dacg_consultar_sede
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+<<<<<<< HEAD
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {219199CE-76FA-41B1-B9D7-72443C263474}
+=======
+	GlobalSection(NestedProjects) = preSolution
+		{F00834B0-7201-437D-B39E-28144BC4F677} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{04D58FFC-FDB5-43CF-8601-A787F4D444A6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B826BFF4-0807-4139-8922-45130E8E27E6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{465ED25C-2B80-4633-8FA8-6CF5627321F2} = {F00D3BB7-4270-401D-9130-0A631B502895}
+		{4B80A582-2503-4ED2-8184-28B3083A78CA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A63C9E19-0AC7-4D3B-B360-9EFDF45ED189} = {0FD3D164-D535-4517-8A48-3A20EEF4D2FE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24919D5D-DA73-4FEA-874E-285C110D15E4}
+>>>>>>> origin/feature_cedj.dacg_consultar_sede
 	EndGlobalSection
 EndGlobal

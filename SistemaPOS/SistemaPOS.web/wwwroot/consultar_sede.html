@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Sede - POS</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("formBuscar");
+
+            form.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const id = document.getElementById("idSede").value.trim();
+                const nombre = document.getElementById("nombreSede").value.trim();
+
+                if (!id && !nombre) {
+                    alert("Por favor ingresa un ID o un nombre de sede.");
+                    return;
+                }
+
+                const params = new URLSearchParams();
+                if (id) params.append("id", id);
+                if (nombre) params.append("nombre", nombre);
+
+                const url = `https://localhost:7209/api/Sede/buscar?${params.toString()}`;
+                console.log("🌐 Solicitando:", url);
+
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(await response.text());
+                    const sede = await response.json();
+
+                    // ✅ Guardar datos en localStorage
+                    localStorage.setItem("sedeEncontrada", JSON.stringify(sede));
+
+                    // ✅ Redirigir con el ID en la URL
+                    window.location.href = `consultar_sede_resultado.html?id=${sede.sedE_ID}`;
+                } catch (error) {
+                    alert("❌ " + error.message);
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/SistemaPOS_logo.jpg" alt="POS">
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Consultar Sede</h1>
+        </header>
+
+        <form id="formBuscar" class="form-container">
+            <label for="nombreSede">Nombre de la Sede</label>
+            <input type="text" id="nombreSede" placeholder="Ej: Bogotá">
+
+            <label for="idSede">Código de la Sede</label>
+            <input type="number" id="idSede" placeholder="Ej: 1">
+
+            <button type="submit" class="search-btn">🔍 Buscar Sede</button>
+        </form>
+    </main>
+</div>
+</body>
+</html>
