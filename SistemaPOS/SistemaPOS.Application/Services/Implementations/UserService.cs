@@ -62,4 +62,11 @@ public class UserService : IUserService
             .FindAsync(u => u.UsuRol == "CAJERO" && u.SedeId == sedeId && u.UsuEstado == "ACTIVO");
     }
 
+    public async Task<int> GetUsuariosActivosCountAsync()
+    {
+        return await _userRepo.CountAsync(u =>
+            (u.UsuRol == "CAJERO" || u.UsuRol == "ADMIN_LOCAL")
+            && u.UsuEstado == "ACTIVO");
+    }
+
 }

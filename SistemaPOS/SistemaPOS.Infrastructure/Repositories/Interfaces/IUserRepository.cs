@@ -8,4 +8,5 @@ public interface IUserRepository
     Task AddAsync(Usuario user);
     Task SaveChangesAsync();
     Task<List<Usuario>> FindAsync(Expression<Func<Usuario, bool>> predicate);
+    Task<int> CountAsync(Expression<Func<Usuario, bool>> predicate);
 }

@@ -33,4 +33,10 @@ public class UserRepository : IUserRepository
             .Where(predicate)
             .ToListAsync();
     }
+
+    public async Task<int> CountAsync(Expression<Func<Usuario, bool>> predicate)
+    {
+        return await _ctx.Usuarios.CountAsync(predicate);
+    }
+
 }

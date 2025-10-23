@@ -23,5 +23,22 @@ namespace SistemaPOS.API.Controllers
             var sedes = await _context.Sedes.ToListAsync();
             return Ok(sedes);
         }
+
+        [HttpGet("activas/count")]
+        public async Task<IActionResult> GetCantidadSedesActivas()
+        {
+            try
+            {
+                var cantidad = await _context.Sedes
+                    .CountAsync(s => s.SedeEstado.ToUpper() == "ACTIVA");
+
+                return Ok(new { sedesActivas = cantidad });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
     }
 }

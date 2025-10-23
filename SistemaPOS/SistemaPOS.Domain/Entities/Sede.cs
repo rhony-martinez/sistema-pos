@@ -40,9 +40,10 @@ namespace SistemaPOS.Domain.Entities
         [StringLength(100)]
         public string? SedeCorreo { get; set; }
 
+        [Required]
         [Column("SEDE_ESTADO")]
         [StringLength(20)]
-        public string? SedeEstado { get; set; }
+        public string SedeEstado { get; set; } = string.Empty;
 
         public ICollection<Caja>? Cajas { get; set; }
         public ICollection<Usuario>? Usuarios { get; set; }

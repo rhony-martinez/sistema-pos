@@ -67,4 +67,20 @@ public class UsersController : ControllerBase
         var cajeros = await _userService.GetCajerosActivosPorSedeAsync(sedeId);
         return Ok(new { cantidad = cajeros.Count });
     }
+
+    [Authorize(Roles = "ADMIN_GENERAL")]
+    [HttpGet("activos/count")]
+    public async Task<IActionResult> GetUsuariosActivosCount()
+    {
+        try
+        {
+            var cantidad = await _userService.GetUsuariosActivosCountAsync();
+            return Ok(new { usuariosActivos = cantidad });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = ex.Message });
+        }
+    }
+
 }
