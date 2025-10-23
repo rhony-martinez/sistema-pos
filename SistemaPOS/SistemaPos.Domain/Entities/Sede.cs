@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaPOS.Domain.Entities
@@ -8,27 +9,44 @@ namespace SistemaPOS.Domain.Entities
     {
         [Key]
         [Column("SEDE_ID")]
-        public int SEDE_ID { get; set; }
+        public int SedeId { get; set; }
 
+        [Required]
         [Column("SEDE_NOMBRE")]
-        public string SEDE_NOMBRE { get; set; } = string.Empty;
+        [StringLength(100)]
+        public string SedeNombre { get; set; } = string.Empty;
+
+        [Column("SEDE_DIRECCION")]
+        [StringLength(150)]
+        public string? SedeDireccion { get; set; }
 
         [Column("SEDE_CIUDAD")]
-        public string? SEDE_CIUDAD { get; set; }
+        [StringLength(80)]
+        public string? SedeCiudad { get; set; }
 
         [Column("SEDE_DEPARTAMENTO")]
-        public string? SEDEE_DEPARTAMENTO { get; set; }
+        [StringLength(80)]
+        public string? SedeDepartamento { get; set; }
 
         [Column("SEDE_UBICACION")]
-        public string? SEDE_UBICACION { get; set; }
-
-        [Column("SEDE_CORREO")]
-        public string? SEDE_CORREO { get; set; }
+        [StringLength(100)]
+        public string? SedeUbicacion { get; set; }
 
         [Column("SEDE_TELEFONO")]
-        public string? SEDE_TELEFONO { get; set; }
+        [StringLength(20)]
+        public string? SedeTelefono { get; set; }
 
+        [Column("SEDE_CORREO")]
+        [StringLength(100)]
+        public string? SedeCorreo { get; set; }
+
+        [Required]
         [Column("SEDE_ESTADO")]
-        public string? SEDE_ESTADO { get; set; }
+        [StringLength(20)]
+        public string SedeEstado { get; set; } = string.Empty;
+
+        public ICollection<Caja>? Cajas { get; set; }
+        public ICollection<Usuario>? Usuarios { get; set; }
+        public ICollection<Catalogo>? Catalogos { get; set; }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
 using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Domain.Entities;
-=======
 using SistemaPOS.Domain.Repositories;
->>>>>>> origin/feature_cedj.dacg_consultar_sede
 
 namespace SistemaPOS.API.Controllers
 {
@@ -13,13 +10,16 @@ namespace SistemaPOS.API.Controllers
     [Route("api/[controller]")]
     public class SedeController : ControllerBase
     {
-<<<<<<< HEAD
         private readonly SistemaPosContext _context;
 
-        public SedeController(SistemaPosContext context)
+        //Constructor
+        public SedeController(SistemaPosContext context, ISedeRepository sedeRepository)
         {
             _context = context;
+            _sedeRepository = sedeRepository;
         }
+
+
 
         // GET: api/Sede
         [HttpGet]
@@ -45,13 +45,9 @@ namespace SistemaPOS.API.Controllers
             }
         }
 
-=======
         private readonly ISedeRepository _sedeRepository;
 
-        public SedeController(ISedeRepository sedeRepository)
-        {
-            _sedeRepository = sedeRepository;
-        }
+      
 
         // ✅ Endpoint para buscar una sede por ID o nombre
         [HttpGet("buscar")]
@@ -78,7 +74,7 @@ namespace SistemaPOS.API.Controllers
                 }
 
                 // Log de éxito
-                Console.WriteLine($"✅ Sede encontrada: {sede.SEDE_NOMBRE} (ID: {sede.SEDE_ID})");
+                Console.WriteLine($"✅ Sede encontrada: {sede.SedeNombre} (ID: {sede.SedeId})");
 
                 // Retornamos el objeto encontrado
                 return Ok(sede);
@@ -90,6 +86,5 @@ namespace SistemaPOS.API.Controllers
                 return StatusCode(500, "Ocurrió un error al procesar la solicitud.");
             }
         }
->>>>>>> origin/feature_cedj.dacg_consultar_sede
     }
 }

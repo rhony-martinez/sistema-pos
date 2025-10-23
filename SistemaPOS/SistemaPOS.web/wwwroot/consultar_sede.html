@@ -1,72 +1,97 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Consultar Sede - POS</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer>
-        document.addEventListener("DOMContentLoaded", () => {
-            const form = document.getElementById("formBuscar");
-
-            form.addEventListener("submit", async (event) => {
-                event.preventDefault();
-
-                const id = document.getElementById("idSede").value.trim();
-                const nombre = document.getElementById("nombreSede").value.trim();
-
-                if (!id && !nombre) {
-                    alert("Por favor ingresa un ID o un nombre de sede.");
-                    return;
-                }
-
-                const params = new URLSearchParams();
-                if (id) params.append("id", id);
-                if (nombre) params.append("nombre", nombre);
-
-                const url = `https://localhost:7209/api/Sede/buscar?${params.toString()}`;
-                console.log("🌐 Solicitando:", url);
-
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error(await response.text());
-                    const sede = await response.json();
-
-                    // ✅ Guardar datos en localStorage
-                    localStorage.setItem("sedeEncontrada", JSON.stringify(sede));
-
-                    // ✅ Redirigir con el ID en la URL
-                    window.location.href = `consultar_sede_resultado.html?id=${sede.sedE_ID}`;
-                } catch (error) {
-                    alert("❌ " + error.message);
-                    console.error(error);
-                }
-            });
-        });
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultar Sede - Sistema POS</title>
+  <link rel="stylesheet" href="css/consultar-sede.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<div class="app-container">
+  <div class="app-container">
+    <!-- 🔹 Sidebar -->
     <aside class="sidebar">
-        <div class="sidebar-logo">
-            <img src="assets/SistemaPOS_logo.jpg" alt="POS">
-        </div>
+      <div class="sidebar-logo">
+        <img src="assets/pos-logo.png" alt="POS Logo">
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard-adm-gral.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li><a href="gestion-sedes.html" class="active"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
+        </ul>
+      </nav>
     </aside>
 
+    <!-- 🔹 Contenido principal -->
     <main class="main-content">
-        <header class="header">
-            <h1>Consultar Sede</h1>
-        </header>
+      <header class="header">
+        <div class="header-left">
+          <h1>Consultar Sede</h1>
+        </div>
+      </header>
 
-        <form id="formBuscar" class="form-container">
-            <label for="nombreSede">Nombre de la Sede</label>
-            <input type="text" id="nombreSede" placeholder="Ej: Bogotá">
+      <section class="form-section">
+        <form id="formBuscar" class="search-form">
+          <h2 class="form-title">Buscar Sede</h2>
+          <p class="form-subtitle">Ingresa el nombre o código de la sede para consultarla</p>
 
-            <label for="idSede">Código de la Sede</label>
-            <input type="number" id="idSede" placeholder="Ej: 1">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombreSede">Nombre de la Sede</label>
+              <input type="text" id="nombreSede" placeholder="Ej: Bogotá">
+            </div>
 
-            <button type="submit" class="search-btn">🔍 Buscar Sede</button>
+            <div class="form-group">
+              <label for="idSede">Código de la Sede</label>
+              <input type="number" id="idSede" placeholder="Ej: 1">
+            </div>
+          </div>
+
+          <div class="btn-container">
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-search"></i> Buscar Sede
+            </button>
+          </div>
         </form>
+      </section>
     </main>
-</div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("formBuscar");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const id = document.getElementById("idSede").value.trim();
+        const nombre = document.getElementById("nombreSede").value.trim();
+
+        if (!id && !nombre) {
+          alert("Por favor ingresa un ID o un nombre de sede.");
+          return;
+        }
+
+        const params = new URLSearchParams();
+        if (id) params.append("id", id);
+        if (nombre) params.append("nombre", nombre);
+
+        const url = `http://localhost:5289/api/Sede/buscar?${params.toString()}`;
+        console.log("🌐 Solicitando:", url);
+
+        try {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error(await response.text());
+          const sede = await response.json();
+
+          localStorage.setItem("sedeEncontrada", JSON.stringify(sede));
+          window.location.href = `consultar_sede_resultado.html?id=${sede.sedE_ID}`;
+        } catch (error) {
+          alert("❌ " + error.message);
+          console.error(error);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

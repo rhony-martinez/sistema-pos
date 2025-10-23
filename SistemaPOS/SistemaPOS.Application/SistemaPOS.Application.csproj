@@ -6,35 +6,34 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Dependencias del proyecto -->
   <ItemGroup>
-<<<<<<< HEAD
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.10" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
 
+  <!-- Referencias a otros proyectos -->
   <ItemGroup>
     <ProjectReference Include="..\SistemaPOS.Domain\SistemaPOS.Domain.csproj" />
-=======
-    <Compile Remove="DTOSs\**" />
-    <Compile Remove="NewFolder1\**" />
-    <Compile Remove="NewFolder3\**" />
-    <Compile Remove="NewFolder\**" />
-    <EmbeddedResource Remove="DTOSs\**" />
-    <EmbeddedResource Remove="NewFolder1\**" />
-    <EmbeddedResource Remove="NewFolder3\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="DTOSs\**" />
-    <None Remove="NewFolder1\**" />
-    <None Remove="NewFolder3\**" />
-    <None Remove="NewFolder\**" />
+    <ProjectReference Include="..\SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj" />
   </ItemGroup>
 
+  <!-- Exclusiones de archivos innecesarios -->
   <ItemGroup>
-    <ProjectReference Include="..\SistemaPos.Domain\SistemaPos.Domain.csproj" />
->>>>>>> origin/feature_cedj.dacg_consultar_sede
-    <ProjectReference Include="..\SistemaPOS.Infrastructure\SistemaPOS.Infrastructure.csproj" />
+    <Compile Remove="DTOSs\**" />
+    <Compile Remove="NewFolder\**" />
+    <Compile Remove="NewFolder1\**" />
+    <Compile Remove="NewFolder3\**" />
+    <EmbeddedResource Remove="DTOSs\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="NewFolder3\**" />
+    <None Remove="DTOSs\**" />
+    <None Remove="NewFolder\**" />
+    <None Remove="NewFolder1\**" />
+    <None Remove="NewFolder3\**" />
   </ItemGroup>
 
 </Project>

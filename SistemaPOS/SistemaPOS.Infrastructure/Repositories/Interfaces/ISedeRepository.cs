@@ -7,4 +7,6 @@ public interface ISedeRepository
     Task AddAsync(Sede sede);
     Task UpdateAsync(Sede sede);
     Task DeleteAsync(int id);
+    Task<Sede?> BuscarSedeAsync(int? SEDE_ID, string? SEDE_NOMBRE);
+
 }

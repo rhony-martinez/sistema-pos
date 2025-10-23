@@ -5,35 +5,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-<<<<<<< HEAD
-    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
-    <PackageReference Include="Oracle.EntityFrameworkCore" Version="9.23.26000" />
-    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.26.0" />
-  </ItemGroup>
-
+  <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+  </PackageReference>
+  <PackageReference Include="Oracle.EntityFrameworkCore" Version="9.23.26000" />
+  <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.26.0" />
+</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SistemaPOS.Domain\SistemaPOS.Domain.csproj" />
-=======
-    <Compile Remove="DatabaseTest.cs" />
-    <Compile Remove="Repositories\ISedeRepository.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Oracle.EntityFrameworkCore" Version="9.23.26000" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SistemaPos.Domain\SistemaPos.Domain.csproj" />
->>>>>>> origin/feature_cedj.dacg_consultar_sede
-  </ItemGroup>
+ 
 
 </Project>
