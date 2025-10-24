@@ -1,12 +1,17 @@
-﻿using SistemaPOS.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaPOS.Application.DTOs;
+using SistemaPOS.Domain.Entities;
+using SistemaPOS.Infrastructure.Data;
 
 public class UserService : IUserService
 {
+    private readonly SistemaPosContext _context;
     private readonly IUserRepository _userRepo;
 
-    public UserService(IUserRepository userRepo)
+    public UserService(IUserRepository userRepo, SistemaPosContext context)
     {
         _userRepo = userRepo;
+        _context = context;
     }
 
     public async Task<Usuario> CreateUserAsync(CreateUserRequest dto)
@@ -56,6 +61,11 @@ public class UserService : IUserService
         return await _userRepo.GetByIdAsync(id);
     }
 
+    public async Task<Usuario?> GetUserByIdAsyncToUpdate(int id)
+    {
+        return await _context.Usuarios.FindAsync(id);
+    }
+
     public async Task<List<Usuario>> GetCajerosActivosPorSedeAsync(int sedeId)
     {
         return await _userRepo
@@ -68,5 +78,53 @@ public class UserService : IUserService
             (u.UsuRol == "CAJERO" || u.UsuRol == "ADMIN_LOCAL")
             && u.UsuEstado == "ACTIVO");
     }
+
+    // Consultar todos los usuarios
+    public async Task<List<Usuario>> GetAllUsersAsync()
+    {
+        return await _context.Usuarios.ToListAsync();
+    }
+
+    public async Task<bool> UpdateUserAsync(int id, UpdateUserRequest dto)
+    {
+        var usuarioExistente = await _context.Usuarios.FindAsync(id);
+        if (usuarioExistente == null)
+            return false;
+
+        // Actualiza solo si viene con valor
+        if (!string.IsNullOrWhiteSpace(dto.UsuPrimerNombre))
+            usuarioExistente.UsuPrimerNombre = dto.UsuPrimerNombre;
+
+        if (!string.IsNullOrWhiteSpace(dto.UsuSegundoNombre))
+            usuarioExistente.UsuSegundoNombre = dto.UsuSegundoNombre;
+
+        if (!string.IsNullOrWhiteSpace(dto.UsuPrimerApellido))
+            usuarioExistente.UsuPrimerApellido = dto.UsuPrimerApellido;
+
+        if (!string.IsNullOrWhiteSpace(dto.UsuSegundoApellido))
+            usuarioExistente.UsuSegundoApellido = dto.UsuSegundoApellido;
+
+        if (!string.IsNullOrWhiteSpace(dto.UsuCorreo))
+            usuarioExistente.UsuCorreo = dto.UsuCorreo;
+
+        if (!string.IsNullOrWhiteSpace(dto.UsuTelefono))
+            usuarioExistente.UsuTelefono = dto.UsuTelefono;
+
+        if (!string.IsNullOrWhiteSpace(dto.UsuEstado))
+            usuarioExistente.UsuEstado = dto.UsuEstado.ToUpper();
+
+        if (!string.IsNullOrWhiteSpace(dto.UsuEstado) &&
+            dto.UsuEstado.ToUpper() != "ACTIVO" &&
+            dto.UsuEstado.ToUpper() != "INACTIVO")
+        {
+            throw new ArgumentException("El estado debe ser 'ACTIVO' o 'INACTIVO'.");
+        }
+
+
+        await _userRepo.SaveChangesAsync();
+        return true;
+    }
+
+
 
 }

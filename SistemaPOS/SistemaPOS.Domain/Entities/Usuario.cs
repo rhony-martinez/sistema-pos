@@ -52,7 +52,7 @@ namespace SistemaPOS.Domain.Entities
         [Required]
         [Column("USU_ESTADO")]
         [StringLength(20)]
-        public string UsuEstado { get; set; } = string.Empty;
+        public string UsuEstado { get; set; } = "ACTIVO";
 
         [Column("USU_ROL")]
         [StringLength(30)]

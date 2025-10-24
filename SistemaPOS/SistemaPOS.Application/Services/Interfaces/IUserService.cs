@@ -1,4 +1,5 @@
-﻿using SistemaPOS.Domain.Entities;
+﻿using SistemaPOS.Application.DTOs;
+using SistemaPOS.Domain.Entities;
 
 public interface IUserService
 {
@@ -6,4 +7,8 @@ public interface IUserService
     Task<Usuario?> GetUserByIdAsync(int id); // agregado
     Task<List<Usuario>> GetCajerosActivosPorSedeAsync(int sedeId);
     Task<int> GetUsuariosActivosCountAsync();
+    Task<List<Usuario>> GetAllUsersAsync();
+    Task<bool> UpdateUserAsync(int id, UpdateUserRequest dto);
+    Task<Usuario?> GetUserByIdAsyncToUpdate(int id);
 }
+

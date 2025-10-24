@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Domain.Entities;
+using SistemaPOS.Application.DTOs;
 
 namespace SistemaPOS.API.Controllers
 {
@@ -10,21 +11,28 @@ namespace SistemaPOS.API.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly SistemaPosContext _context;
+        private readonly IUserService _userService;
 
-        public UsuarioController(SistemaPosContext context)
+        public UsuarioController(SistemaPosContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() =>
-            Ok(await _context.Usuarios.ToListAsync());
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
+        }
 
+        // Get user by ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            return usuario == null ? NotFound() : Ok(usuario);
+            var user = await _userService.GetUserByIdAsync(id);
+            return user == null ? NotFound(new { message = "User not found." }) : Ok(user);
         }
 
         [HttpPost]
@@ -35,15 +43,31 @@ namespace SistemaPOS.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = usuario.UsuId }, usuario);
         }
 
+        // Update user
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Usuario usuario)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateUserRequest dto)
         {
-            if (id != usuario.UsuId) return BadRequest();
+            try
+            {
+                var actualizado = await _userService.UpdateUserAsync(id, dto);
 
-            _context.Entry(usuario).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
+                if (!actualizado)
+                    return NotFound(new { message = "Usuario no encontrado." });
+
+                return Ok(new { message = "Usuario actualizado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "Error al actualizar el usuario.",
+                    error = ex.Message
+                });
+            }
         }
+
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
