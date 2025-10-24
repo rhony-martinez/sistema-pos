@@ -10,5 +10,6 @@ public interface IUserService
     Task<List<Usuario>> GetAllUsersAsync();
     Task<bool> UpdateUserAsync(int id, UpdateUserRequest dto);
     Task<Usuario?> GetUserByIdAsyncToUpdate(int id);
+    Task<List<Usuario>> GetUsersByRoleAsync(string rol);
 }
 

@@ -7,26 +7,6 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/auth.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            if (!checkAuth()) return;
-
-            const profile = await getUserProfile();
-            const nameTag = document.querySelector(".user-profile span");
-            if (nameTag && profile?.usuPrimerNombre && profile?.usuPrimerApellido) {
-                nameTag.textContent = `${profile.usuPrimerNombre} ${profile.usuPrimerApellido}`;
-            }
-
-            // Botón para crear cajero
-            document.querySelector(".btn-primary").addEventListener("click", () => {
-                window.location.href = "crear-cajero.html";
-            });
-
-            // Botón cerrar sesión
-            document.getElementById("logoutBtn").addEventListener("click", () => logout());
-        });
-    </script>
 </head>
 
 <body>
@@ -67,22 +47,22 @@
                     <thead>
                         <tr>
                             <th>Usuario</th>
-                            <th>Nombre Completo</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
                             <th>Email</th>
-                            <th>Rol</th>
                             <th>Estado</th>
-                            <th>Último Acceso</th>
+                            <th>Sede Id</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="tablaUsuarios">
+                    <tbody>
                         <tr>
-                            <td>JD</td>
-                            <td>Juan Díaz</td>
+                            <td>juand</td>
+                            <td>Juan</td>
+                            <td>Diaz</td>
                             <td>juan.diaz@ejemplo.com</td>
-                            <td>Administrador</td>
-                            <td><i class="fas fa-circle text-green"></i> Activo</td>
-                            <td>Hace 2 horas</td>
+                            <td><i class="fas fa-circle"></i> Activo</td>
+                            <td>1</td>
                             <td class="table-actions">
                                 <button class="btn btn-action"><i class="fas fa-edit"></i></button>
                                 <button class="btn btn-action btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -93,5 +73,6 @@
             </section>
         </main>
     </div>
+    <script src="js/gestion-usuarios-adm-local.js"></script>
 </body>
 </html>

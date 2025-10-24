@@ -125,6 +125,9 @@ public class UserService : IUserService
         return true;
     }
 
-
+    public async Task<List<Usuario>> GetUsersByRoleAsync(string rol)
+    {
+        return await _userRepo.FindAsync(u => u.UsuRol == rol);
+    }
 
 }

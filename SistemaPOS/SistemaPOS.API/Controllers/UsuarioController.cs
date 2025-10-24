@@ -66,9 +66,6 @@ namespace SistemaPOS.API.Controllers
             }
         }
 
-
-
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -79,5 +76,20 @@ namespace SistemaPOS.API.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        [HttpGet("admins-locales")]
+        public async Task<IActionResult> GetAdminsLocales()
+        {
+            var adminsLocales = await _userService.GetUsersByRoleAsync("ADMIN_LOCAL");
+            return Ok(adminsLocales);
+        }
+
+        [HttpGet("cajeros/{sedeId}")]
+        public async Task<IActionResult> GetCajerosPorSede(int sedeId)
+        {
+            var cajeros = await _userService.GetCajerosActivosPorSedeAsync(sedeId);
+            return Ok(cajeros);
+        }
+
     }
 }
