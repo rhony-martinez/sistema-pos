@@ -25,26 +25,47 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         // Llenar tabla dinámicamente
-        usuarios.forEach(u => {
-            const estadoColor = u.usuEstado === "ACTIVO" ? "text-blue" : "text-red";
-            const estadoTexto = u.usuEstado === "ACTIVO" ? "Activo" : "Inactivo";
-
-            const fila = `
-                <tr>
-                    <td>${u.usuUsername || "-"}</td>
-                    <td>${u.usuPrimerNombre || "-"}</td>
-                    <td>${u.usuPrimerApellido || "-"}</td>
-                    <td>${u.usuCorreo || "-"}</td>
+        // 🔹 Renderizar tabla de admins locales
+        function renderUsuarios(usuarios) {
+            const tbody = document.querySelector("tbody");
+            tbody.innerHTML = "";
+        
+            usuarios.forEach(usuario => {
+                const fila = document.createElement("tr");
+            
+                // Estado (color e ícono)
+                const estadoColor = usuario.usuEstado === "ACTIVO" ? "text-blue" : "text-red";
+                const estadoTexto = usuario.usuEstado === "ACTIVO" ? "Activo" : "Inactivo";
+            
+                fila.innerHTML = `
+                    <td>${usuario.usuUsername || "-"}</td>
+                    <td>${usuario.usuPrimerNombre || "-"}</td>
+                    <td>${usuario.usuPrimerApellido || "-"}</td>
+                    <td>${usuario.usuCorreo || "-"}</td>
                     <td><i class="fas fa-circle ${estadoColor}"></i> ${estadoTexto}</td>
-                    <td>${u.sedeId ?? "-"}</td>
+                    <td>${usuario.sedeId ?? "-"}</td>
                     <td class="table-actions">
-                        <button class="btn btn-action" title="Editar"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-action btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-action btn-edit" data-id="${usuario.usuId}">
+                            <i class="fas fa-edit"></i>
+                        </button>
                     </td>
-                </tr>
-            `;
-            tablaBody.insertAdjacentHTML("beforeend", fila);
-        });
+                `;
+            
+                tbody.appendChild(fila);
+            });
+        
+            // ✅ Añadir evento a los botones de edición
+            document.querySelectorAll(".btn-edit").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    const userId = e.currentTarget.getAttribute("data-id");
+                    // Redirigir al formulario de modificación con el ID
+                    window.location.href = `modificar-adm-local.html?id=${userId}`;
+                });
+            });
+        }
+
+        renderUsuarios(usuarios);
+
 
     } catch (error) {
         console.error("❌ Error cargando usuarios:", error);

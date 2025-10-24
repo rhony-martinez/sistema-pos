@@ -363,7 +363,7 @@ tr:hover {
 
 .btn-action {
     background: none;
-    color: #777;
+    color: var(--text-color);
     padding: 8px;
     border-radius: 50%;
     font-size: 1em;
@@ -532,4 +532,9 @@ tr:hover {
 .btn-filter {
     background-color: var(--border-color);
     color: var(--text-color);
+}
+
+.table-actions {
+    display: flex;
+    justify-content: left;
 }

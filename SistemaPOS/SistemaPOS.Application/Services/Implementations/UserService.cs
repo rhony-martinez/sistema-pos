@@ -95,14 +95,12 @@ public class UserService : IUserService
         if (!string.IsNullOrWhiteSpace(dto.UsuPrimerNombre))
             usuarioExistente.UsuPrimerNombre = dto.UsuPrimerNombre;
 
-        if (!string.IsNullOrWhiteSpace(dto.UsuSegundoNombre))
-            usuarioExistente.UsuSegundoNombre = dto.UsuSegundoNombre;
+        usuarioExistente.UsuSegundoNombre = string.IsNullOrWhiteSpace(dto.UsuSegundoNombre) ? null : dto.UsuSegundoNombre; // Puede ser nulo
 
         if (!string.IsNullOrWhiteSpace(dto.UsuPrimerApellido))
             usuarioExistente.UsuPrimerApellido = dto.UsuPrimerApellido;
 
-        if (!string.IsNullOrWhiteSpace(dto.UsuSegundoApellido))
-            usuarioExistente.UsuSegundoApellido = dto.UsuSegundoApellido;
+        usuarioExistente.UsuSegundoApellido = string.IsNullOrWhiteSpace(dto.UsuSegundoApellido) ? null : dto.UsuSegundoApellido; // Puede ser nulo
 
         if (!string.IsNullOrWhiteSpace(dto.UsuCorreo))
             usuarioExistente.UsuCorreo = dto.UsuCorreo;

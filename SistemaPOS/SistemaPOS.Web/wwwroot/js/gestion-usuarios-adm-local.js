@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <td>${c.sedeId ?? "-"}</td>
                     <td class="table-actions">
                         <button class="btn btn-action" title="Editar"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-action btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                     </td>
                 </tr>`;
             tablaBody.insertAdjacentHTML("beforeend", fila);
