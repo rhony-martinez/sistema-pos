@@ -1,0 +1,118 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Crear Sede | SistemaPOS</title>
+
+    <!-- Tus estilos -->
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/pos.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Scripts -->
+    <script defer src="js/site.js"></script>
+    <script defer src="js/crear-sedes.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/pos-logo.png" alt="POS">
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a class="active" href="/gestion-sedes.html">Gestión de Sedes</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <div class="main-inner">
+                <div class="header">
+                    <h1>Registrar Sede</h1>
+                </div>
+
+                <section class="form-card">
+                    <form id="form-sede">
+                        <!-- Datos de la sede -->
+                        <h3 class="section-title">Datos de la Sede</h3>
+                        <div class="grid">
+                            <div>
+                                <div class="label">Nombre de la Sede <span style="color:red">*</span></div>
+                                <input class="input" data-field="nombre" id="nombre" placeholder="Nombre de la Sede" required>
+                                <div class="feedback-inline" data-feedback="nombre"></div>
+                            </div>
+                        </div>
+
+                        <!-- Información -->
+                        <h3 class="section-title">Información de la sede</h3>
+                        <div class="grid">
+                            <div>
+                                <div class="label">Dirección</div>
+                                <input class="input" data-field="direccion" id="direccion" placeholder="Dirección">
+                            </div>
+                            <div>
+                                <div class="label">Ciudad</div>
+                                <input class="input" data-field="ciudad" id="ciudad" placeholder="Ciudad">
+                            </div>
+                            <div>
+                                <div class="label">Departamento</div>
+                                <input class="input" data-field="departamento" id="departamento" placeholder="Departamento">
+                            </div>
+                            <div>
+                                <div class="label">Ubicación</div>
+                                <input class="input" data-field="ubicacion" id="ubicacion" placeholder="Ubicación">
+                            </div>
+                        </div>
+
+                        <!-- Contacto -->
+                        <h3 class="section-title">Contacto</h3>
+                        <div class="grid">
+                            <div>
+                                <div class="label">Teléfono</div>
+                                <input class="input" data-field="telefono" id="telefono" placeholder="Teléfono">
+                            </div>
+                            <div>
+                                <div class="label">Correo electrónico</div>
+                                <input class="input" data-field="correo" id="correo" placeholder="contacto@sede.com">
+                            </div>
+                        </div>
+
+                        <!-- Configuración -->
+                        <h3 class="section-title">Configuración</h3>
+                        <div class="grid">
+                            <div>
+                                <div class="label">Estado</div>
+                                <input class="input" data-field="estado" id="estado" value="ACTIVA" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="form-actions">
+                            <button class="btn btn-primary" type="submit">Registrar Sede</button>
+                            <button type="button" class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de mensajes -->
+    <div id="modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <p id="modal-text"></p>
+            <button id="modal-btn" class="btn btn-primary">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("cancelBtn").addEventListener("click", () => {
+            window.location.href = "gestion-sedes.html";
+        });
+    </script>
+</body>
+</html>
