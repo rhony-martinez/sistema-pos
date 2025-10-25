@@ -55,7 +55,7 @@
 
     async function actualizarDashboard() {
         try {
-            // 1. Obtener cantidad de cajeros activos en esta sede
+            // 1. Obtener cantidad de cajeros en esta sede
             const resCajeros = await fetch(`http://localhost:5289/api/users/cajeros/activos/${sedeId}`, { headers });
             const cajerosData = await resCajeros.json();
             const cantCajeros = cajerosData.cantidad ?? 0;

@@ -538,3 +538,10 @@ tr:hover {
     display: flex;
     justify-content: left;
 }
+
+.search-bar input:focus {
+    outline: none;
+    border: 2px solid var(--primary-blue);
+    box-shadow: 0 0 5px rgba(44, 142, 249, 0.4);
+    transition: 0.2s ease;
+}

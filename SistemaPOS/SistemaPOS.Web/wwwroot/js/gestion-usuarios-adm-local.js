@@ -3,15 +3,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const profile = await getUserProfile();
     const nameTag = document.querySelector(".user-profile span");
-            if (nameTag && profile?.usuPrimerNombre && profile?.usuPrimerApellido) {
-                nameTag.textContent = `${profile.usuPrimerNombre} ${profile.usuPrimerApellido}`;
-            }
+    if (nameTag && profile?.usuPrimerNombre && profile?.usuPrimerApellido) {
+        nameTag.textContent = `${profile.usuPrimerNombre} ${profile.usuPrimerApellido}`;
+    }
 
-            // Botón para crear cajero
-            document.querySelector(".btn-primary").addEventListener("click", () => {
-                window.location.href = "crear-cajero.html";
-            });
-    console.log("Perfil del usuario autenticado:", profile); // 👈 Verificar qué trae exactamente
+    // Botón para crear cajero
+    document.querySelector(".btn-primary").addEventListener("click", () => {
+        window.location.href = "crear-cajero.html";
+    });
+
+    console.log("Perfil del usuario autenticado:", profile);
 
     if (!profile?.sedeId) {
         console.error("❌ El perfil no contiene sedeId. Verifica el backend o el token.");
@@ -24,20 +25,50 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const apiUrl = `http://localhost:5289/api/Usuario/cajeros/${profile.sedeId}`;
     const tablaBody = document.querySelector("tbody");
+    const searchInput = document.querySelector(".search-bar input"); // 🔍 Input de búsqueda
+    let cajeros = []; // 🔹 Guardaremos los cajeros cargados aquí
 
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error("Error al obtener los cajeros de la sede.");
+        cajeros = await response.json();
 
-        const cajeros = await response.json();
-        tablaBody.innerHTML = "";
+        renderTabla(cajeros);
 
-        if (cajeros.length === 0) {
-            tablaBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No hay cajeros registrados en esta sede.</td></tr>`;
+    } catch (error) {
+        console.error("❌ Error cargando cajeros:", error);
+        tablaBody.innerHTML = `
+            <tr><td colspan="7" style="text-align:center;color:#e63946;">Error al cargar cajeros.</td></tr>
+        `;
+    }
+
+    // === 🔍 FILTRO DE BÚSQUEDA ===
+    searchInput.addEventListener("input", (e) => {
+        const filtro = e.target.value.toLowerCase().trim();
+        if (filtro === "") {
+            renderTabla(cajeros); // Mostrar todos si no hay texto
             return;
         }
 
-        cajeros.forEach(c => {
+        const filtrados = cajeros.filter(c => 
+            c.usuPrimerNombre?.toLowerCase().includes(filtro) ||
+            c.usuPrimerApellido?.toLowerCase().includes(filtro) ||
+            c.usuId?.toString().includes(filtro)
+        );
+
+        renderTabla(filtrados);
+    });
+
+    // === 🧩 Función para renderizar tabla ===
+    function renderTabla(lista) {
+        tablaBody.innerHTML = "";
+
+        if (lista.length === 0) {
+            tablaBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No se encontraron resultados.</td></tr>`;
+            return;
+        }
+
+        lista.forEach(c => {
             const estadoColor = c.usuEstado === "ACTIVO" ? "text-blue" : "text-red";
             const estadoTexto = c.usuEstado === "ACTIVO" ? "Activo" : "Inactivo";
 
@@ -58,31 +89,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             tablaBody.insertAdjacentHTML("beforeend", fila);
         });
 
-        // Añadir evento al botón de editar cajero
-        document.querySelectorAll(".btn-action").forEach(btn => {
+        // ✅ Evento para editar cajero
+        document.querySelectorAll(".btn-edit").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                const fila = e.target.closest("tr");
-                const userId = fila ? fila.querySelector(".btn-action").dataset?.id : null;
-            
-                // Si no tiene dataset, buscar por el objeto cajero correspondiente
-                const id = e.currentTarget.getAttribute("data-id");
-                const cajeroId = id || (fila ? fila.dataset.id : null);
-            
-                if (!cajeroId) {
-                    console.error("❌ No se encontró el ID del cajero.");
-                    return;
-                }
-            
-                // Redirigir al formulario de modificación con el ID
-                window.location.href = `modificar-cajero.html?id=${cajeroId}`;
+                const userId = e.currentTarget.getAttribute("data-id");
+                window.location.href = `modificar-cajero.html?id=${userId}`;
             });
         });
-
-
-    } catch (error) {
-        console.error("❌ Error cargando cajeros:", error);
-        tablaBody.innerHTML = `
-            <tr><td colspan="7" style="text-align:center;color:#e63946;">Error al cargar cajeros.</td></tr>
-        `;
     }
 });
