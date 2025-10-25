@@ -87,7 +87,7 @@ namespace SistemaPOS.API.Controllers
         [HttpGet("cajeros/{sedeId}")]
         public async Task<IActionResult> GetCajerosPorSede(int sedeId)
         {
-            var cajeros = await _userService.GetCajerosActivosPorSedeAsync(sedeId);
+            var cajeros = await _userService.GetCajerosPorSedeAsync(sedeId);
             return Ok(cajeros);
         }
 

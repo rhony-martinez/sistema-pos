@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Cajero</title>
+    <link rel="stylesheet" href="css/gestion-user.css">
+</head>
+
+<body>
+    <main class="page-wrapper">
+    <section class="register-card">
+        <div class="form-header">
+            <img src="assets/pos-logo.png" alt="Logo POS" class="logo">
+            <div>
+                <h1>Modificar Cajero</h1>
+                <p>Edite los datos en los campos a continuación</p>
+            </div>
+        </div>
+
+        <!-- Identificación -->
+        <div class="id-section">
+            <p><strong>Identificación</strong></p>
+            <div class="id-row">
+                <span>Número: <b id="idUsuario">#IdDelAdmin</b></span>
+            </div>
+        </div>
+
+    <form id="form-modificar-cajero" class="register-form" novalidate>
+        <h2 class="section-title">Datos Personales</h2>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Primer nombre*</label>
+                <input type="text" id="primerNombre" placeholder="Primer nombre del Cajero" required>
+            </div>
+            <div class="form-group">
+                <label>Segundo nombre</label>
+                <input type="text" id="segundoNombre" placeholder="Segundo nombre del Cajero">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Primer apellido*</label>
+                <input type="text" id="primerApellido" placeholder="Primer apellido del Cajero" required>
+            </div>
+            <div class="form-group">
+                <label>Segundo apellido</label>
+                <input type="text" id="segundoApellido" placeholder="Segundo apellido del Cajero">
+            </div>
+        </div>
+
+        <h2 class="section-title">Información de Contacto</h2>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Correo electrónico*</label>
+                <input type="email" id="correo" placeholder="Correo electrónico del Cajero" required>
+            </div>
+            <div class="form-group">
+                <label>Teléfono*</label>
+                <input type="tel" id="telefono" placeholder="Teléfono del Cajero">
+            </div>
+        </div>
+
+        <!-- Estado -->
+        <h3 class="section-title">Estado</h3>
+        <div class="estado-toggle">
+            <span id="estadoInactivo">Inactivo</span>
+            <label class="switch">
+                <input type="checkbox" id="estado">
+                <span class="slider"></span>
+            </label>
+            <span id="estadoActivo">Activo</span>
+        </div>
+
+        <input type="hidden" id="rol" value="CAJERO">
+
+        <div class="btn-container">
+            <button type="submit" class="btn-primary">Guardar Cambios</button>
+            <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+        </div>
+        </form>
+    </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <p id="modal-text"></p>
+            <button id="modal-btn" class="btn-modal">Aceptar</button>
+        </div>
+    </div>
+
+    <script src="js/modificar-cajero.js"></script>
+</body>
+</html>

@@ -50,11 +50,34 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <td><i class="fas fa-circle ${estadoColor}"></i> ${estadoTexto}</td>
                     <td>${c.sedeId ?? "-"}</td>
                     <td class="table-actions">
-                        <button class="btn btn-action" title="Editar"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-action btn-edit" title="Editar" data-id="${c.usuId}">
+                            <i class="fas fa-edit"></i>
+                        </button>
                     </td>
                 </tr>`;
             tablaBody.insertAdjacentHTML("beforeend", fila);
         });
+
+        // Añadir evento al botón de editar cajero
+        document.querySelectorAll(".btn-action").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const fila = e.target.closest("tr");
+                const userId = fila ? fila.querySelector(".btn-action").dataset?.id : null;
+            
+                // Si no tiene dataset, buscar por el objeto cajero correspondiente
+                const id = e.currentTarget.getAttribute("data-id");
+                const cajeroId = id || (fila ? fila.dataset.id : null);
+            
+                if (!cajeroId) {
+                    console.error("❌ No se encontró el ID del cajero.");
+                    return;
+                }
+            
+                // Redirigir al formulario de modificación con el ID
+                window.location.href = `modificar-cajero.html?id=${cajeroId}`;
+            });
+        });
+
 
     } catch (error) {
         console.error("❌ Error cargando cajeros:", error);
