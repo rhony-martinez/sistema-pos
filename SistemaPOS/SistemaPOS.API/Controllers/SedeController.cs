@@ -84,5 +84,44 @@ namespace SistemaPOS.API.Controllers
                 return StatusCode(500, "Ocurrió un error al procesar la solicitud.");
             }
         }
+        [HttpPost("{id}/eliminar")]
+        public async Task<IActionResult> InactivarSede(int id)
+        {
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+
+                if (connection.State != System.Data.ConnectionState.Open)
+                    await connection.OpenAsync();
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "BEGIN :resultado := fn_inactivar_sede(:p_sede_id); END;";
+                    command.CommandType = System.Data.CommandType.Text;
+
+                    var resultadoParam = command.CreateParameter();
+                    resultadoParam.ParameterName = "resultado";
+                    resultadoParam.DbType = System.Data.DbType.String;
+                    resultadoParam.Size = 200;
+                    resultadoParam.Direction = System.Data.ParameterDirection.Output;
+                    command.Parameters.Add(resultadoParam);
+
+                    var sedeIdParam = command.CreateParameter();
+                    sedeIdParam.ParameterName = "p_sede_id";
+                    sedeIdParam.Value = id;
+                    sedeIdParam.DbType = System.Data.DbType.Int32;
+                    command.Parameters.Add(sedeIdParam);
+
+                    await command.ExecuteNonQueryAsync();
+
+                    string mensaje = resultadoParam.Value?.ToString() ?? "Sin respuesta";
+                    return Ok(new { message = mensaje });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
     }
 }
