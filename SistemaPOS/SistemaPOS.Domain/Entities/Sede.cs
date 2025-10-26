@@ -16,29 +16,35 @@ namespace SistemaPOS.Domain.Entities
         [StringLength(100)]
         public string SedeNombre { get; set; } = string.Empty;
 
+        [Required]
         [Column("SEDE_DIRECCION")]
         [StringLength(150)]
-        public string? SedeDireccion { get; set; }
+        public string SedeDireccion { get; set; } = string.Empty;
 
+        [Required]
         [Column("SEDE_CIUDAD")]
         [StringLength(80)]
-        public string? SedeCiudad { get; set; }
+        public string SedeCiudad { get; set; } = string.Empty;
 
+        [Required]
         [Column("SEDE_DEPARTAMENTO")]
         [StringLength(80)]
-        public string? SedeDepartamento { get; set; }
+        public string SedeDepartamento { get; set; } = string.Empty;
 
+        [Required]
         [Column("SEDE_UBICACION")]
         [StringLength(100)]
-        public string? SedeUbicacion { get; set; }
-
+        public string SedeUbicacion { get; set; } = string.Empty;
+        
+        [Required]
         [Column("SEDE_TELEFONO")]
         [StringLength(20)]
-        public string? SedeTelefono { get; set; }
+        public string SedeTelefono { get; set; } = string.Empty;
 
+        [Required]
         [Column("SEDE_CORREO")]
         [StringLength(100)]
-        public string? SedeCorreo { get; set; }
+        public string SedeCorreo { get; set; } = string.Empty;
 
         [Required]
         [Column("SEDE_ESTADO")]

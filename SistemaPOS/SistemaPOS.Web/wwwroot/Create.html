@@ -7,11 +7,10 @@
 
     <!-- Tus estilos -->
     <link rel="stylesheet" href="css/site.css">
-    <link rel="stylesheet" href="css/pos.css">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pos.css">
 
     <!-- Scripts -->
-    <script defer src="js/site.js"></script>
     <script defer src="js/crear-sedes.js"></script>
 </head>
 <body>
@@ -23,7 +22,7 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a class="active" href="/gestion-sedes.html">Gestión de Sedes</a></li>
+                    <li><a class="active" href="gestion-sedes.html">Gestión de Sedes</a></li>
                 </ul>
             </nav>
         </aside>
@@ -36,12 +35,12 @@
                 </div>
 
                 <section class="form-card">
-                    <form id="form-sede">
+                    <form id="form-sede" novalidate>
                         <!-- Datos de la sede -->
                         <h3 class="section-title">Datos de la Sede</h3>
                         <div class="grid">
                             <div>
-                                <div class="label">Nombre de la Sede <span style="color:red">*</span></div>
+                                <div class="label">Nombre de la Sede <span style="color:#FF6347">*</span></div>
                                 <input class="input" data-field="nombre" id="nombre" placeholder="Nombre de la Sede" required>
                                 <div class="feedback-inline" data-feedback="nombre"></div>
                             </div>
@@ -51,35 +50,44 @@
                         <h3 class="section-title">Información de la sede</h3>
                         <div class="grid">
                             <div>
-                                <div class="label">Dirección</div>
-                                <input class="input" data-field="direccion" id="direccion" placeholder="Dirección">
+                                <div class="label">Dirección <span style="color:#FF6347">*</span></div>
+                                <input class="input" data-field="direccion" id="direccion" placeholder="Dirección" required>
+                                <div class="feedback-inline" data-feedback="direccion"></div>
                             </div>
-                            <div>
-                                <div class="label">Ciudad</div>
-                                <input class="input" data-field="ciudad" id="ciudad" placeholder="Ciudad">
-                            </div>
-                            <div>
-                                <div class="label">Departamento</div>
-                                <input class="input" data-field="departamento" id="departamento" placeholder="Departamento">
-                            </div>
-                            <div>
-                                <div class="label">Ubicación</div>
-                                <input class="input" data-field="ubicacion" id="ubicacion" placeholder="Ubicación">
-                            </div>
-                        </div>
 
-                        <!-- Contacto -->
-                        <h3 class="section-title">Contacto</h3>
-                        <div class="grid">
                             <div>
-                                <div class="label">Teléfono</div>
-                                <input class="input" data-field="telefono" id="telefono" placeholder="Teléfono">
+                                <div class="label">Ciudad <span style="color:#FF6347">*</span></div>
+                                <input class="input" data-field="ciudad" id="ciudad" placeholder="Ciudad" required>
+                                <div class="feedback-inline" data-feedback="ciudad"></div>
                             </div>
+
                             <div>
-                                <div class="label">Correo electrónico</div>
-                                <input class="input" data-field="correo" id="correo" placeholder="contacto@sede.com">
+                                <div class="label">Departamento <span style="color:#FF6347">*</span></div>
+                                <input class="input" data-field="departamento" id="departamento" placeholder="Departamento"             required>
+                                <div class="feedback-inline" data-feedback="departamento"></div>
                             </div>
-                        </div>
+                        
+                            <div>
+                                <div class="label">Ubicación <span style="color:#FF6347">*</span></div>
+                                <input class="input" data-field="ubicacion" id="ubicacion" placeholder="Ubicación" required>
+                                <div class="feedback-inline" data-feedback="ubicacion"></div>
+                            </div>
+                            </div>
+                        
+                            <!-- Contacto -->
+                            <h3 class="section-title">Contacto</h3>
+                            <div class="grid">
+                                <div>
+                                    <div class="label">Teléfono <span style="color:#FF6347">*</span></div>
+                                    <input class="input" data-field="telefono" id="telefono" placeholder="Teléfono" required>
+                                    <div class="feedback-inline" data-feedback="telefono"></div>
+                                </div>
+                                <div>
+                                    <div class="label">Correo electrónico <span style="color:#FF6347">*</span></div>
+                                    <input class="input" data-field="correo" id="correo" placeholder="contacto@sede.com"            required>
+                                    <div class="feedback-inline" data-feedback="correo"></div>
+                                </div>
+                            </div>
 
                         <!-- Configuración -->
                         <h3 class="section-title">Configuración</h3>
@@ -108,11 +116,5 @@
             <button id="modal-btn" class="btn btn-primary">Aceptar</button>
         </div>
     </div>
-
-    <script>
-        document.getElementById("cancelBtn").addEventListener("click", () => {
-            window.location.href = "gestion-sedes.html";
-        });
-    </script>
 </body>
 </html>

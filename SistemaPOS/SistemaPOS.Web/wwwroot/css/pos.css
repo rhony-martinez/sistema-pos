@@ -58,10 +58,10 @@ body {
     border-radius: 10px
 }
 
-    .sidebar-nav a:hover, .sidebar-nav a.active {
-        background: #1e293b;
-        color: #fff
-    }
+.sidebar-nav a:hover, .sidebar-nav a.active {
+    background: #1e293b;
+    color: #fff
+}
 
 .main-content {
     flex: 1;
@@ -75,10 +75,10 @@ body {
     margin-bottom: 18px
 }
 
-    .header h1 {
-        margin: 0;
-        font-size: 28px
-    }
+.header h1 {
+    margin: 0;
+    font-size: 28px
+}
 
 .btn {
     border: 0;
@@ -92,9 +92,18 @@ body {
     color: #fff
 }
 
-    .btn-primary:hover {
-        background: var(--blue-dark)
-    }
+.btn-primary:hover {
+    background: var(--blue-dark)
+}
+
+.btn-secondary {
+    background-color: var(--red);
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #f45337;
+}
 
 .btn-action {
     background: #f3f4f6;
@@ -140,9 +149,9 @@ body {
     background: #fafafa
 }
 
-    .input[readonly] {
-        background: #f5f5f5
-    }
+.input[readonly] {
+    background: #f5f5f5
+}
 
 .badge {
     display: inline-flex;
@@ -153,12 +162,12 @@ body {
     padding: 8px 14px
 }
 
-    .badge .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #22c55e
-    }
+.badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e
+}
 
 .help {
     color: var(--muted);
@@ -196,44 +205,34 @@ tbody tr td:last-child {
     border-bottom-right-radius: 12px
 }
 
-.modal-backdrop {
+.modal {
+    display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.35);
-    display: none;
-    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
     justify-content: center;
-    z-index: 50
+    align-items: center;
+    z-index: 2000;
 }
 
-.modal {
-    background: #fff;
-    width: 520px;
-    max-width: 92vw;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    padding: 28px;
-    text-align: center
+.modal h3 {
+    margin: 0 0 8px
 }
 
-    .modal h3 {
-        margin: 0 0 8px
-    }
+.modal p {
+    color: #4b5563;
+    margin: 0 0 18px
+}
 
-    .modal p {
-        color: #4b5563;
-        margin: 0 0 18px
-    }
+.modal .ok {
+    background: var(--blue);
+    color: #fff
+}
 
-    .modal .ok {
-        background: var(--blue);
-        color: #fff
-    }
-
-    .modal .error {
-        background: var(--red);
-        color: #fff
-    }
+.modal .error {
+    background: var(--red);
+    color: #fff
+}
 
 .modal-show {
     display: flex
@@ -245,10 +244,6 @@ tbody tr td:last-child {
     gap: 8px;
     color: #ef4444;
     font-size: 13px
-}
-
-input:invalid {
-    border-color: #f59e0b
 }
 
 /* ===== Overrides para que el sidebar sea claro como el prototipo ===== */
@@ -271,15 +266,10 @@ input:invalid {
     background: transparent;
 }
 
-    .sidebar-nav a:hover,
-    .sidebar-nav a.active {
-        background: #eef2ff; /* highlight suave */
-        color: #111827;
-    }
-
-/* Fondo general como el prototipo */
-body {
-    background: #f5f6f8;
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: #eef2ff; /* highlight suave */
+    color: #111827;
 }
 
 /* Caja de la tabla como tarjeta blanca */
@@ -292,4 +282,20 @@ body {
 /* Encabezado */
 .header h1 {
     color: #111827;
+}
+
+.form-actions {
+    margin: 10px 0;
+}
+
+.input.input-error {
+    border: 2px solid #e63946 !important;
+    background-color: #ffe6e6 !important;
+    transition: all 0.3s ease;
+}
+
+.feedback-inline {
+    color: #e63946 !important;
+    font-size: 0.85rem;
+    margin-top: 4px;
 }
