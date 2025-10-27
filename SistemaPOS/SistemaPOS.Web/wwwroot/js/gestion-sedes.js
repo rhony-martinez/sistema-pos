@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 confirmDelete(sedeId, async () => {
                     try {
-                        const resp = await fetch(`${API_URL}/${sedeId}/eliminar`, {
+                        const resp = await fetch(`${API_URL}/${sedeId}/inactivar`, {
                             method: 'POST',
                             headers: {
                                 'Accept': '*/*',

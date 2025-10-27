@@ -5,7 +5,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SistemaPOS.Application.Sedes;
-
+using SistemaPOS.Application.Services;
+using SistemaPOS.Application.Services.Implementations;
 using SistemaPOS.Infrastructure;
 using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Infrastructure.Persistence;
@@ -25,9 +26,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 // ----------------------------------------------------
-// 🔹 Configurar conexión a Oracle
+// 🔹 Configurar conexión a SQL Server
 builder.Services.AddDbContext<SistemaPosContext>(options =>
-    options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // ----------------------------------------------------
 // 🔹 Repositorios y servicios personalizados
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISedeRepository, SedeRepository>();
+builder.Services.AddScoped<ISedeService, SedeService>();
 
 // 🔹 Registrar casos de uso de “crear sede”
 builder.Services.AddScoped<ListarSedesQuery>();

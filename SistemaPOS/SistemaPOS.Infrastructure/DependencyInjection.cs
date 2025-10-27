@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SistemaPOS.Infrastructure.Db;
+using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Infrastructure.Repositories;
 
 namespace SistemaPOS.Infrastructure
@@ -9,11 +10,16 @@ namespace SistemaPOS.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration cfg)
         {
-            var cs = cfg.GetConnectionString("OracleDb")
-                     ?? throw new InvalidOperationException("ConnectionStrings:OracleDb no configurada");
+            // ✅ Conexión a SQL Server
+            var connectionString = cfg.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("ConnectionStrings:DefaultConnection no configurada");
 
-            services.AddSingleton<IOracleConnectionFactory>(new OracleConnectionFactory(cs));
-            services.AddScoped<ISedeRepository, OracleSedeRepository>();
+            // ✅ Registrar el DbContext de EF Core
+            services.AddDbContext<SistemaPosContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            // ✅ Registrar repositorios reales
+            services.AddScoped<ISedeRepository, SedeRepository>();
 
             return services;
         }

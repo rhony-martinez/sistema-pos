@@ -96,5 +96,15 @@ namespace SistemaPOS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return sede.SedeId; // EF asigna automáticamente el ID al guardar
         }
+
+        public async Task<string> InactivarSedeAsync(int sedeId)
+        {
+            var result = await _context
+                .Database
+                .SqlQueryRaw<string>("EXEC sp_inactivar_sede @p0", sedeId)
+                .ToListAsync();
+
+            return result.FirstOrDefault() ?? "No se encontró resultado.";
+        }
     }
 }

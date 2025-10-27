@@ -15,12 +15,14 @@ namespace SistemaPOS.Domain.Entities
         [Column("FECHA_VENTA")]
         public DateTime FechaVenta { get; set; } = DateTime.Now;
 
+        [Required]
         [Column("VEN_TOTAL")]
-        public decimal? VenTotal { get; set; }
+        public decimal VenTotal { get; set; }
 
+        [Required]
         [Column("VEN_METODO_PAGO")]
         [StringLength(30)]
-        public string? VenMetodoPago { get; set; }
+        public string VenMetodoPago { get; set; } = string.Empty;
 
         [Column("CAJA_ID")]
         public int CajaId { get; set; }

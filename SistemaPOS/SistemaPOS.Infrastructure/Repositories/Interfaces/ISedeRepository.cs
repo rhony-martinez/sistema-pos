@@ -11,6 +11,6 @@ public interface ISedeRepository
     Task<IEnumerable<Sede>> ListarAsync();
     Task<bool> ExisteDuplicadaAsync(string nombre, string ciudad);
     Task<long> CrearAsync(Sede sede);
-
+    Task<string> InactivarSedeAsync(int sedeId);
 
 }
