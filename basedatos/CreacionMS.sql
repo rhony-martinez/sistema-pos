@@ -1,0 +1,132 @@
+--------------------------------------------------------
+-- SISTEMA POS - ESTRUCTURA BASE FINAL (MS SQL SERVER)
+--------------------------------------------------------
+
+--------------------------------------------------------
+--  TABLA: SEDE
+--------------------------------------------------------
+CREATE TABLE SEDE (
+    SEDE_ID INT IDENTITY(1,1) PRIMARY KEY,
+    SEDE_NOMBRE VARCHAR(100) NOT NULL,
+    SEDE_DIRECCION VARCHAR(150) NOT NULL,
+    SEDE_CIUDAD VARCHAR(80) NOT NULL,
+    SEDE_DEPARTAMENTO VARCHAR(80) NOT NULL,
+    SEDE_UBICACION VARCHAR(100) NOT NULL,
+    SEDE_TELEFONO VARCHAR(20),
+    SEDE_CORREO VARCHAR(100),
+    SEDE_ESTADO VARCHAR(20) NOT NULL DEFAULT 'ACTIVA'
+);
+
+ALTER TABLE SEDE ADD CONSTRAINT CKC_ESTADO CHECK (SEDE_ESTADO IN ('ACTIVA', 'INACTIVA'));
+
+--------------------------------------------------------
+--  TABLA: CAJA
+--------------------------------------------------------
+CREATE TABLE CAJA (
+    CAJA_ID INT IDENTITY(1,1) PRIMARY KEY,
+    CAJA_FECHA_APERTURA DATETIME,
+    CAJA_FECHA_CIERRE DATETIME,
+    CAJA_MONTO_INICIAL DECIMAL(12,2),
+    CAJA_MONTO_FINAL DECIMAL(12,2),
+    CAJA_ESTADO VARCHAR(20) NOT NULL DEFAULT 'ABIERTA',
+    SEDE_ID INT NOT NULL FOREIGN KEY REFERENCES SEDE(SEDE_ID)
+);
+
+ALTER TABLE CAJA ADD CONSTRAINT CKC_ESTADO_CAJA CHECK (CAJA_ESTADO IN ('ABIERTA', 'CERRADA'));
+
+--------------------------------------------------------
+--  TABLA: CATEGORIA_PRODUCTO
+--------------------------------------------------------
+CREATE TABLE CATEGORIA_PRODUCTO (
+    CAT_ID INT IDENTITY(1,1) PRIMARY KEY,
+    CAT_NOMBRE VARCHAR(50) NOT NULL UNIQUE
+);
+
+--------------------------------------------------------
+--  TABLA: PRODUCTO
+--------------------------------------------------------
+CREATE TABLE PRODUCTO (
+    PRO_ID INT IDENTITY(1,1) PRIMARY KEY,
+    PRO_NOMBRE VARCHAR(100) NOT NULL,
+    PRO_DESCRIPCION VARCHAR(200),
+    PRO_PRECIO_VENTA DECIMAL(12,2) NOT NULL,
+    PRO_UNIDAD VARCHAR(20),
+    CAT_ID INT NOT NULL FOREIGN KEY REFERENCES CATEGORIA_PRODUCTO(CAT_ID),
+    PRO_ESTADO VARCHAR(20) NOT NULL DEFAULT 'ACTIVO'
+);
+
+ALTER TABLE PRODUCTO ADD CONSTRAINT CKC_PRO_ESTADO CHECK (PRO_ESTADO IN ('ACTIVO', 'INACTIVO'));
+
+--------------------------------------------------------
+--  TABLA: CATALOGO
+--------------------------------------------------------
+CREATE TABLE CATALOGO (
+    SEDE_ID INT NOT NULL,
+    PRO_ID INT NOT NULL,
+    CONSTRAINT PK_CATALOGO PRIMARY KEY (SEDE_ID, PRO_ID),
+    CONSTRAINT FK_CATALOGO_SEDE FOREIGN KEY (SEDE_ID) REFERENCES SEDE(SEDE_ID),
+    CONSTRAINT FK_CATALOGO_PRODUCTO FOREIGN KEY (PRO_ID) REFERENCES PRODUCTO(PRO_ID)
+);
+
+--------------------------------------------------------
+--  TABLA: USUARIO
+--------------------------------------------------------
+CREATE TABLE USUARIO (
+    USU_ID INT IDENTITY(1,1) PRIMARY KEY,
+    USU_PRIMER_NOMBRE VARCHAR(50) NOT NULL,
+    USU_SEGUNDO_NOMBRE VARCHAR(50),
+    USU_PRIMER_APELLIDO VARCHAR(50) NOT NULL,
+    USU_SEGUNDO_APELLIDO VARCHAR(50),
+    USU_CORREO VARCHAR(100) NOT NULL UNIQUE,
+    USU_TELEFONO VARCHAR(20),
+    USU_USERNAME VARCHAR(50) NOT NULL UNIQUE,
+    USU_CLAVE_HASH VARCHAR(255) NOT NULL,
+    USU_ESTADO VARCHAR(20) NOT NULL DEFAULT 'ACTIVO',
+    USU_ROL VARCHAR(30),
+    SEDE_ID INT NULL FOREIGN KEY REFERENCES SEDE(SEDE_ID)
+);
+
+ALTER TABLE USUARIO ADD CONSTRAINT CKC_USU_ESTADO CHECK (USU_ESTADO IN ('ACTIVO', 'INACTIVO'));
+ALTER TABLE USUARIO ADD CONSTRAINT CKC_USU_ROL CHECK (USU_ROL IN ('ADMIN_GENERAL', 'ADMIN_LOCAL', 'CAJERO'));
+
+--------------------------------------------------------
+--  TABLA: VENTA
+--------------------------------------------------------
+CREATE TABLE VENTA (
+    VEN_ID INT IDENTITY(1,1) PRIMARY KEY,
+    FECHA_VENTA DATETIME DEFAULT GETDATE(),
+    VEN_TOTAL DECIMAL(12,2) NOT NULL,
+    VEN_METODO_PAGO VARCHAR(30) NOT NULL,
+    CAJA_ID INT NOT NULL FOREIGN KEY REFERENCES CAJA(CAJA_ID)
+);
+
+--------------------------------------------------------
+--  TABLA: DETALLE_VENTA
+--------------------------------------------------------
+CREATE TABLE DETALLE_VENTA (
+    DET_ID INT IDENTITY(1,1) PRIMARY KEY,
+    VEN_ID INT NOT NULL FOREIGN KEY REFERENCES VENTA(VEN_ID),
+    PRO_ID INT NOT NULL FOREIGN KEY REFERENCES PRODUCTO(PRO_ID),
+    DET_CANTIDAD DECIMAL(8,2) NOT NULL,
+    DET_PRECIO_UNITARIO DECIMAL(12,2) NOT NULL,
+    DET_SUBTOTAL AS (DET_CANTIDAD * DET_PRECIO_UNITARIO) PERSISTED
+);
+
+--------------------------------------------------------
+--  TABLA: REVOKED_TOKEN
+--------------------------------------------------------
+CREATE TABLE REVOKED_TOKEN (
+    JT_ID VARCHAR(200) PRIMARY KEY,
+    EXPIRES_AT DATETIME
+);
+
+--------------------------------------------------------
+--  UNIQUE INDEX (ADMIN LOCAL x SEDE)
+--------------------------------------------------------
+CREATE UNIQUE INDEX UQ_ADMIN_LOCAL_SEDE
+ON USUARIO (SEDE_ID)
+WHERE USU_ROL = 'ADMIN_LOCAL';
+--------------------------------------------------------
+-- FIN SCRIPT
+--------------------------------------------------------
+SELECT * FROM sys.tables
