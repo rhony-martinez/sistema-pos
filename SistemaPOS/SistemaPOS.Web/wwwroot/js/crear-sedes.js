@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // === Enviar al backend ===
         try {
-            const response = await fetch("http://localhost:5289/api/Sedes", {
+            const response = await fetch(`${API_URL}/Sedes`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

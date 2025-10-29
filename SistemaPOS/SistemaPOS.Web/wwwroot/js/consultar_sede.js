@@ -48,7 +48,7 @@
         if (id) params.append("id", id);
         if (nombre) params.append("nombre", nombre);
 
-        const url = `http://localhost:5289/api/Sede/buscar?${params.toString()}`;
+        const url = `${API_URL}/Sede/buscar?${params.toString()}`;
         console.log("🌐 Solicitando:", url);
 
         try {

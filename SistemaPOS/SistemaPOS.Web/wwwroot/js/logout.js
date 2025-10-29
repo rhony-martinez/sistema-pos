@@ -16,7 +16,7 @@
         }
 
         try {
-            const response = await fetch("http://localhost:5289/api/auth/logout", {
+            const response = await fetch(`${API_URL}/auth/logout`, {
                 method: "POST",
                 headers: { "Authorization": `Bearer ${token}` }
             });

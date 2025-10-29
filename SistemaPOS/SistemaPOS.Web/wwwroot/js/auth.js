@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("http://localhost:5289/api/auth/login", {
+            const response = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password })
@@ -89,7 +89,7 @@ async function getUserProfile() {
     if (!token) return null;
 
     try {
-        const res = await fetch("http://localhost:5289/api/Users/me", {
+        const res = await fetch(`${API_URL}/Users/me`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"

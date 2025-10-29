@@ -58,6 +58,8 @@ vite.config.*
 
 # ─── Archivos de configuración sensibles ──────────────────────────────────────
 appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
 appsettings.Local.json
 appsettings.*.json
 .env

@@ -9,7 +9,7 @@
             profile = await getUserProfile();
         } else {
             const token = sessionStorage.getItem("token");
-            const res = await fetch("http://localhost:5289/api/Users/me", {
+            const res = await fetch(`${API_URL}/Users/me`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.ok) profile = await res.json();
@@ -56,7 +56,7 @@
     async function actualizarDashboard() {
         try {
             // 1. Obtener cantidad de cajeros en esta sede
-            const resCajeros = await fetch(`http://localhost:5289/api/users/cajeros/activos/${sedeId}`, { headers });
+            const resCajeros = await fetch(`${API_URL}/users/cajeros/activos/${sedeId}`, { headers });
             const cajerosData = await resCajeros.json();
             const cantCajeros = cajerosData.cantidad ?? 0;
 
@@ -64,7 +64,7 @@
             if (cardCajeros) cardCajeros.textContent = cantCajeros;
 
             // 2. Verificar si hay caja abierta
-            const resCaja = await fetch(`http://localhost:5289/api/caja/abierta/${sedeId}`, { headers });
+            const resCaja = await fetch(`${API_URL}/caja/abierta/${sedeId}`, { headers });
             const cajaData = await resCaja.json();
             const abierta = cajaData.abierta === true;
 

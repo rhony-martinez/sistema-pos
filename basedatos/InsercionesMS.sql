@@ -57,7 +57,7 @@ INSERT INTO USUARIO (
     USU_ID, USU_PRIMER_NOMBRE, USU_PRIMER_APELLIDO, USU_CORREO,
     USU_USERNAME, USU_CLAVE_HASH, USU_ROL, USU_ESTADO
 ) VALUES (
-    1001, 'Laura', 'Gómez', 'laura.gomez@pos.com', 'admin_general', 'clave123', 'ADMIN_GENERAL', 'ACTIVO'
+    1001, 'Laura', 'Gómez', 'laura.gomez@pos.com', 'admin', '$2b$12$xr.knbw8qLxpK5wn4jUrdOa6SzlmRL7hvxK6gFxT1N.X59rBNwT3.', 'ADMIN_GENERAL', 'ACTIVO'
 );
 
 

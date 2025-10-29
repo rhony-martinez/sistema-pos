@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tablaBody = document.querySelector("tbody");
     const botonCrear = document.querySelector(".btn-primary");
     const searchInput = document.querySelector(".search-bar input"); // 🔍 Input de búsqueda
-    const apiUrl = "http://localhost:5289/api/Usuario/admins-locales";
+    // const apiUrl = "http://localhost:5289/api/Usuario/admins-locales";
 
     // Navegación al crear Admin Local
     botonCrear.addEventListener("click", () => {
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === 1️⃣ Cargar usuarios al iniciar ===
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(`${API_URL}/Usuario/admins-locales`);
         if (!response.ok) throw new Error("Error al obtener los administradores locales.");
         usuarios = await response.json();
 

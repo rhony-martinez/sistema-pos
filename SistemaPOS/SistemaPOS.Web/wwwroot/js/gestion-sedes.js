@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const tablaBody = document.querySelector("tbody");
-    const API_URL = "http://localhost:5289/api/Sede";
+    // const API_URL = "http://localhost:5289/api/Sede";
 
     // --- Función genérica para mostrar modal ---
     function showMessage(message, onAccept = null, showCancel = false) {
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}/Sede`);
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
         const sedes = await response.json();
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 confirmDelete(sedeId, async () => {
                     try {
-                        const resp = await fetch(`${API_URL}/${sedeId}/inactivar`, {
+                        const resp = await fetch(`${API_URL}/Sede/${sedeId}/inactivar`, {
                             method: 'POST',
                             headers: {
                                 'Accept': '*/*',

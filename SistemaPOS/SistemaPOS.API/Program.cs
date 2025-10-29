@@ -158,7 +158,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Swagger (solo en desarrollo)
+// Swagger 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -170,9 +170,19 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
+    // Habilita Swagger temporalmente también en producción
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "SistemaPOS API v1");
+        options.RoutePrefix = "swagger"; // así se accede desde /swagger
+    });
+
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
+
 
 // Mapeo de controladores
 app.MapControllers();

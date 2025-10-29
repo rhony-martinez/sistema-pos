@@ -88,7 +88,7 @@
 
         // Llamada al backend
         try {
-            const res = await fetch("http://localhost:5289/api/users", {
+            const res = await fetch(`${API_URL}/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

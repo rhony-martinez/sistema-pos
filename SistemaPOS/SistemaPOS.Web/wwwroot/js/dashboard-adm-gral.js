@@ -12,7 +12,7 @@
         if (typeof getUserProfile === "function") {
             profile = await getUserProfile();
         } else {
-            const res = await fetch("http://localhost:5289/api/Users/me", {
+            const res = await fetch(`${API_URL}/Users/me`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.ok) profile = await res.json();
@@ -39,7 +39,7 @@
 
     // Obtener cantidad de usuarios activos (Cajeros + Admin Local)
     try {
-        const resUsers = await fetch("http://localhost:5289/api/users/activos/count", {
+        const resUsers = await fetch(`${API_URL}/users/activos/count`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -57,7 +57,7 @@
 
     // Obtener cantidad de sedes activas
     try {
-        const resSedes = await fetch("http://localhost:5289/api/sede/activas/count", {
+        const resSedes = await fetch(`${API_URL}/sede/activas/count`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
