@@ -38,5 +38,7 @@ namespace SistemaPOS.Domain.Entities
 
         [ForeignKey("CatId")]
         public CategoriaProducto? Categoria { get; set; }
+
+        public ICollection<Catalogo>? Catalogos { get; set; }
     }
 }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/catalogo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
 </head>
 
 <body>
@@ -48,27 +49,18 @@
                         <tr>
                             <th>ID Producto</th>
                             <th>Nombre</th>
-                            <th>Descripcion</th>
+                            <th>Descripción</th>
                             <th>Precio</th>
-                            <th>Categoria</th>
+                            <th>Categoría</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Pala</td>
-                            <td>Pala de acero</td>
-                            <td>45000</td>
-                            <td>Herramientas</td>
-                            <td class="table-actions">
-                                <button class="btn btn-action"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-action btn-danger"><i class="fas fa-trash-alt"></i></button>
-                            </td>
-                        </tr>
+                    <tbody id="tabla-productos">
+                        <!-- Aquí se insertarán las filas dinámicamente -->
                     </tbody>
                 </table>
             </section>
+
         </main>
     </div>
     <script src="js/gestion-catalogo.js"></script>
