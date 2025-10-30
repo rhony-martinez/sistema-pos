@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Catálogo - Sistema POS</title>
+    <link rel="stylesheet" href="css/catalogo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="js/config.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!--  SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/pos-logo.png" alt="POS Logo">
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard-adm-local.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li><a href="gestion-catalogo.html" class="active"><i class="fas fa-boxes"></i>Gestión de Catálogo</a></li>
+                    <li><a href="gestion-usuarios-adm-local.html"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
+                    <li><a href="gestion-ventas.html"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
+                    <li><a href="gestion-caja.html" class="disabled"><i class="fas fa-cash-register"></i>Gestión de Caja</a></li>
+                    <li><a href="gestion-sedes.html" class="disabled"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <h1>Gestión de Catálogo</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar producto...">
+                    </div>
+                    <button id="btnCargarProducto" class="btn btn-primary"><i class="fas fa-plus"></i> Cargar Producto</button>
+                </div>
+            </header>
+
+            <section class="data-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Producto</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th>Categoria</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Pala</td>
+                            <td>Pala de acero</td>
+                            <td>45000</td>
+                            <td>Herramientas</td>
+                            <td class="table-actions">
+                                <button class="btn btn-action"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-action btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script src="js/gestion-catalogo.js"></script>
+    <!-- 🔹 Modal para registrar producto -->
+            <div id="modal-registrar-producto" class="modal">
+                <div class="modal-content modal-lg">
+                <div class="form-header">
+                    <img src="assets/pos-logo.png" alt="Logo POS" class="logo">
+                    <div>
+                        <h1>Registrar Producto</h1>
+                        <p>Llene los campos para el producto</p>
+                    </div>
+                </div>
+            
+                <form id="form-registrar-producto" class="register-form" novalidate>
+                    <h2 class="section-title">Datos del producto</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre del producto*</label>
+                            <input type="text" id="proNombre" placeholder="Nombre del producto" required>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Información del producto</h2>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Descripción</label>
+                            <textarea id="proDescripcion" placeholder="Descripción del producto" rows="3" style="resize: none;"></textarea>
+                        </div>
+                    </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Unidad</label>
+                        <input type="text" id="proUnidad" placeholder="Unidad de medida">
+                    </div>
+                    <div class="form-group">
+                        <label>Precio de Venta*</label>
+                        <input type="number" id="proPrecioVenta" placeholder="Precio de venta" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select id="catNombre">
+                            <option value="">Seleccione una categoría</option>
+                        </select>
+                    </div>
+                </div>
+                    <div class="btn-container">
+                    <button type="submit" class="btn-primary">Registrar Producto</button>
+                    <button type="button" class="btn-secondary" id="cancelarModal">Cancelar</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+</body>
+</html>

@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SistemaPOS.Application.CategoriasProducto;
 using SistemaPOS.Application.Sedes;
 using SistemaPOS.Application.Services;
 using SistemaPOS.Application.Services.Implementations;
+using SistemaPOS.Application.Services.Interfaces;
 using SistemaPOS.Infrastructure;
 using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Infrastructure.Persistence;
@@ -38,6 +40,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISedeRepository, SedeRepository>();
 builder.Services.AddScoped<ISedeService, SedeService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ICategoriaProductoService, CategoriaProductoService>();
 
 // 🔹 Registrar casos de uso de “crear sede”
 builder.Services.AddScoped<ListarSedesQuery>();

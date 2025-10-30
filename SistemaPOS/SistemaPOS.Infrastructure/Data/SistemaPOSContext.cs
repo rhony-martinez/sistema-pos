@@ -96,18 +96,40 @@ namespace SistemaPOS.Infrastructure.Data
                       .HasColumnName("PRO_ID")
                       .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.ProNombre).HasColumnName("PRO_NOMBRE").HasMaxLength(100).IsRequired();
-                entity.Property(e => e.ProDescripcion).HasColumnName("PRO_DESCRIPCION").HasMaxLength(200);
-                entity.Property(e => e.ProPrecioVenta).HasColumnName("PRO_PRECIO_VENTA").HasColumnType("decimal(12,2)");
-                entity.Property(e => e.ProUnidad).HasColumnName("PRO_UNIDAD").HasMaxLength(20);
-                entity.Property(e => e.ProEstado).HasColumnName("PRO_ESTADO").HasMaxLength(20).HasDefaultValue("ACTIVO");
+                entity.Property(e => e.ProNombre)
+                      .HasColumnName("PRO_NOMBRE")
+                      .HasMaxLength(100)
+                      .IsRequired();
 
-                entity.Property(e => e.CatId).HasColumnName("CAT_ID");
+                entity.Property(e => e.ProDescripcion)
+                      .HasColumnName("PRO_DESCRIPCION")
+                      .HasMaxLength(200);
 
+                entity.Property(e => e.ProPrecioVenta)
+                      .HasColumnName("PRO_PRECIO_VENTA")
+                      .HasColumnType("decimal(12,2)")
+                      .IsRequired();
+
+                entity.Property(e => e.ProUnidad)
+                      .HasColumnName("PRO_UNIDAD")
+                      .HasMaxLength(20);
+
+                entity.Property(e => e.ProEstado)
+                      .HasColumnName("PRO_ESTADO")
+                      .HasMaxLength(20)
+                      .HasDefaultValue("ACTIVO");
+
+                entity.Property(e => e.CatId)
+                      .HasColumnName("CAT_ID")
+                      .IsRequired();
+
+                // 🔧 Relación correcta
                 entity.HasOne(e => e.Categoria)
-                      .WithMany()
-                      .HasForeignKey(e => e.CatId);
+                      .WithMany(c => c.Productos)
+                      .HasForeignKey(e => e.CatId)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
+
 
             //------------------------------------------------------------
             // CATALOGO (clave compuesta)
