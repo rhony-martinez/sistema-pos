@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    aplicarValidacionesGlobales(); //  Activa las validaciones universales
     // === Referencias al DOM ===
     const form = document.getElementById("form-modificar-admin");
     const cancelBtn = document.getElementById("cancelBtn");
@@ -49,6 +50,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("❌ Error al cargar usuario:", error);
         showModal("No se pudo cargar la información del usuario.");
     }
+        // ✅ === VALIDACIÓN: solo números en teléfono ===
+    const telefonoInput = document.getElementById("telefono");
+    telefonoInput.addEventListener("input", (e) => {
+        const field = e.target;
+        let value = field.value;
+
+        // Si contiene algo que no sea número → eliminarlo
+        if (/[^0-9]/.test(value)) {
+            field.value = value.replace(/[^0-9]/g, "");
+            field.classList.add("input-error");
+            showModal("Solo se permiten números en el teléfono.");
+            return;
+        } else {
+            field.classList.remove("input-error");
+        }
+    });
 
     // === Manejar envío del formulario (PUT) ===
     form.addEventListener("submit", async (e) => {
@@ -73,6 +90,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const regexSoloLetras = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/;
         const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const regexTelefono = /^[\d+\-\s()]{7,20}$/;
+        
+        
+
 
         // Campos obligatorios vacíos
         if (primerNombre.value.trim() === "") {

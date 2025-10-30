@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    aplicarValidacionesGlobales(); //  Activa las validaciones universales
+
     // === Referencias al DOM ===
     const form = document.getElementById("form-modificar-cajero");
     const cancelBtn = document.getElementById("cancelBtn");
@@ -50,6 +52,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         showModal("No se pudo cargar la información del usuario.");
     }
 
+    // ✅ === VALIDACIÓN: solo números en teléfono ===
+    const telefonoInput = document.getElementById("telefono");
+    telefonoInput.addEventListener("input", (e) => {
+        const field = e.target;
+        let value = field.value;
+
+        // Si contiene algo que no sea número → eliminarlo
+        if (/[^0-9]/.test(value)) {
+            field.value = value.replace(/[^0-9]/g, "");
+            field.classList.add("input-error");
+            showModal("Solo se permiten números en el teléfono.");
+            return;
+        } else {
+            field.classList.remove("input-error");
+        }
+    });
+
     // === Manejar envío del formulario (PUT) ===
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -99,16 +118,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             mensaje = "El teléfono es obligatorio.";
         }
 
-        // Validación de solo letras y longitud (20 máx)
-        [primerNombre, segundoNombre, primerApellido, segundoApellido].forEach(campo => {
-            const valor = campo.value.trim();
-            if (valor !== "" && (!regexSoloLetras.test(valor) || valor.length > 20)) {
-                marcarError(campo);
-                valido = false;
-                mensaje = "Los nombres y apellidos deben contener solo letras y máximo 20 caracteres.";
-            }
-        });
-
         // Validar formato de correo
         if (correo.value.trim() !== "" && !regexCorreo.test(correo.value.trim())) {
             marcarError(correo);
@@ -116,11 +125,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             mensaje = "El formato del correo electrónico no es válido.";
         }
 
-        // Validar teléfono (solo dígitos, +, -, espacios y paréntesis)
-        if (telefono.value.trim() !== "" && !regexTelefono.test(telefono.value.trim())) {
+        // Validar que teléfono tenga solo números (extra en submit)
+        if (telefono.value.trim() !== "" && /[^0-9]/.test(telefono.value.trim())) {
             marcarError(telefono);
             valido = false;
-            mensaje = "El teléfono debe contener solo números y caracteres válidos (+, -, espacios, paréntesis).";
+            mensaje = "El teléfono solo debe contener números.";
         }
 
         // Si hay errores, mostrar mensaje y detener envío
@@ -171,27 +180,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     function updateEstadoColores(isActive) {
         const estadoActivo = document.getElementById("estadoActivo");
         const estadoInactivo = document.getElementById("estadoInactivo");
-        // Evita errores si no existen (por ejemplo, si el DOM no cargó bien)
         if (!estadoActivo || !estadoInactivo) {
             console.warn("⚠️ Elementos de estado no encontrados aún.");
             return;
         }
 
         if (isActive) {
-            estadoActivo.style.color = "#007bff";   // Azul cuando activo
-            estadoInactivo.style.color = "#333";    // Gris cuando no aplica
+            estadoActivo.style.color = "#007bff";
+            estadoInactivo.style.color = "#333";
         } else {
-            estadoActivo.style.color = "#333";      // Gris cuando no aplica
-            estadoInactivo.style.color = "#e63946"; // Rojo cuando inactivo
+            estadoActivo.style.color = "#333";
+            estadoInactivo.style.color = "#e63946";
         }
     }
 
-    // === Función para marcar error visualmente ===
     function marcarError(input) {
         input.classList.add("input-error");
     }
 
-    // === Función para mostrar mensaje inline en la interfaz ===
     function showInlineMessage(msg) {
         const existing = document.querySelector(".inline-error");
         if (existing) existing.remove();
@@ -204,16 +210,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         setTimeout(() => p.remove(), 4000);
     }
 
-    // === Modal genérica (para errores más críticos) ===
     function showModalVal(msg) {
         modalText.textContent = msg;
         modal.style.display = "flex";
         modalBtn.onclick = () => modal.style.display = "none";
     }
 
-    // === Simulación de envío (aquí va tu lógica PUT actual) ===
     async function guardarCambios() {
-        // Aquí va tu lógica de actualización existente (fetch PUT)
         showModalVal("✅ Cambios guardados correctamente.");
     }
 });
