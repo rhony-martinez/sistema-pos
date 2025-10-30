@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    aplicarValidacionesGlobales(); //  Activa las validaciones universales
     const form = document.getElementById("form-sede");
     const modal = document.getElementById("modal");
     const modalText = document.getElementById("modal-text");
@@ -43,6 +44,20 @@ document.addEventListener("DOMContentLoaded", () => {
         form.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
         form.querySelectorAll(".feedback-inline").forEach(f => f.textContent = "");
     }
+        // === Validación en tiempo real: teléfono solo números ===
+    const telefonoInput = form.querySelector('[data-field="telefono"]');
+    if (telefonoInput) {
+        telefonoInput.addEventListener("input", () => {
+            telefonoInput.value = telefonoInput.value.replace(/\D/g, "");
+        });
+
+        telefonoInput.addEventListener("paste", (e) => {
+            e.preventDefault();
+            const textoPegado = (e.clipboardData || window.clipboardData).getData("text");
+            telefonoInput.value = textoPegado.replace(/\D/g, "");
+            showModal("⚠️ Solo se permiten números en el campo teléfono.");
+        });
+    }
 
     // === Envío del formulario ===
     form.addEventListener("submit", async (e) => {
@@ -58,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // === Validaciones ===
         let valido = true;
+
 
         // 1️⃣ Campos obligatorios
         for (const [campo, valor] of Object.entries(data)) {
