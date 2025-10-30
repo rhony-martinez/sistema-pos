@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
     const btnCargar = document.getElementById("btnCargarProducto");
     const modal = document.getElementById("modal-registrar-producto");
     const cancelBtn = document.getElementById("cancelarModal");
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     cargarCategorias();
+
 
     if (form) {
         form.addEventListener("submit", async (e) => {
@@ -79,8 +81,22 @@ async function registrarProducto() {
 }
 
 function abrirModal() {
-    document.getElementById("modal-registrar-producto").style.display = "flex";
+  const modal = document.getElementById("modal-registrar-producto");
+  modal.style.display = "flex";
+
+  // Esperar un ciclo de renderizado para que los inputs existan en el DOM
+  setTimeout(() => {
+    if (typeof aplicarValidacionesProducto === "function") {
+      aplicarValidacionesProducto();
+      console.log("✅ Validaciones de producto aplicadas");
+    } else {
+      console.error("⚠️ No se encontró la función aplicarValidacionesProducto()");
+    }
+  }, 50);
 }
+
+
+
 
 function cerrarModal() {
     document.getElementById("modal-registrar-producto").style.display = "none";
