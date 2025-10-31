@@ -53,19 +53,35 @@ async function cargarCategorias() {
 }
 
 async function registrarProducto() {
+    document.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
+
+    const campos = ["proNombre", "proDescripcion", "proPrecioVenta", "proUnidad", "catNombre"];
+    const vacios = [];
+    // Validar campos vacíos
+    campos.forEach(id => {
+        const input = document.getElementById(id);
+        if (!input.value.trim()) {
+            input.classList.add("input-error");
+            vacios.push(input);
+        }
+    });
+
+    if (vacios.length > 0) {
+        showModal("Tienes campos obligatorios vacíos. Complétalos antes de continuar.", () => vacios[0].focus());
+        return;
+    }
+
     const data = {
         proNombre: document.getElementById("proNombre").value.trim(),
         proDescripcion: document.getElementById("proDescripcion").value.trim(),
         proPrecioVenta: parseFloat(document.getElementById("proPrecioVenta").value),
         proUnidad: document.getElementById("proUnidad").value.trim(),
         catNombre: document.getElementById("catNombre").value.trim()
+        
     };
 
 
-    if (!data.proNombre || isNaN(data.proPrecioVenta) || !data.catNombre) {
-        showModal("Por favor, complete los campos obligatorios.");
-        return;
-    }
+    
 
     try {
         const response = await fetch(`${API_URL}/Producto`, {
