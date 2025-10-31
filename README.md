@@ -242,7 +242,8 @@ Resultado esperado:
 ```
 
 ✅ Si obtienes esta respuesta o similar, la conexión Oracle ↔ .NET está verificada.
-
+**ENLACES EXTERNOS
+https://www.figma.com/design/LvxiFRraDB2ZAWkXMbFDKP/Sistema-pos?node-id=0-1&t=pkG9HilTqFNv6D9K-1 
 ## Información
 Proyecto con fines educativos
 
