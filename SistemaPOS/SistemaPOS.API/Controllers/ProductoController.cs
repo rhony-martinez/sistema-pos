@@ -46,8 +46,12 @@ namespace SistemaPOS.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            // ya estaba bien implementado, puedes mantenerlo
-            return Ok();
+            var producto = await _productoService.GetByIdAsync(id);
+            if (producto == null)
+                return NotFound(new { mensaje = $"No se encontró el producto con ID {id}." });
+
+            return Ok(producto);
         }
+
     }
 }

@@ -47,6 +47,13 @@ namespace SistemaPOS.Application.Services.Implementations
 
             return nuevo;
         }
+        public async Task<Producto?> GetByIdAsync(int id)
+        {
+            return await _context.Productos
+                .Include(p => p.Categoria) // opcional, si quieres traer datos de categoría
+                .FirstOrDefaultAsync(p => p.ProId == id && p.ProEstado == "ACTIVO");
+        }
+
 
     }
 }
