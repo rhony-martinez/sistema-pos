@@ -1,7 +1,7 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
   // --- BOTÓN CERRAR SESIÓN ---
   const logoutBtn = document.getElementById("logoutBtn");
-  const API_URL = window.API_URL || "http://localhost:5289/api"; // por si viene de config.js
+  //const API_URL = window.API_URL || "http://localhost:5289/api"; // por si viene de config.js
 
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
