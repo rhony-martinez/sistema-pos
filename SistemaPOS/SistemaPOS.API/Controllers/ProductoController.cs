@@ -53,5 +53,22 @@ namespace SistemaPOS.API.Controllers
             return Ok(producto);
         }
 
+<<<<<<< HEAD
+=======
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var productos = await _productoService.ObtenerProductosAsync();
+                return Ok(productos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error al obtener los productos.", detalle = ex.Message });
+            }
+        }
+
+>>>>>>> 68801e5805970b71668795762ce7e884d08c4a4f
     }
 }
