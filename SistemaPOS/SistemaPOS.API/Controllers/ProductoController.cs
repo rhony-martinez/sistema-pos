@@ -53,8 +53,6 @@ namespace SistemaPOS.API.Controllers
             return Ok(producto);
         }
 
-<<<<<<< HEAD
-=======
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -69,6 +67,5 @@ namespace SistemaPOS.API.Controllers
             }
         }
 
->>>>>>> 68801e5805970b71668795762ce7e884d08c4a4f
     }
 }
