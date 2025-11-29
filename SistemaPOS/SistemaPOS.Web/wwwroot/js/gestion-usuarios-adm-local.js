@@ -84,6 +84,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <button class="btn btn-action btn-edit" title="Editar" data-id="${c.usuId}">
                             <i class="fas fa-edit"></i>
                         </button>
+            <button class="btn btn-action btn-del"
+                    title="Desactivar"
+                    data-id="${c.usuId}"
+                    ${c.usuEstado === "INACTIVO" ? "disabled" : ""}>
+                <i class="fas ${c.usuEstado === "INACTIVO" ? "fa-ban" : "fa-trash"}"></i>
+            </button>
                     </td>
                 </tr>`;
             tablaBody.insertAdjacentHTML("beforeend", fila);
@@ -95,6 +101,81 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const userId = e.currentTarget.getAttribute("data-id");
                 window.location.href = `modificar-cajero.html?id=${userId}`;
             });
+        });
+
+   // ✅ Evento para desactivar cajero con MODAL
+        document.querySelectorAll(".btn-del").forEach(btn => {
+            btn.addEventListener("click", async (e) => {
+                const userId = e.currentTarget.getAttribute("data-id");
+
+                // 🔵 Modal de confirmación (reemplazo de confirm())
+                const confirmar = await showModal("¿Seguro que deseas desactivar este usuario?", true);
+                if (!confirmar) return;
+
+                try {
+                    const token = sessionStorage.getItem("token");
+
+                    const response = await fetch(`${API_URL}/Users/${userId}/desactivar`, {
+                        method: "PATCH",
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                    if (!response.ok) throw new Error("No se pudo desactivar el usuario");
+
+                    // 🔵 Modal de éxito (reemplazo de alert())
+                    await showModal("Usuario desactivado correctamente.");
+
+                    // 🔄 Actualizar el array en memoria
+                    cajeros = cajeros.map(c =>
+                        c.usuId == userId ? { ...c, usuEstado: "INACTIVO" } : c
+                    );
+
+                    // 🔁 Volver a dibujar tabla
+                    renderTabla(cajeros);
+
+                } catch (error) {
+                    console.error("❌ Error:", error);
+
+                    // 🔵 Modal de error
+                    await showModal("Error al desactivar usuario.");
+                }
+            });
+        });
+    
+    }
+
+    // Mostrar modal con opciones
+    function showModal(message, showConfirm = false) {
+        modalMessage.textContent = message;
+    
+        modalButtons.innerHTML = showConfirm
+            ? `
+                <button id="modalCancel" class="btn btn-secondary">Cancelar</button>
+                <button id="modalConfirm" class="btn btn-danger">Desactivar</button>`
+            : `
+                <button id="modalOk" class="btn btn-primary">OK</button>`;
+    
+        customModal.style.display = "flex";
+    
+        return new Promise(resolve => {
+            if (showConfirm) {
+                document.getElementById("modalCancel").onclick = () => {
+                    customModal.style.display = "none";
+                    resolve(false);
+                };
+                document.getElementById("modalConfirm").onclick = () => {
+                    customModal.style.display = "none";
+                    resolve(true);
+                };
+            } else {
+                document.getElementById("modalOk").onclick = () => {
+                    customModal.style.display = "none";
+                    resolve(true);
+                };
+            }
         });
     }
 });
