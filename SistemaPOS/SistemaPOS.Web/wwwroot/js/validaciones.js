@@ -1,7 +1,7 @@
-﻿// ==================== VALIDACIONES GLOBALES ====================
+﻿﻿// ==================== VALIDACIONES GLOBALES ====================
 const RESERVED_WORDS = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"];
 const MAX_LENGTH = 15;
-const MAX_EMAIL_LENGTH = 25;
+const MAX_EMAIL_LENGTH = 40;
 
 /**
  * Muestra mensajes en el modal principal del sistema POS
@@ -26,7 +26,7 @@ function showModal(message, callback) {
 }
 
 /**
- * Aplica validaciones globales a todos los <input> del documento.
+ * Creamos la función de validaciones globales
  */
 function aplicarValidacionesGlobales() {
   document.querySelectorAll("input").forEach(input => {
@@ -43,7 +43,7 @@ function aplicarValidacionesGlobales() {
       }
 
       //  Limitar longitud
-      const limit = field.id === "correo" ? MAX_EMAIL_LENGTH : MAX_LENGTH;
+      const limit = field.id === "correo" ? MAX_EMAIL_LENGT : MAX_LENGTH;
       if (value.length > limit) {
         field.value = value.slice(0, limit);
         showModal(`Máximo ${limit} caracteres permitidos.`);
@@ -125,4 +125,3 @@ function aplicarValidacionesGlobales() {
     });
   });
 }
-

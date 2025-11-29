@@ -28,6 +28,7 @@ body {
 .text-blue {
     color: var(--primary-blue);
 }
+
 .text-red {
     color: var(--soft-red);
 }
@@ -45,16 +46,24 @@ body {
 }
 
 @keyframes gradient-animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .login-card {
     background-color: rgba(255, 255, 255, 0.95);
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
 }
@@ -100,7 +109,7 @@ body {
 .sidebar {
     width: 250px;
     background-color: var(--card-bg);
-    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
     padding: 20px 0;
 }
 
@@ -159,7 +168,7 @@ body {
     background-color: var(--card-bg);
     padding: 15px 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
 }
 
@@ -200,7 +209,7 @@ body {
     background-color: var(--card-bg);
     border-radius: 15px;
     padding: 25px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .table-header {
@@ -221,7 +230,8 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     text-align: left;
     padding: 15px;
     border-bottom: 1px solid var(--border-color);
@@ -290,7 +300,7 @@ tr:hover {
     background-color: var(--card-bg);
     border-radius: 15px;
     padding: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     width: 400px;
     text-align: center;
 }
@@ -338,14 +348,19 @@ tr:hover {
 }
 
 .disabled {
-  pointer-events: none;     /* Desactiva clics */
-  opacity: 0.5;            /* Lo hace visualmente "apagado" */
-  cursor: not-allowed;     /* Muestra el cursor de prohibido */
+    pointer-events: none;
+    /* Desactiva clics */
+    opacity: 0.5;
+    /* Lo hace visualmente "apagado" */
+    cursor: not-allowed;
+    /* Muestra el cursor de prohibido */
 }
 
 .input-error {
-    border: 2px solid #e63946; /* Rojo de error */
-    background-color: #ffe6e6; /* Fondo rosado suave */
+    border: 2px solid #e63946;
+    /* Rojo de error */
+    background-color: #ffe6e6;
+    /* Fondo rosado suave */
 }
 
 #error-message {
@@ -353,7 +368,8 @@ tr:hover {
     font-size: 0.9rem;
     margin-top: 10px;
     text-align: center;
-    display: none; /* Oculto por defecto */
+    display: none;
+    /* Oculto por defecto */
 }
 
 /* 🔹 Fondo opaco del modal */
@@ -373,7 +389,7 @@ tr:hover {
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
     width: 300px;
     animation: showModal 0.3s ease;
 }
@@ -551,7 +567,9 @@ label {
     color: var(--text-color);
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     padding: 0.75rem 0.9rem;
     border: 1px solid var(--border-color);
     border-radius: 10px;
@@ -561,11 +579,14 @@ input, select, textarea {
     transition: all 0.2s ease;
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
     color: #999;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
     border-color: var(--primary-blue);
     box-shadow: 0 0 0 3px rgba(44, 142, 249, 0.15);
     outline: none;
@@ -579,7 +600,7 @@ textarea {
     border-radius: 8px;
     resize: none;
     font-family: 'Poppins', sans-serif;
-    font-weight: 100; 
+    font-weight: 100;
 }
 
 /* === Botones === */
@@ -618,13 +639,75 @@ textarea {
     background: linear-gradient(45deg, #db2b0c, #f45337);
     transform: translateY(-2px);
 }
+
 .input-error {
-  border-color: red !important;
+    border-color: red !important;
 }
 
 .error-msg {
-  display: block;
-  color: red;
-  font-size: 0.8rem;
-  margin-top: 2px;
+    display: block;
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 2px;
+}
+
+/* === Modal de mensajes global === */
+.modal-small {
+    width: 380px;
+    max-width: 90%;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    background: white;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.modal-small p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1.2rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.modal-buttons .btn-primary {
+    background: var(--blue-gradient);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-buttons .btn-primary:hover {
+    background: linear-gradient(45deg, #2381e6, #0099e9);
+    transform: translateY(-1px);
+}
+
+/* Animación */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.search-bar input:focus {
+    outline: none;
+    border: 2px solid var(--primary-blue);
+    box-shadow: 0 0 8px rgba(44, 142, 249, 0.3);
+    transition: 0.2s ease;
 }

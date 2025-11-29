@@ -47,6 +47,32 @@ namespace SistemaPOS.Application.Services.Implementations
 
             return nuevo;
         }
+        public async Task<Producto?> GetByIdAsync(int id)
+        {
+            return await _context.Productos
+                .Include(p => p.Categoria) // opcional, si quieres traer datos de categoría
+                .FirstOrDefaultAsync(p => p.ProId == id && p.ProEstado == "ACTIVO");
+        }
+
+
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductosAsync()
+        {
+            var productos = await _context.Productos
+                .Include(p => p.Categoria) // 👈 importante: asume que tienes relación navigation property
+                .Where(p => p.ProEstado == "ACTIVO")
+                .ToListAsync();
+
+            return productos.Select(p => new ProductoResponse
+            {
+                ProId = p.ProId,
+                ProNombre = p.ProNombre,
+                ProDescripcion = p.ProDescripcion,
+                ProPrecioVenta = p.ProPrecioVenta,
+                ProUnidad = p.ProUnidad,
+                CatNombre = p.Categoria != null ? p.Categoria.CatNombre : "(Sin categoría)"
+            });
+        }
+
 
     }
 }

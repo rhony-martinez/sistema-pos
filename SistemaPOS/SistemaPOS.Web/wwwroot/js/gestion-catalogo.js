@@ -1,4 +1,12 @@
+let productosGlobal = [];
+
 document.addEventListener("DOMContentLoaded", () => {
+    cargarProductos();
+
+    const buscador = document.getElementById("buscarProducto");
+    if (buscador) {
+        buscador.addEventListener("input", filtrarProductos);
+    }
 
     const btnCargar = document.getElementById("btnCargarProducto");
     const modal = document.getElementById("modal-registrar-producto");
@@ -13,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     cargarCategorias();
+    cargarProductos();
 
 
     if (form) {
@@ -45,24 +54,43 @@ async function cargarCategorias() {
 }
 
 async function registrarProducto() {
+    document.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
+
+    const campos = ["proNombre", "proDescripcion", "proPrecioVenta", "proUnidad", "catNombre"];
+    const vacios = [];
+    // Validar campos vacíos
+    campos.forEach(id => {
+        const input = document.getElementById(id);
+        if (!input.value.trim()) {
+            input.classList.add("input-error");
+            vacios.push(input);
+        }
+    });
+
+    if (vacios.length > 0) {
+        showModal("Tienes campos obligatorios vacíos. Complétalos antes de continuar.", () => vacios[0].focus());
+        return;
+    }
+
     const data = {
         proNombre: document.getElementById("proNombre").value.trim(),
         proDescripcion: document.getElementById("proDescripcion").value.trim(),
         proPrecioVenta: parseFloat(document.getElementById("proPrecioVenta").value),
         proUnidad: document.getElementById("proUnidad").value.trim(),
         catNombre: document.getElementById("catNombre").value.trim()
+        
     };
 
+    console.log("📦 Datos a enviar:", data);
 
-    if (!data.proNombre || isNaN(data.proPrecioVenta) || !data.catNombre) {
-        alert("Por favor, complete los campos obligatorios.");
-        return;
-    }
+    
 
     try {
         const response = await fetch(`${API_URL}/Producto`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify(data),
         });
 
@@ -71,7 +99,7 @@ async function registrarProducto() {
             throw new Error(error.detalle || "Error al registrar el producto.");
         }
 
-        alert("✅ Producto registrado exitosamente.");
+        showModal("✅ Producto registrado exitosamente.");
         cerrarModal();
         document.getElementById("form-registrar-producto").reset();
     } catch (error) {
@@ -80,24 +108,87 @@ async function registrarProducto() {
     }
 }
 
+
 function abrirModal() {
-  const modal = document.getElementById("modal-registrar-producto");
-  modal.style.display = "flex";
+    const modal = document.getElementById("modal-registrar-producto");
+    modal.style.display = "flex";
 
-  // Esperar un ciclo de renderizado para que los inputs existan en el DOM
-  setTimeout(() => {
-    if (typeof aplicarValidacionesProducto === "function") {
-      aplicarValidacionesProducto();
-      console.log("✅ Validaciones de producto aplicadas");
-    } else {
-      console.error("⚠️ No se encontró la función aplicarValidacionesProducto()");
-    }
-  }, 50);
+    // Esperar un ciclo de renderizado para que los inputs existan en el DOM
+    setTimeout(() => {
+        if (typeof aplicarValidacionesProducto === "function") {
+            aplicarValidacionesProducto();
+            console.log("✅ Validaciones de producto aplicadas");
+        } else {
+            console.error("⚠️ No se encontró la función aplicarValidacionesProducto()");
+        }
+    }, 50);
 }
-
-
-
 
 function cerrarModal() {
     document.getElementById("modal-registrar-producto").style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    
+});
+
+async function cargarProductos() {
+    try {
+        const res = await fetch(`${API_URL}/Producto`);
+        if (!res.ok) throw new Error("No se pudieron cargar los productos.");
+
+        const productos = await res.json();
+        renderizarTabla(productos);
+    } catch (err) {
+        console.error("❌ Error cargando productos:", err);
+    }
+}
+
+function renderizarTabla(productos) {
+    const tbody = document.querySelector("table tbody");
+    tbody.innerHTML = ""; // limpiar
+
+    if (!productos || productos.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No hay productos registrados.</td></tr>`;
+        return;
+    }
+
+    productos.forEach(p => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${p.proId}</td>
+            <td>${p.proNombre}</td>
+            <td>${p.proDescripcion || "-"}</td>
+            <td>${p.proPrecioVenta.toLocaleString("es-CO", { style: "currency", currency: "COP" })}</td>
+            <td>${p.catNombre}</td>
+            <td class="table-actions">
+                <button class="btn btn-action"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-action btn-danger"><i class="fas fa-trash-alt"></i></button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+async function cargarProductos() {
+    try {
+        const res = await fetch(`${API_URL}/Producto`);
+        if (!res.ok) throw new Error("No se pudieron cargar los productos.");
+
+        const productos = await res.json();
+        productosGlobal = productos; // guardar lista completa
+        renderizarTabla(productos);
+    } catch (err) {
+        console.error("❌ Error cargando productos:", err);
+    }
+}
+
+function filtrarProductos(e) {
+    const termino = e.target.value.toLowerCase().trim();
+
+    const filtrados = productosGlobal.filter(p =>
+        p.proNombre.toLowerCase().includes(termino)
+    );
+
+    renderizarTabla(filtrados);
 }

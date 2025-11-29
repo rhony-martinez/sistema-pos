@@ -128,6 +128,10 @@ namespace SistemaPOS.Infrastructure.Data
                       .WithMany(c => c.Productos)
                       .HasForeignKey(e => e.CatId)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(p => p.Catalogos)
+                .WithOne(c => c.Producto)
+                .HasForeignKey(c => c.ProId);
             });
 
 

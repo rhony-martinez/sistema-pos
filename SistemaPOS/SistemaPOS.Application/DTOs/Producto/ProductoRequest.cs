@@ -20,4 +20,3 @@ public class ProductoRequest
     [Required(ErrorMessage = "Debe especificar el nombre de la categoría.")]
     public string CatNombre { get; set; } = string.Empty;
 }
-
