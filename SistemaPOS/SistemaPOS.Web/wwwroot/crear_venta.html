@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear Venta - Sistema POS</title>
+
+  <!-- Estilos globales -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Estilos específicos de esta vista -->
+  <link rel="stylesheet" href="css/crear_venta.css" />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+
+  <style>
+    /* ============ ESTILOS EXTRA PARA MODALES ============ */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      animation: popIn 0.2s ease-out;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .cv-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .cv-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #007bff;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #ccc;
+      color: #333;
+    }
+
+    .cv-summary .line {
+      display: flex;
+      justify-content: space-between;
+      margin: 6px 0;
+    }
+
+    .cv-summary .total {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container crear-venta">
+    <h1>Crear Venta</h1>
+
+    <div class="cv-grid">
+      <div>
+        <!-- FILTROS -->
+        <div class="cv-card">
+          <h3>Datos del Cliente</h3>
+          <div class="cv-row">
+            <input id="cliente_documento" class="cv-input" placeholder="Cc. Documento" />
+            <input id="cliente_nombre" class="cv-input" placeholder="Nombre" />
+            <input id="cliente_telefono" class="cv-input" placeholder="Teléfono" />
+            <input id="cliente_correo" class="cv-input" placeholder="Correo" />
+          </div>
+        </div>
+
+        <!-- PRODUCTOS -->
+        <div class="cv-card">
+          <div class="cv-card-header">
+            <h3>Productos</h3>
+            <div class="cv-search">
+              <input id="busqueda" class="cv-input" placeholder="Buscar por ID de Producto" />
+              <button id="btn-agregar" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Agregar
+              </button>
+            </div>
+          </div>
+
+          <table class="cv-table" id="tb-items">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cant.</th>
+                <th>Precio</th>
+                <th>IVA%</th>
+                <th>Subtotal</th>
+                <th>Acc.</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- MEDIOS DE PAGO -->
+        <div class="cv-card">
+          <h3>Medios de pago</h3>
+          <div class="cv-actions">
+            <label><input type="radio" name="mpago" value="Efectivo" checked /> Efectivo</label>
+            <label><input type="radio" name="mpago" value="Tarjeta" /> Tarjeta</label>
+            <label><input type="radio" name="mpago" value="Transferencia" /> Transferencia</label>
+          </div>
+
+          <!-- Panel Efectivo -->
+          <div id="panel-efectivo" style="margin-top: 10px;">
+            <label>Monto recibido</label>
+            <input id="monto_recibido" data-numeric="true" class="cv-input" placeholder="$" />
+            <label>Cambio</label>
+            <input id="monto_cambio" class="cv-input" placeholder="$" readonly />
+          </div>
+
+          <!-- Panel Tarjeta -->
+          <div id="panel-tarjeta" style="display:none; margin-top:10px;">
+            <label>Token autorización</label>
+            <input id="token_aut" class="cv-input" placeholder="Código / Token" />
+          </div>
+        </div>
+      </div>
+
+      <!-- RESUMEN -->
+      <aside class="cv-card cv-summary">
+        <h3>Resumen</h3>
+        <div class="line"><span>Subtotal</span><span id="r-subtotal">$0</span></div>
+        <div class="line"><span>IVA 19%</span><span id="r-iva">$0</span></div>
+        <div class="line total"><span>TOTAL</span><span id="r-total">$0</span></div>
+
+        <label>Observaciones</label>
+        <textarea id="observaciones" class="cv-textarea" placeholder="Sugerencias o notas"></textarea>
+
+        <hr />
+        <div class="cv-actions">
+          <button id="btn-cancelar" class="btn btn-secondary">Cancelar</button>
+          <button id="btn-confirmar" class="btn btn-primary">Confirmar</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Modal general -->
+  <div id="modal" class="modal">
+    <div class="modal-card">
+      <p id="modal-text">Mensaje</p>
+      <button id="modal-btn" class="btn btn-primary">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- Modal para cantidad -->
+  <div id="modal-cantidad" class="modal">
+    <div class="modal-card">
+      <h3>Ingrese la cantidad</h3>
+      <input id="input-cantidad" type="number" class="cv-input" min="1" value="1" />
+      <div class="cv-actions">
+        <button id="btn-cant-cancelar" class="btn btn-secondary">Cancelar</button>
+        <button id="btn-cant-ok" class="btn btn-primary">Aceptar</button>
+      </div>
+    </div>
+  </div>
+  <!-- =============================== -->
+<!-- MODAL FACTURA -->
+<!-- =============================== -->
+<div id="modal-factura" style="display:none;" class="modal-overlay">
+  <div class="factura-container">
+    <img src="img/pos-logo.png" alt="Logo POS" class="factura-logo">
+    <div class="factura-info">
+      <p id="factura-hora"></p>
+      <p id="factura-fecha"></p>
+    </div>
+    <table class="factura-tabla">
+      <thead>
+        <tr>
+          <th>Cant.</th>
+          <th>Nombre del Producto</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody id="factura-detalles"></tbody>
+    </table>
+    <div class="factura-total">
+      <strong>TOTAL</strong>
+      <span id="factura-total"></span>
+    </div>
+    <div class="factura-botones">
+      <button id="btn-factura-cerrar" class="btn-azul">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script type="module" src="js/validaciones_ventas.js"></script>
+  <script type="module" src="js/crear_venta.js"></script>
+</body>
+</html>

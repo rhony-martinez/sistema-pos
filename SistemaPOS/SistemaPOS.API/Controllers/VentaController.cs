@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SistemaPOS.Infrastructure.Data;
-using SistemaPOS.Domain.Entities;
+using SistemaPOS.Application.DTOs.Venta;
+using SistemaPOS.Application.Services.Interfaces;
 
 namespace SistemaPOS.API.Controllers
 {
@@ -9,54 +8,29 @@ namespace SistemaPOS.API.Controllers
     [Route("api/[controller]")]
     public class VentaController : ControllerBase
     {
-        private readonly SistemaPosContext _context;
+        private readonly IVentaService _ventaService;
 
-        public VentaController(SistemaPosContext context)
+        public VentaController(IVentaService ventaService)
         {
-            _context = context;
+            _ventaService = ventaService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll() =>
-            Ok(await _context.Ventas.Include(v => v.Detalles).ToListAsync());
+            Ok(await _ventaService.ObtenerVentasAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var venta = await _context.Ventas
-                .Include(v => v.Detalles)
-                .FirstOrDefaultAsync(v => v.VenId == id);
-
+            var venta = await _ventaService.ObtenerVentaPorIdAsync(id);
             return venta == null ? NotFound() : Ok(venta);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Venta venta)
+        public async Task<IActionResult> Create([FromBody] VentaCreateDto dto)
         {
-            _context.Ventas.Add(venta);
-            await _context.SaveChangesAsync();
+            var venta = await _ventaService.CrearVentaAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = venta.VenId }, venta);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Venta venta)
-        {
-            if (id != venta.VenId) return BadRequest();
-
-            _context.Entry(venta).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var venta = await _context.Ventas.FindAsync(id);
-            if (venta == null) return NotFound();
-
-            _context.Ventas.Remove(venta);
-            await _context.SaveChangesAsync();
-            return NoContent();
         }
     }
 }

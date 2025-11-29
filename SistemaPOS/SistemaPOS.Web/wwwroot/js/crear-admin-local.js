@@ -1,4 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
+    aplicarValidacionesGlobales(); //  Activa las validaciones universales
     const form = document.getElementById("form-crear-admin");
     const modal = document.getElementById("modal");
     const modalText = document.getElementById("modal-text");
@@ -12,16 +13,16 @@
             if (callback) callback();
         };
     }
-
-    // Solo permitir números en campos ID
-    ["usuId", "sedeId"].forEach(id => {
+           // Solo permitir números en campos ID
+    ["usuId", "sedeId", "telefono"].forEach(id => {
         document.getElementById(id).addEventListener("keypress", (e) => {
             if (!/[0-9]/.test(e.key)) {
                 e.preventDefault();
-                showModal("Solo se permiten números en los campos de ID.");
+                showModal("Solo se permiten números.");
             }
         });
     });
+
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -41,7 +42,7 @@
         });
 
         if (vacios.length > 0) {
-            showModal("Tienes campos vacíos. Complétalos antes de continuar.", () => vacios[0].focus());
+            showModal("Tienes campos obligatorios vacíos. Complétalos antes de continuar.", () => vacios[0].focus());
             return;
         }
 

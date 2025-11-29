@@ -9,6 +9,7 @@
   <!-- Dependencias del proyecto -->
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.10" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
@@ -23,15 +24,12 @@
   <!-- Exclusiones de archivos innecesarios -->
   <ItemGroup>
     <Compile Remove="DTOSs\**" />
-    <Compile Remove="NewFolder\**" />
     <Compile Remove="NewFolder1\**" />
     <Compile Remove="NewFolder3\**" />
     <EmbeddedResource Remove="DTOSs\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
     <EmbeddedResource Remove="NewFolder1\**" />
     <EmbeddedResource Remove="NewFolder3\**" />
     <None Remove="DTOSs\**" />
-    <None Remove="NewFolder\**" />
     <None Remove="NewFolder1\**" />
     <None Remove="NewFolder3\**" />
   </ItemGroup>

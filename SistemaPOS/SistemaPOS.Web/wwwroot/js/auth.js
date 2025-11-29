@@ -33,9 +33,36 @@ document.addEventListener("DOMContentLoaded", () => {
             sessionStorage.setItem("token", data.accessToken);
             sessionStorage.setItem("expiresAt", data.expiresAt);
 
+            // Obtener y guardar perfil del usuario
+            const perfil = await getUserProfile();
+            if (perfil) {
+                console.log("✅ Perfil recibido:", perfil);
+                localStorage.setItem("userProfile", JSON.stringify(perfil));
+            }
+
             // Obtener rol desde el token
             const payload = JSON.parse(atob(data.accessToken.split(".")[1]));
             const userRole = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            // 🔹 Obtener perfil completo y guardarlo en localStorage
+            try {
+                const perfilResponse = await fetch(`${API_URL}/Users/me`, {
+                    headers: {
+                        "Authorization": `Bearer ${data.accessToken}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+            
+                if (perfilResponse.ok) {
+                    const perfil = await perfilResponse.json();
+                    console.log("✅ Perfil recibido:", perfil);
+                    localStorage.setItem("userProfile", JSON.stringify(perfil));
+                } else {
+                    console.warn("No se pudo obtener el perfil del usuario.");
+                }
+            } catch (error) {
+                console.error("Error obteniendo perfil del usuario:", error);
+            }
+            
 
             // Redirigir según el rol
             switch (userRole) {

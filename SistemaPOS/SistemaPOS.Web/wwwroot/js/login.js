@@ -1,14 +1,18 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
+    aplicarValidacionesGlobales(); //  Activa las validaciones universales
     const form = document.querySelector("form");
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
     const errorMsg = document.getElementById("error-message");
-
+    
+    
+   
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
+
 
         if (!username || !password) {
             errorMsg.textContent = "Por favor, completa todos los campos.";
@@ -17,6 +21,9 @@
             passwordInput.classList.add("input-error");
             return;
         }
+
+    
+    
 
         try {
             const response = await fetch(`${API_URL}/auth/login`, {
@@ -47,6 +54,26 @@
 
             const payload = JSON.parse(atob(data.accessToken.split(".")[1]));
             const userRole = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
+            // 🔹 Obtener perfil completo y guardarlo en localStorage
+            try {
+                const perfilResponse = await fetch(`${API_URL}/Users/me`, {
+                    headers: {
+                        "Authorization": `Bearer ${data.accessToken}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (perfilResponse.ok) {
+                    const perfil = await perfilResponse.json();
+                    console.log("✅ Perfil recibido:", perfil);
+                    localStorage.setItem("userProfile", JSON.stringify(perfil));
+                } else {
+                    console.warn("No se pudo obtener el perfil del usuario.");
+                }
+            } catch (error) {
+                console.error("Error obteniendo perfil del usuario:", error);
+            }
 
             switch (userRole) {
                 case "ADMIN_GENERAL":

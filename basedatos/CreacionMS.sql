@@ -72,7 +72,7 @@ CREATE TABLE CATALOGO (
 --  TABLA: USUARIO
 --------------------------------------------------------
 CREATE TABLE USUARIO (
-    USU_ID INT IDENTITY(1,1) PRIMARY KEY,
+    USU_ID INT NOT NULL PRIMARY KEY,
     USU_PRIMER_NOMBRE VARCHAR(50) NOT NULL,
     USU_SEGUNDO_NOMBRE VARCHAR(50),
     USU_PRIMER_APELLIDO VARCHAR(50) NOT NULL,
@@ -88,17 +88,9 @@ CREATE TABLE USUARIO (
 
 ALTER TABLE USUARIO ADD CONSTRAINT CKC_USU_ESTADO CHECK (USU_ESTADO IN ('ACTIVO', 'INACTIVO'));
 ALTER TABLE USUARIO ADD CONSTRAINT CKC_USU_ROL CHECK (USU_ROL IN ('ADMIN_GENERAL', 'ADMIN_LOCAL', 'CAJERO'));
--- 1️⃣ Quita la restricción IDENTITY
--- Esto recrea la columna USU_ID sin autoincremento
-ALTER TABLE USUARIO DROP CONSTRAINT PK__USUARIO__0B483FBF2EE2B706;  -- nombre puede variar, revisa en sys.objects
--- o si no conoces el nombre exacto:
--- ALTER TABLE USUARIO DROP CONSTRAINT [NombreDeTuPK];
 
-ALTER TABLE USUARIO DROP COLUMN USU_ID;
 
-ALTER TABLE USUARIO ADD USU_ID INT NOT NULL PRIMARY KEY;
 
-SELECT * FROM sys.objects
 --------------------------------------------------------
 --  TABLA: VENTA
 --------------------------------------------------------
