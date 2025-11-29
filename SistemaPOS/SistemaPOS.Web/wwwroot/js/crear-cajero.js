@@ -1,4 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", async () => {
+    aplicarValidacionesGlobales(); //  Activa las validaciones universales
     if (!checkAuth()) return;
 
     const sedeInput = document.getElementById("sedeId");
@@ -26,13 +27,17 @@
         };
     }
 
-    // Solo permitir números en ID
-    usuIdInput?.addEventListener("keypress", (e) => {
-        if (!/[0-9]/.test(e.key)) {
-            e.preventDefault();
-            showModal("Solo se permiten números en el campo ID.");
-        }
+              // Solo permitir números en campos ID
+    ["usuId", "sedeId", "telefono"].forEach(id => {
+        document.getElementById(id).addEventListener("keypress", (e) => {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+                showModal("Solo se permiten números.");
+            }
+        });
     });
+
+
 
     // Cargar sede automáticamente desde el perfil del usuario logueado
     let profile = null;
@@ -69,6 +74,7 @@
             rol: "CAJERO",
             sedeId: parseInt(sedeInput.value)
         };
+       
 
         // Validación de campos obligatorios
         const requiredFields = ["usuId", "primerNombre", "primerApellido", "correo", "username", "password"];

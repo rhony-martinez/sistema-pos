@@ -4,13 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SistemaPOS.Application.CategoriasProducto;
 using SistemaPOS.Application.Sedes;
 using SistemaPOS.Application.Services;
 using SistemaPOS.Application.Services.Implementations;
+using SistemaPOS.Application.Services.Interfaces;
 using SistemaPOS.Infrastructure;
 using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Infrastructure.Persistence;
 using SistemaPOS.Infrastructure.Repositories;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 // Crear el builder
@@ -38,6 +41,12 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISedeRepository, SedeRepository>();
 builder.Services.AddScoped<ISedeService, SedeService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ICategoriaProductoService, CategoriaProductoService>();
+builder.Services.AddScoped<IVentaService, VentaService>();
+
+
+builder.Services.AddHttpContextAccessor();
 
 // 🔹 Registrar casos de uso de “crear sede”
 builder.Services.AddScoped<ListarSedesQuery>();
@@ -55,6 +64,9 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
+
+
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 // ----------------------------------------------------
 // 🔹 Autenticación JWT

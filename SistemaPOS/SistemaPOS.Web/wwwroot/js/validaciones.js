@@ -1,12 +1,7 @@
-// config.js
-// ✅ URL base de la API - cámbiala según entorno
- const API_URL = "http://localhost:5289/api"; // ← para desarrollo local
-//const API_URL = "http://www.possistema.somee.com/api"; // ← para producción en Somee
-
-// ==================== VALIDACIONES GLOBALES ====================
+﻿﻿// ==================== VALIDACIONES GLOBALES ====================
 const RESERVED_WORDS = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"];
 const MAX_LENGTH = 15;
-const MAX_EMAIL_LENGTH = 25;
+const MAX_EMAIL_LENGTH = 40;
 
 /**
  * Muestra mensajes en el modal principal del sistema POS
@@ -31,7 +26,7 @@ function showModal(message, callback) {
 }
 
 /**
- * Aplica validaciones globales a todos los <input> del documento.
+ * Creamos la función de validaciones globales
  */
 function aplicarValidacionesGlobales() {
   document.querySelectorAll("input").forEach(input => {
@@ -48,12 +43,13 @@ function aplicarValidacionesGlobales() {
       }
 
       //  Limitar longitud
-      const limit = field.id === "correo" ? MAX_EMAIL_LENGTH : MAX_LENGTH;
+      const limit = field.id === "correo" ? MAX_EMAIL_LENGT : MAX_LENGTH;
       if (value.length > limit) {
         field.value = value.slice(0, limit);
         showModal(`Máximo ${limit} caracteres permitidos.`);
         return;
       }
+   
 
         //  El correo no puede tener ningún espacio (ni al inicio, ni en medio, ni al final)
       if (field.id === "correo") {
@@ -85,9 +81,7 @@ function aplicarValidacionesGlobales() {
 
       
 
-    
-
-      //  Bloquear caracteres especiales excepto en correo
+      //  Bloquear caracteres especiales excepto en correo y contraseña
       if (field.id !== "correo" && field.id !== "password") {
         if (/[^a-zA-Z0-9\s]/.test(value)) {
           field.classList.add("input-error");
@@ -109,6 +103,23 @@ function aplicarValidacionesGlobales() {
           return;
         }
       }
+      
+        const telefonoInput = document.getElementById("telefono");
+    telefonoInput.addEventListener("input", (e) => {
+        const field = e.target;
+        let value = field.value;
+
+        // Si contiene algo que no sea número → eliminarlo
+        if (/[^0-9]/.test(value)) {
+            field.value = value.replace(/[^0-9]/g, "");
+            field.classList.add("input-error");
+            showModal("Solo se permiten números en el teléfono.");
+            return;
+        } else {
+            field.classList.remove("input-error");
+        }
+    });  
+
 
       field.classList.remove("input-error");
     });

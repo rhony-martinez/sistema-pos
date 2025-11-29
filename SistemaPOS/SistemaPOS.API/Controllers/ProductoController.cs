@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SistemaPOS.Infrastructure.Data;
+using SistemaPOS.Application.DTOs.Producto;
+using SistemaPOS.Application.Services.Implementations;
+using SistemaPOS.Application.Services.Interfaces;
 using SistemaPOS.Domain.Entities;
 
 namespace SistemaPOS.API.Controllers
@@ -9,51 +10,62 @@ namespace SistemaPOS.API.Controllers
     [Route("api/[controller]")]
     public class ProductoController : ControllerBase
     {
-        private readonly SistemaPosContext _context;
+        private readonly IProductoService _productoService;
 
-        public ProductoController(SistemaPosContext context)
+        public ProductoController(IProductoService productoService)
         {
-            _context = context;
+            _productoService = productoService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll() =>
-            Ok(await _context.Productos.ToListAsync());
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] ProductoRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var producto = await _productoService.CrearProductoAsync(request);
+                return CreatedAtAction(nameof(GetById), new { id = producto.ProId }, producto);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(new { mensaje = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error interno del servidor.", detalle = ex.Message });
+            }
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var producto = await _context.Productos.FindAsync(id);
-            return producto == null ? NotFound() : Ok(producto);
+            var producto = await _productoService.GetByIdAsync(id);
+            if (producto == null)
+                return NotFound(new { mensaje = $"No se encontró el producto con ID {id}." });
+
+            return Ok(producto);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(Producto producto)
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            _context.Productos.Add(producto);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = producto.ProId }, producto);
+            try
+            {
+                var productos = await _productoService.ObtenerProductosAsync();
+                return Ok(productos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error al obtener los productos.", detalle = ex.Message });
+            }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Producto producto)
-        {
-            if (id != producto.ProId) return BadRequest();
-
-            _context.Entry(producto).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var producto = await _context.Productos.FindAsync(id);
-            if (producto == null) return NotFound();
-
-            _context.Productos.Remove(producto);
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
     }
 }

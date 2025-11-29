@@ -19,6 +19,7 @@ namespace SistemaPOS.Domain.Entities
         [StringLength(200)]
         public string? ProDescripcion { get; set; }
 
+        [Required]
         [Column("PRO_PRECIO_VENTA")]
         public decimal ProPrecioVenta { get; set; }
 
@@ -26,14 +27,18 @@ namespace SistemaPOS.Domain.Entities
         [StringLength(20)]
         public string? ProUnidad { get; set; }
 
+        [Required]
         [Column("PRO_ESTADO")]
         [StringLength(20)]
-        public string? ProEstado { get; set; }
+        public string ProEstado { get; set; } = string.Empty;
 
+        [Required]
         [Column("CAT_ID")]
         public int CatId { get; set; }
 
         [ForeignKey("CatId")]
         public CategoriaProducto? Categoria { get; set; }
+
+        public ICollection<Catalogo>? Catalogos { get; set; }
     }
 }

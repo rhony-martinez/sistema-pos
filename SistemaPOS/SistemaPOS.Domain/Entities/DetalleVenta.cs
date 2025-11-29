@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace SistemaPOS.Domain.Entities
 {
@@ -15,6 +16,7 @@ namespace SistemaPOS.Domain.Entities
         public int VenId { get; set; }
 
         [ForeignKey("VenId")]
+        [JsonIgnore] // EVITA el ciclo de referencia
         public Venta? Venta { get; set; }
 
         [Column("PRO_ID")]
