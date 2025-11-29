@@ -134,4 +134,21 @@ public class UserService : IUserService
         return await _userRepo.FindAsync(u => u.UsuRol == rol);
     }
 
+    public async Task<bool> DeactivateUserAsync(int id)
+    {
+        // Puedes usar el repositorio o directamente el contexto, según tu estándar
+        var usuario = await _userRepo.GetByIdAsync(id);
+        if (usuario == null)
+            return false;
+
+        // Si ya está inactivo, no pasa nada, pero consideramos la operación exitosa
+        if (usuario.UsuEstado == "INACTIVO")
+            return true;
+
+        usuario.UsuEstado = "INACTIVO";
+
+        await _userRepo.SaveChangesAsync();
+        return true;
+    }
+
 }

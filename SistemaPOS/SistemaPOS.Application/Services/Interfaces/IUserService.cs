@@ -12,5 +12,6 @@ public interface IUserService
     Task<bool> UpdateUserAsync(int id, UpdateUserRequest dto);
     Task<Usuario?> GetUserByIdAsyncToUpdate(int id);
     Task<List<Usuario>> GetUsersByRoleAsync(string rol);
+    Task<bool> DeactivateUserAsync(int id);
 }
 

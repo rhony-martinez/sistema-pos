@@ -83,4 +83,19 @@ public class UsersController : ControllerBase
         }
     }
 
+    // 🔹 Desactivar usuario por ID
+    [Authorize(Roles = "ADMIN_GENERAL,ADMIN_LOCAL")]
+    [HttpPatch("{id}/desactivar")]
+    public async Task<IActionResult> DesactivarUsuario(int id)
+    {
+        var resultado = await _userService.DeactivateUserAsync(id);
+
+        if (!resultado)
+            return NotFound(new { message = "Usuario no encontrado" });
+
+        return Ok(new { message = "Usuario desactivado correctamente" });
+        // o si prefieres:
+        // return NoContent();
+    }
+
 }

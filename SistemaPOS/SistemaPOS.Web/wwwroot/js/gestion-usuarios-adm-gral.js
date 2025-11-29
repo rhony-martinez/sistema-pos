@@ -48,48 +48,53 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === 3️⃣ Función para renderizar tabla ===
     function renderUsuarios(lista) {
-        tablaBody.innerHTML = "";
+    tablaBody.innerHTML = "";
 
-        if (lista.length === 0) {
-            tablaBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No se encontraron resultados.</td></tr>`;
-            return;
-        }
+    if (lista.length === 0) {
+        tablaBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No se encontraron resultados.</td></tr>`;
+        return;
+    }
 
-        lista.forEach(usuario => {
-            const estadoColor = usuario.usuEstado === "ACTIVO" ? "text-blue" : "text-red";
-            const estadoTexto = usuario.usuEstado === "ACTIVO" ? "Activo" : "Inactivo";
+    lista.forEach(usuario => {
+        const estadoColor = usuario.usuEstado === "ACTIVO" ? "text-blue" : "text-red";
+        const estadoTexto = usuario.usuEstado === "ACTIVO" ? "Activo" : "Inactivo";
 
-            const fila = `
-                <tr>
-                    <td>${usuario.usuUsername || "-"}</td>
-                    <td>${usuario.usuPrimerNombre || "-"}</td>
-                    <td>${usuario.usuPrimerApellido || "-"}</td>
-                    <td>${usuario.usuCorreo || "-"}</td>
-                    <td><i class="fas fa-circle ${estadoColor}"></i> ${estadoTexto}</td>
-                    <td>${usuario.sedeId ?? "-"}</td>
-                    <td class="table-actions">
-                        <button class="btn btn-action btn-edit" title="Editar" data-id="${usuario.usuId}">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-action btn-del" title="Desactivar" data-id="${usuario.usuId}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
+        const fila = `
+            <tr>
+                <td>${usuario.usuUsername || "-"}</td>
+                <td>${usuario.usuPrimerNombre || "-"}</td>
+                <td>${usuario.usuPrimerApellido || "-"}</td>
+                <td>${usuario.usuCorreo || "-"}</td>
+                <td><i class="fas fa-circle ${estadoColor}"></i> ${estadoTexto}</td>
+                <td>${usuario.sedeId ?? "-"}</td>
+                <td class="table-actions">
+                    <button class="btn btn-action btn-edit" title="Editar" data-id="${usuario.usuId}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-action btn-del" 
+        title="Desactivar" 
+        data-id="${usuario.usuId}"
+        ${usuario.usuEstado === "INACTIVO" ? "disabled" : ""}>
+        <i class="fas ${usuario.usuEstado === "INACTIVO" ? "fa-ban" : "fa-trash"}"></i>
 
-            tablaBody.insertAdjacentHTML("beforeend", fila);
+</button>
+
+                </td>
+            </tr>
+        `;
+
+        tablaBody.insertAdjacentHTML("beforeend", fila);
+    });
+
+    // Botón editar
+    document.querySelectorAll(".btn-edit").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const userId = e.currentTarget.getAttribute("data-id");
+            window.location.href = `modificar-adm-local.html?id=${userId}`;
         });
+    });
 
-        // ✅ Evento para botón Editar
-        document.querySelectorAll(".btn-edit").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const userId = e.currentTarget.getAttribute("data-id");
-                window.location.href = `modificar-adm-local.html?id=${userId}`;
-            });
-        });
-
-        // ✅ Evento para botón Desactivar
+// ✅ Evento para botón Desactivar
         document.querySelectorAll(".btn-del").forEach(btn => {
             btn.addEventListener("click", async (e) => {
                 const userId = e.currentTarget.getAttribute("data-id");
@@ -129,9 +134,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             });
         });
-    }
+}
 
-    // Mostrar modal con opciones
+// Mostrar modal con opciones
     function showModal(message, showConfirm = false) {
         modalMessage.textContent = message;
     
@@ -162,4 +167,5 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
     }
+
 });
