@@ -1,4 +1,10 @@
-﻿namespace SistemaPOS.Application.DTOs.Producto
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SistemaPOS.Application.DTOs.Producto
 {
     public class ProductoResponse
     {
@@ -7,7 +13,6 @@
         public string? ProDescripcion { get; set; }
         public decimal ProPrecioVenta { get; set; }
         public string? ProUnidad { get; set; }
-        public string Categoria { get; set; } = string.Empty;
-        public int SedeId { get; set; }
+        public string CatNombre { get; set; } = string.Empty;
     }
 }

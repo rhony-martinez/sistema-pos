@@ -1,4 +1,4 @@
-﻿function aplicarValidacionesProducto() {
+﻿﻿function aplicarValidacionesProducto() {
   const inputsProducto = [
     "proNombre",
     "proDescripcion",

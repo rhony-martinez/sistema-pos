@@ -41,9 +41,9 @@ public class ProductoService : IProductoService
         bool existe = await _context.Productos
             .Where(p => p.ProEstado == "ACTIVO" && p.ProNombre == request.ProNombre)
             .Join(_context.Catalogos,
-                  p => p.ProId,
-                  c => c.ProId,
-                  (p, c) => new { Producto = p, Catalogo = c })
+                p => p.ProId,
+                c => c.ProId,
+                (p, c) => new { Producto = p, Catalogo = c })
             .AnyAsync(pc => pc.Catalogo.SedeId == sedeId);
 
         if (existe)
@@ -82,11 +82,33 @@ public class ProductoService : IProductoService
 
             return nuevo;
         }
-        catch (Exception ex)
+        public async Task<Producto?> GetByIdAsync(int id)
         {
-            await transaction.RollbackAsync();
-            throw new Exception($"Error al crear el producto y asociarlo al catálogo: {ex.Message}", ex);
+            return await _context.Productos
+                .Include(p => p.Categoria) // opcional, si quieres traer datos de categoría
+                .FirstOrDefaultAsync(p => p.ProId == id && p.ProEstado == "ACTIVO");
         }
+
+
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductosAsync()
+        {
+            var productos = await _context.Productos
+                .Include(p => p.Categoria) // 👈 importante: asume que tienes relación navigation property
+                .Where(p => p.ProEstado == "ACTIVO")
+                .ToListAsync();
+
+            return productos.Select(p => new ProductoResponse
+            {
+                ProId = p.ProId,
+                ProNombre = p.ProNombre,
+                ProDescripcion = p.ProDescripcion,
+                ProPrecioVenta = p.ProPrecioVenta,
+                ProUnidad = p.ProUnidad,
+                CatNombre = p.Categoria != null ? p.Categoria.CatNombre : "(Sin categoría)"
+            });
+        }
+
+
     }
 
 }

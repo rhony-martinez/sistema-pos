@@ -43,6 +43,8 @@ builder.Services.AddScoped<ISedeRepository, SedeRepository>();
 builder.Services.AddScoped<ISedeService, SedeService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<ICategoriaProductoService, CategoriaProductoService>();
+builder.Services.AddScoped<IVentaService, VentaService>();
+
 
 builder.Services.AddHttpContextAccessor();
 

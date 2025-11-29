@@ -43,7 +43,7 @@
                 <div class="header-right">
                     <div class="search-bar">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar producto...">
+                        <input type="text" id="buscarProducto" placeholder="Buscar producto...">
                     </div>
                     <button id="btnCargarProducto" class="btn btn-primary"><i class="fas fa-plus"></i> Cargar Producto</button>
                 </div>
@@ -108,7 +108,7 @@
                         <input type="number" id="proPrecioVenta" placeholder="Precio de venta" required>
                     </div>
                     <div class="form-group">
-                        <label>Categoría</label>
+                        <label>Categoría*</label>
                         <select id="catNombre">
                             <option value="">Seleccione una categoría</option>
                         </select>
@@ -123,5 +123,14 @@
             </div>
             <script src="js/validaciones-producto.js"></script>
             <script src="js/gestion-catalogo.js"></script>
+            <!-- 🔹 Modal global para mensajes del sistema POS -->
+            <div id="modal" class="modal">
+                <div class="modal-content modal-small">
+                    <p id="modal-text"></p>
+                    <div class="modal-buttons">
+                        <button id="modal-btn" class="btn btn-primary">Aceptar</button>
+                    </div>
+                </div>
+            </div>
 </body>
 </html>
