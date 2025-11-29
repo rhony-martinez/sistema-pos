@@ -6,7 +6,7 @@
     const errorMsg = document.getElementById("error-message");
     
     
-   
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 

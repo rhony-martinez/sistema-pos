@@ -547,83 +547,94 @@ tr:hover {
 }
 /* Fondo oscuro del modal */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
 }
 
 /* Caja blanca centrada */
 .factura-container {
-  background: white;
-  padding: 20px 30px;
-  border-radius: 12px;
-  text-align: center;
-  width: 340px;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    background: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 340px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Logo */
 .factura-logo {
-  width: 100px;
-  margin-bottom: 10px;
+    width: 100px;
+    margin-bottom: 10px;
 }
 
 /* Tabla */
 .factura-tabla {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
 }
-.factura-tabla th, .factura-tabla td {
-  border-bottom: 1px solid #ddd;
-  padding: 5px;
-  font-size: 14px;
+
+.factura-tabla th,
+.factura-tabla td {
+    border-bottom: 1px solid #ddd;
+    padding: 5px;
+    font-size: 14px;
 }
+
 .factura-tabla th {
-  text-align: left;
-  color: #333;
+    text-align: left;
+    color: #333;
 }
 
 /* Total */
 .factura-total {
-  margin-top: 15px;
-  font-size: 18px;
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
+    margin-top: 15px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
 }
 
 /* Botones */
 .factura-botones {
-  margin-top: 20px;
+    margin-top: 20px;
 }
+
 .btn-azul {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 6px;
-  cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
 }
+
 .btn-azul:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
 
 /* Botón blanco borde azul */
 .btn-blanco {
-  background: white;
-  color: #007bff;
-  border: 2px solid #007bff;
-  padding: 8px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-left: 10px;
+    background: white;
+    color: #007bff;
+    border: 2px solid #007bff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 10px;
 }
+
 .btn-blanco:hover {
-  background-color: #e6f0ff;
+    background-color: #e6f0ff;
+}
+
+.btn-del:hover{
+    color: var(--soft-red);
+    background-color: #fceaea;
 }
