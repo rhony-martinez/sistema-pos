@@ -1,14 +1,18 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
+    aplicarValidacionesGlobales(); //  Activa las validaciones universales
     const form = document.querySelector("form");
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
     const errorMsg = document.getElementById("error-message");
-
+    
+    
+   
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
+
 
         if (!username || !password) {
             errorMsg.textContent = "Por favor, completa todos los campos.";
@@ -17,6 +21,9 @@
             passwordInput.classList.add("input-error");
             return;
         }
+
+    
+    
 
         try {
             const response = await fetch(`${API_URL}/auth/login`, {

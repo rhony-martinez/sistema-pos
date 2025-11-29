@@ -618,3 +618,13 @@ textarea {
     background: linear-gradient(45deg, #db2b0c, #f45337);
     transform: translateY(-2px);
 }
+.input-error {
+  border-color: red !important;
+}
+
+.error-msg {
+  display: block;
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}

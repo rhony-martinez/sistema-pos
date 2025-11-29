@@ -1,9 +1,4 @@
-// config.js
-// ✅ URL base de la API - cámbiala según entorno
- const API_URL = "http://localhost:5289/api"; // ← para desarrollo local
-//const API_URL = "http://www.possistema.somee.com/api"; // ← para producción en Somee
-
-// ==================== VALIDACIONES GLOBALES ====================
+﻿// ==================== VALIDACIONES GLOBALES ====================
 const RESERVED_WORDS = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"];
 const MAX_LENGTH = 15;
 const MAX_EMAIL_LENGTH = 25;
@@ -54,6 +49,7 @@ function aplicarValidacionesGlobales() {
         showModal(`Máximo ${limit} caracteres permitidos.`);
         return;
       }
+   
 
         //  El correo no puede tener ningún espacio (ni al inicio, ni en medio, ni al final)
       if (field.id === "correo") {
@@ -85,9 +81,7 @@ function aplicarValidacionesGlobales() {
 
       
 
-    
-
-      //  Bloquear caracteres especiales excepto en correo
+      //  Bloquear caracteres especiales excepto en correo y contraseña
       if (field.id !== "correo" && field.id !== "password") {
         if (/[^a-zA-Z0-9\s]/.test(value)) {
           field.classList.add("input-error");
@@ -109,8 +103,26 @@ function aplicarValidacionesGlobales() {
           return;
         }
       }
+      
+        const telefonoInput = document.getElementById("telefono");
+    telefonoInput.addEventListener("input", (e) => {
+        const field = e.target;
+        let value = field.value;
+
+        // Si contiene algo que no sea número → eliminarlo
+        if (/[^0-9]/.test(value)) {
+            field.value = value.replace(/[^0-9]/g, "");
+            field.classList.add("input-error");
+            showModal("Solo se permiten números en el teléfono.");
+            return;
+        } else {
+            field.classList.remove("input-error");
+        }
+    });  
+
 
       field.classList.remove("input-error");
     });
   });
 }
+
