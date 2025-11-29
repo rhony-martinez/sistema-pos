@@ -627,3 +627,8 @@ tr:hover {
 .btn-blanco:hover {
   background-color: #e6f0ff;
 }
+
+.btn-del:hover{
+    color: var(--soft-red);
+    background-color: #fceaea;
+}

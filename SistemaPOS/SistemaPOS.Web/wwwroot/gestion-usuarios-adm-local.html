@@ -13,21 +13,24 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
 </head>
+
 <body>
     <div class="app-container">
+        <!--  SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-logo">
                 <img src="assets/pos-logo.png" alt="POS Logo">
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="dashboard-adm-gral.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-                    <li><a href="gestion-sedes.html"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
-                    <li><a href="gestion-usuarios-adm-gral.html" class="active"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
-                    <li><a href="gestion-catalogo.html" class="disabled"><i class="fas fa-boxes"></i>Gestión de Catálogo</a></li>
+                    <li><a href="dashboard-adm-local.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li><a href="gestion-catalogo.html"><i class="fas fa-boxes"></i>Gestión de Catálogo</a></li>
+                    <li><a href="gestion-usuarios-adm-local.html" class="active"><i class="fas fa-users"></i>Gestión de Usuarios</a></li>
+                    <li><a href="gestion-ventas.html"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
                     <li><a href="gestion-caja.html" class="disabled"><i class="fas fa-cash-register"></i>Gestión de Caja</a></li>
-                    <li><a href="gestion-ventas.html" class="disabled"><i class="fas fa-chart-line"></i>Gestión de Ventas</a></li>
+                    <li><a href="gestion-sedes.html" class="disabled"><i class="fas fa-store"></i>Gestión de Sedes</a></li>
                 </ul>
             </nav>
         </aside>
@@ -42,7 +45,7 @@
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Buscar usuario...">
                     </div>
-                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Crear Admin Local</button>
+                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Crear Cajero</button>
                 </div>
             </header>
 
@@ -68,7 +71,7 @@
                             <td><i class="fas fa-circle"></i> Activo</td>
                             <td>1</td>
                             <td class="table-actions">
-                                <button class="btn btn-action"><i class="fas fa-edit"></i> Editar</button>
+                                <button class="btn btn-action"><i class="fas fa-edit"></i></button>
                                 <button class="btn btn-action"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
@@ -77,14 +80,18 @@
             </section>
         </main>
     </div>
-    <script src="js/gestion-usuarios-adm-gral.js"></script>
+    <script src="js/gestion-usuarios-adm-local.js"></script>
+        
+<!-- Modal Genérico -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+        
+            <div id="modalButtons" class="modal-buttons">
+                <!-- Botones dinámicos -->
+            </div>
+        </div>
+    </div>
 </body>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector(".btn-primary").addEventListener("click", () => {
-            window.location.href = "crear-admin-local.html";
-        });
-    });
-</script>
 
 </html>
