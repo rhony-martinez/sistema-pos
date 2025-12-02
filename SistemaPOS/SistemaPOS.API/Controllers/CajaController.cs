@@ -78,5 +78,19 @@ namespace SistemaPOS.API.Controllers
             }
         }
 
+        [HttpGet("abierta/detalle/{sedeId}")]
+        public async Task<IActionResult> ObtenerCajaAbierta(int sedeId)
+        {
+            var caja = await _context.Cajas
+                .Where(c => c.SedeId == sedeId && c.CajaEstado.Trim().ToUpper() == "ABIERTA")
+                .FirstOrDefaultAsync();
+
+            if (caja == null)
+                return Ok(null); // No hay caja abierta
+
+            return Ok(caja);
+        }
+
+
     }
 }

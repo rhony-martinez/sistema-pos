@@ -1,6 +1,6 @@
 ﻿import { aplicarValidacionesGlobales } from "./validaciones_ventas.js";
-const API_URL = "http://localhost:5289/api";
-const headers = { "Content-Type": "application/json" };
+//const API_URL = "http://localhost:5289/api";
+//const headers = { "Content-Type": "application/json" };
 
 const tbody = document.querySelector("#tb-items tbody");
 const btnAgregar = document.getElementById("btn-agregar");
@@ -22,6 +22,41 @@ const btnCantCancelar = document.getElementById("btn-cant-cancelar");
 document.addEventListener("DOMContentLoaded", () => {
   aplicarValidacionesGlobales();
 });
+
+// ===============================
+// OBTENER CAJA ABIERTA
+// ===============================
+async function obtenerCajaAbierta() {
+  const token = sessionStorage.getItem("token");
+  const sedeId = sessionStorage.getItem("sedeId");
+
+  const res = await fetch(`${API_URL}/Caja/abierta/detalle/${sedeId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  // Si la respuesta es error (404, 500, etc.)
+  if (!res.ok) {
+    console.warn("Caja no encontrada o cerrada:", res.status);
+    return null;
+  }
+
+  // 🔥 Aqui está la diferencia clave:
+  const raw = await res.text();   // <- obtenemos texto primero
+
+  // Si viene vacío → caja cerrada → retornar null
+  if (!raw) return null;
+
+  try {
+    return JSON.parse(raw);       // devolver JSON válido
+  } catch (e) {
+    console.error("Error parseando JSON de caja abierta:", e, raw);
+    return null;
+  }
+}
+
 
 // ===============================
 // MODAL MENSAJES
@@ -214,9 +249,20 @@ btnConfirmar.addEventListener("click", async () => {
     }
   }
 
+  const caja = await obtenerCajaAbierta();
+
+  if (!caja) {
+      return showModal("❌ Primero debes abrir caja antes de registrar una venta.");
+  }
+
+
+  if (!caja) {
+    return showModal("❌ Primero debes abrir caja antes de registrar una venta.");
+  }
+
   const venta = {
     venMetodoPago: metodoPago,
-    cajaId: 1,
+    cajaId: caja.cajaId, 
     venTotal,
     detalles,
     venObservaciones: observaciones,
@@ -226,7 +272,10 @@ btnConfirmar.addEventListener("click", async () => {
   try {
     const res = await fetch(`${API_URL}/Venta`, {
       method: "POST",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+      },
       body: JSON.stringify(venta)
     });
 

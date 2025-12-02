@@ -54,6 +54,14 @@
 
             const payload = JSON.parse(atob(data.accessToken.split(".")[1]));
             const userRole = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            // === EXTRAER SEDE DEL TOKEN ===
+            let sedeId = payload["sedeId"] || payload["sedeid"];
+            if (sedeId) {
+                sessionStorage.setItem("sedeId", sedeId);
+                console.log("🏬 Sede del usuario:", sedeId);
+            } else {
+                console.warn("⚠️ No se encontró sedeId en el token.");
+            }
 
             // 🔹 Obtener perfil completo y guardarlo en localStorage
             try {
