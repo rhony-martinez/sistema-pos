@@ -73,6 +73,26 @@ namespace SistemaPOS.Application.Services.Implementations
             });
         }
 
+        public async Task<bool> InactivarProductoAsync(int id)
+        {
+            var producto = await _context.Productos
+                .FirstOrDefaultAsync(p => p.ProId == id);
+
+            if (producto == null)
+                return false;
+
+            // Ya está inactivo
+            if (producto.ProEstado == "INACTIVO")
+                return true;
+
+            producto.ProEstado = "INACTIVO";
+
+            _context.Productos.Update(producto);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
 
     }
 }
