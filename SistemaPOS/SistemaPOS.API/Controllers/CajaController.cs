@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Domain.Entities;
+using SistemaPOS.Application.DTOs.Caja;
 
 namespace SistemaPOS.API.Controllers
 {
@@ -91,6 +92,36 @@ namespace SistemaPOS.API.Controllers
             return Ok(caja);
         }
 
+        [HttpPost("abrir")]
+        public async Task<IActionResult> AbrirCaja([FromBody] AbrirCajaDto dto)
+        {
+            // Validación básica
+            if (dto.MontoInicial <= 0)
+                return BadRequest("El monto inicial debe ser mayor a cero.");
+
+            // 🔍 1. Verificar si ya existe caja abierta en la sede
+            var cajaAbierta = await _context.Cajas
+                .Where(c => c.SedeId == dto.SedeId && c.CajaEstado == "ABIERTA")
+                .FirstOrDefaultAsync();
+
+            if (cajaAbierta != null)
+                return BadRequest("Ya existe una caja abierta en esta sede.");
+
+            // 🟢 2. Crear nueva caja
+            var nuevaCaja = new Caja
+            {
+                CajaFechaApertura = DateTime.Now,
+                CajaMontoInicial = dto.MontoInicial,
+                CajaMontoFinal = 0,
+                CajaEstado = "ABIERTA",
+                SedeId = dto.SedeId
+            };
+
+            _context.Cajas.Add(nuevaCaja);
+            await _context.SaveChangesAsync();
+
+            return Ok(nuevaCaja);
+        }
 
     }
 }
