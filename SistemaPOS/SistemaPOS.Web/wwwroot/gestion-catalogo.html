@@ -8,7 +8,7 @@
     <link rel="icon" href="assets/store.svg" type="image/svg+xml">
     <!-- Alternativo en formato ICO -->
     <link rel="icon" href="assets/pos-logo.ico" type="image/x-icon">
-    <!-- Alternativa al favico (PNG) -->
+    <!-- Alternativa al favicon (PNG) -->
     <link rel="icon" href="assets/pos-logo.png" type="image/png">
     <link rel="stylesheet" href="css/catalogo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,7 +18,7 @@
 
 <body>
     <div class="app-container">
-        <!--  SIDEBAR -->
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-logo">
                 <img src="assets/pos-logo.png" alt="POS Logo">
@@ -61,42 +61,45 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
+
+                    <!-- 🔥 Versión correcta, compatible con tu JS -->
                     <tbody id="tabla-productos">
-                        <!-- Aquí se insertarán las filas dinámicamente -->
+                        <!-- Se llena dinámicamente -->
                     </tbody>
+
                 </table>
             </section>
 
         </main>
     </div>
-    
-    <!-- 🔹 Modal para registrar producto -->
-            <div id="modal-registrar-producto" class="modal">
-                <div class="modal-content modal-lg">
-                <div class="form-header">
-                    <img src="assets/pos-logo.png" alt="Logo POS" class="logo">
-                    <div>
-                        <h1>Registrar Producto</h1>
-                        <p>Llene los campos para el producto</p>
+
+    <!-- Modal Registrar Producto -->
+    <div id="modal-registrar-producto" class="modal oculto">
+        <div class="modal-content modal-lg">
+            <div class="form-header">
+                <img src="assets/pos-logo.png" alt="Logo POS" class="logo">
+                <div>
+                    <h1>Registrar Producto</h1>
+                    <p>Llene los campos para el producto</p>
+                </div>
+            </div>
+
+            <form id="form-registrar-producto" class="register-form" novalidate>
+                <h2 class="section-title">Datos del producto</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre del producto*</label>
+                        <input type="text" id="proNombre" placeholder="Nombre del producto" required>
                     </div>
                 </div>
-            
-                <form id="form-registrar-producto" class="register-form" novalidate>
-                    <h2 class="section-title">Datos del producto</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Nombre del producto*</label>
-                            <input type="text" id="proNombre" placeholder="Nombre del producto" required>
-                        </div>
-                    </div>
 
-                    <h2 class="section-title">Información del producto</h2>
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 1;">
-                            <label>Descripción</label>
-                            <textarea id="proDescripcion" placeholder="Descripción del producto" rows="3" style="resize: none;"></textarea>
-                        </div>
+                <h2 class="section-title">Información del producto</h2>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Descripción</label>
+                        <textarea id="proDescripcion" placeholder="Descripción del producto" rows="3" style="resize: none;"></textarea>
                     </div>
+                </div>
 
                 <div class="form-row">
                     <div class="form-group">
@@ -114,23 +117,73 @@
                         </select>
                     </div>
                 </div>
-                    <div class="btn-container">
+
+                <div class="btn-container">
                     <button type="submit" class="btn-primary">Registrar Producto</button>
                     <button type="button" class="btn-secondary" id="cancelarModal">Cancelar</button>
-                    </div>
-                </form>
                 </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🔹 JS -->
+    <script src="js/validaciones-producto.js"></script>
+    <script src="js/gestion-catalogo.js"></script>
+
+    <!-- 🔹 MODAL MENSAJE -->
+    <div id="modal" class="modal oculto">
+        <div class="modal-content modal-small">
+            <p id="modal-text"></p>
+            <div class="modal-buttons">
+                <button id="modal-btn" class="btn btn-primary">Aceptar</button>
             </div>
-            <script src="js/validaciones-producto.js"></script>
-            <script src="js/gestion-catalogo.js"></script>
-            <!-- 🔹 Modal global para mensajes del sistema POS -->
-            <div id="modal" class="modal">
-                <div class="modal-content modal-small">
-                    <p id="modal-text"></p>
-                    <div class="modal-buttons">
-                        <button id="modal-btn" class="btn btn-primary">Aceptar</button>
-                    </div>
-                </div>
+        </div>
+    </div>
+
+    <!-- 🔹 MODAL CONFIRMACIÓN -->
+    <div id="modal-confirmacion" class="modal oculto">
+        <div class="modal-content modal-medium">
+            <h2>¿Está seguro que desea eliminar este producto?</h2>
+            <div class="modal-buttons">
+                <button id="btn-cancelar-eliminacion" class="btn btn-danger">Cancelar</button>
+                <button id="btn-aceptar-eliminacion" class="btn btn-primary">Aceptar</button>
             </div>
+        </div>
+    </div>
+
+    <!-- 🔹 MODAL CANCELADO -->
+    <div id="modal-cancelado" class="modal oculto">
+        <div class="modal-content modal-medium">
+            <h2>¡Operación Cancelada!</h2>
+            <p>El producto no ha sido eliminado</p>
+            <div class="modal-buttons">
+                <button id="btn-cerrar-cancelado" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 MODAL ELIMINADO -->
+    <div id="modal-eliminado" class="modal oculto">
+        <div class="modal-content modal-medium">
+            <h2>¡Producto Eliminado!</h2>
+            <p>El producto ha sido eliminado con éxito</p>
+            <div class="modal-buttons">
+                <button id="btn-cerrar-eliminado" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 MODAL ERROR -->
+    <div id="modal-error-conexion" class="modal oculto">
+        <div class="modal-content modal-medium">
+            <h2>¡Eliminación Fallida!</h2>
+            <p>PERDIDA DE CONEXION<br>No se ha podido eliminar el producto</p>
+            <div class="modal-buttons">
+                <button id="btn-reintentar-eliminacion" class="btn btn-danger">Intenta nuevamente</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
+

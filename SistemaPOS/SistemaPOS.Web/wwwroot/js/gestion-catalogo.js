@@ -1,3 +1,4 @@
+
 let productosGlobal = [];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -23,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarCategorias();
     cargarProductos();
 
-
     if (form) {
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
 
 async function cargarCategorias() {
     try {
@@ -58,7 +57,7 @@ async function registrarProducto() {
 
     const campos = ["proNombre", "proDescripcion", "proPrecioVenta", "proUnidad", "catNombre"];
     const vacios = [];
-    // Validar campos vacíos
+
     campos.forEach(id => {
         const input = document.getElementById(id);
         if (!input.value.trim()) {
@@ -78,12 +77,7 @@ async function registrarProducto() {
         proPrecioVenta: parseFloat(document.getElementById("proPrecioVenta").value),
         proUnidad: document.getElementById("proUnidad").value.trim(),
         catNombre: document.getElementById("catNombre").value.trim()
-        
     };
-
-    console.log("📦 Datos a enviar:", data);
-
-    
 
     try {
         const response = await fetch(`${API_URL}/Producto`, {
@@ -108,18 +102,14 @@ async function registrarProducto() {
     }
 }
 
-
 function abrirModal() {
     const modal = document.getElementById("modal-registrar-producto");
     modal.style.display = "flex";
 
-    // Esperar un ciclo de renderizado para que los inputs existan en el DOM
     setTimeout(() => {
         if (typeof aplicarValidacionesProducto === "function") {
             aplicarValidacionesProducto();
-            console.log("✅ Validaciones de producto aplicadas");
-        } else {
-            console.error("⚠️ No se encontró la función aplicarValidacionesProducto()");
+            console.log("Validaciones aplicadas");
         }
     }, 50);
 }
@@ -128,16 +118,13 @@ function cerrarModal() {
     document.getElementById("modal-registrar-producto").style.display = "none";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    
-});
-
 async function cargarProductos() {
     try {
         const res = await fetch(`${API_URL}/Producto`);
         if (!res.ok) throw new Error("No se pudieron cargar los productos.");
 
         const productos = await res.json();
+        productosGlobal = productos;
         renderizarTabla(productos);
     } catch (err) {
         console.error("❌ Error cargando productos:", err);
@@ -145,8 +132,8 @@ async function cargarProductos() {
 }
 
 function renderizarTabla(productos) {
-    const tbody = document.querySelector("table tbody");
-    tbody.innerHTML = ""; // limpiar
+    const tbody = document.getElementById("tabla-productos");
+    tbody.innerHTML = "";
 
     if (!productos || productos.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No hay productos registrados.</td></tr>`;
@@ -163,24 +150,13 @@ function renderizarTabla(productos) {
             <td>${p.catNombre}</td>
             <td class="table-actions">
                 <button class="btn btn-action"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-action btn-danger"><i class="fas fa-trash-alt"></i></button>
+                <button class="btn btn-action" onclick="eliminarProducto(${p.proId})">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
             </td>
         `;
         tbody.appendChild(row);
     });
-}
-
-async function cargarProductos() {
-    try {
-        const res = await fetch(`${API_URL}/Producto`);
-        if (!res.ok) throw new Error("No se pudieron cargar los productos.");
-
-        const productos = await res.json();
-        productosGlobal = productos; // guardar lista completa
-        renderizarTabla(productos);
-    } catch (err) {
-        console.error("❌ Error cargando productos:", err);
-    }
 }
 
 function filtrarProductos(e) {
@@ -192,3 +168,73 @@ function filtrarProductos(e) {
 
     renderizarTabla(filtrados);
 }
+
+/* === FUNCIONALIDAD DE ELIMINAR PRODUCTO === */
+
+function eliminarProducto(id) {
+    abrirModalConfirmacion(() => ejecutarEliminacion(id));
+}
+
+function abrirModalConfirmacion(onConfirm) {
+    const modal = document.getElementById("modal-confirmacion");
+    modal.classList.remove("oculto");
+
+    document.getElementById("btn-cancelar-eliminacion").onclick = () => {
+        modal.classList.add("oculto");
+        mostrarModalCancelado();
+    };
+
+    document.getElementById("btn-aceptar-eliminacion").onclick = () => {
+        modal.classList.add("oculto");
+        onConfirm();
+    };
+}
+
+async function ejecutarEliminacion(id) {
+    try {
+        const response = await fetch(`${API_URL}/producto/${id}/inactivar`, {
+            method: "PUT"
+        });
+
+        if (!response.ok) {
+            mostrarModalFalloConexion();
+            return;
+        }
+
+        mostrarModalEliminado();
+
+    } catch (error) {
+        mostrarModalFalloConexion();
+    }
+}
+
+function mostrarModalCancelado() {
+    const modal = document.getElementById("modal-cancelado");
+    modal.classList.remove("oculto");
+
+    document.getElementById("btn-cerrar-cancelado").onclick = () => {
+        modal.classList.add("oculto");
+    };
+}
+
+function mostrarModalEliminado() {
+    const modal = document.getElementById("modal-eliminado");
+    modal.classList.remove("oculto");
+
+    document.getElementById("btn-cerrar-eliminado").onclick = () => {
+        modal.classList.add("oculto");
+        cargarProductos();
+    };
+}
+
+function mostrarModalFalloConexion() {
+    const modal = document.getElementById("modal-error-conexion");
+    modal.classList.remove("oculto");
+
+    document.getElementById("btn-reintentar-eliminacion").onclick = () => {
+        modal.classList.add("oculto");
+    };
+}
+
+
+

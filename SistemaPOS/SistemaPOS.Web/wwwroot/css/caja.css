@@ -1,0 +1,196 @@
+/* ===========================
+      MODAL - OVERLAY
+   =========================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.oculto {
+    display: none;
+}
+
+/* ===========================
+      CONTENIDO DEL MODAL
+   =========================== */
+.modal-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+.modal-lg {
+    width: 700px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 15px;
+}
+
+.modal-medium {
+    width: 370px;
+}
+
+/* ===========================
+      ANIMACIÓN
+   =========================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===========================
+      FORMULARIO
+   =========================== */
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.form-header .logo {
+    height: 80px;
+}
+
+.form-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin: 0;
+}
+
+.form-header p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 4px;
+}
+
+/* Títulos de sección */
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Filas y grupos */
+.register-form .form-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.register-form .form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+    color: #333;
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+    padding: 0.75rem 0.9rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    background-color: #fff;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #2C8EF9;
+    box-shadow: 0 0 0 3px rgba(44, 142, 249, 0.15);
+    outline: none;
+}
+
+textarea {
+    resize: none;
+    font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #999;
+}
+
+/* ===========================
+      BOTONES
+   =========================== */
+.btn-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 0.9rem 2.8rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #2C8EF9, #00A9FF);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #2381e6, #0099e9);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #FF6347;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(45deg, #db2b0c, #f45337);
+    transform: translateY(-2px);
+}
+
+/* ===========================
+      ERRORES
+   =========================== */
+.input-error {
+    border-color: red !important;
+}
+
+.error-msg {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 2px;
+}

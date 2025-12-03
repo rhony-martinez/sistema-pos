@@ -29,8 +29,30 @@ namespace SistemaPOS.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] VentaCreateDto dto)
         {
-            var venta = await _ventaService.CrearVentaAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = venta.VenId }, venta);
+            try
+            {
+                var venta = await _ventaService.CrearVentaAsync(dto);
+                return CreatedAtAction(nameof(GetById), new { id = venta.VenId }, venta);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { mensaje = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Usamos 409 Conflict para reglas de negocio (no hay caja abierta / caja no válida)
+                return Conflict(new { mensaje = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                // 500 genérico
+                return StatusCode(500, new { mensaje = "Error interno del servidor.", detalle = ex.Message });
+            }
         }
+
     }
 }

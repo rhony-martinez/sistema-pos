@@ -33,10 +33,11 @@ namespace SistemaPOS.Domain.Entities
 
         [ForeignKey("SedeId")]
         public Sede? Sede { get; set; }
-        [Column("USU_ID")]
-        public int UsuarioId { get; set; }
 
-        [ForeignKey("UsuarioId")]
-        public Usuario? Usuario { get; set; }
+        //[Column("USU_ID")]
+        //public int UsuarioId { get; set; }
+
+        //[ForeignKey("UsuarioId")]
+        //public Usuario? Usuario { get; set; }
     }
 }

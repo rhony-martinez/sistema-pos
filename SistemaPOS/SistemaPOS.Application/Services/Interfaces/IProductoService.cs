@@ -9,5 +9,7 @@ namespace SistemaPOS.Application.Services.Interfaces
         Task<Producto?> GetByIdAsync(int id);
         Task<IEnumerable<ProductoResponse>> ObtenerProductosAsync();
 
+        // NUEVO
+        Task<bool> InactivarProductoAsync(int id);
     }
 }
