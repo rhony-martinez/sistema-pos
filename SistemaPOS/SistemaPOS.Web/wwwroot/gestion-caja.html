@@ -11,6 +11,7 @@
     <!-- Alternativa al favico (PNG) -->
     <link rel="icon" href="assets/pos-logo.png" type="image/png">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/caja.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/config.js"></script>
 </head>
@@ -33,7 +34,7 @@
             <i class="fas fa-cash-register"></i> Crear Venta
           </button>
 
-          <button class="btn btn-primary">
+          <button id="btn-abrir-caja" class="btn btn-primary">
             <i class="fas fa-plus"></i> Abrir Caja
           </button>
           <button class="btn btn-danger">
@@ -61,8 +62,55 @@
     </main>
   </div>
 
+  <!-- ===========================
+    MODAL ABRIR CAJA
+  =========================== -->
+  <div id="modalAbrirCaja" class="modal oculto">
+    <div class="modal-content modal-medium">
+  
+      <!-- Encabezado del formulario -->
+      <div class="form-header">
+        <img src="assets/img/logo.png" class="logo" alt="Logo">
+        <div>
+          <h1>Apertura de Caja</h1>
+          <p>Registra el monto inicial de la caja para esta sede</p>
+        </div>
+      </div>
+  
+      <!-- Formulario -->
+      <form id="formAbrirCaja" class="register-form">
+  
+        <!-- Información de la sede -->
+        <div class="form-group">
+          <label for="abrirCajaSede">Sede</label>
+          <input type="text" id="abrirCajaSede" readonly class="input-readonly" placeholder="Nombre de la sede">
+        </div>
+  
+        <!-- Monto inicial -->
+        <div class="form-group">
+          <label for="abrirCajaMonto">Monto inicial</label>
+          <input type="number" id="abrirCajaMonto" placeholder="Ingrese el monto inicial" min="1">
+          <p id="errorMonto" class="error-msg oculto">Debe ingresar un monto válido</p>
+        </div>
+  
+        <!-- Botones -->
+        <div class="btn-container">
+          <button type="button" id="btnCancelarAbrirCaja" class="btn-secondary">
+            Cancelar
+          </button>
+  
+          <button type="submit" id="btnConfirmarAbrirCaja" class="btn-primary">
+            Abrir caja
+          </button>
+        </div>
+  
+      </form>
+    </div>
+  </div>
+
   <!-- Scripts (al final del body para no bloquear el render) -->
   <script src="js/auth.js"></script>
   <script src="js/gestion-caja.js"></script>
+  <script src="js/abrir-caja.js"></script>
 </body>
 </html>

@@ -1,13 +1,7 @@
 ﻿// ==================== VALIDACIONES GLOBALES ====================
 
 // Palabras SQL prohibidas
-const RESERVED_WORDS = [
-  "SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY",
-  "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE",
-  "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN",
-  "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"
-];
-
+const RESERVED_WORDS = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"];
 const MAX_LENGTH = 15;
 const MAX_EMAIL_LENGTH = 40;
 

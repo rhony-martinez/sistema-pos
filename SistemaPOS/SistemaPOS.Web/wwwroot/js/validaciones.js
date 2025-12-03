@@ -1,5 +1,5 @@
-﻿﻿// ==================== VALIDACIONES GLOBALES ====================
-const RESERVED_WORDS = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"];
+﻿// ==================== VALIDACIONES GLOBALES ====================
+const RESERVED_WORDS1 = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL",  "NOT", "NULL", "INNER", "LEFT", "RIGHT", "ON", "INTO", "VALUES", "SET"];
 const MAX_LENGTH = 15;
 const MAX_EMAIL_LENGTH = 40;
 
@@ -94,7 +94,7 @@ function aplicarValidacionesGlobales() {
 
 
       //  Bloquear palabras reservadas SQL
-      for (let word of RESERVED_WORDS) {
+      for (let word of RESERVED_WORDS1) {
         const regex = new RegExp(`\\b${word}\\b`, "i");
         if (regex.test(value)) {
           field.classList.add("input-error");

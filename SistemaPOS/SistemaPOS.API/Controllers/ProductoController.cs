@@ -67,5 +67,24 @@ namespace SistemaPOS.API.Controllers
             }
         }
 
+        [HttpPut("{id}/inactivar")]
+        public async Task<IActionResult> InactivarProducto(int id)
+        {
+            try
+            {
+                var ok = await _productoService.InactivarProductoAsync(id);
+
+                if (!ok)
+                    return NotFound(new { mensaje = $"No se encontró el producto con ID {id}." });
+
+                return Ok(new { mensaje = "Producto inactivado con éxito." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error al inactivar el producto.", detalle = ex.Message });
+            }
+        }
+
+
     }
 }

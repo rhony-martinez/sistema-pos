@@ -6,7 +6,7 @@
     const errorMsg = document.getElementById("error-message");
     
     
-   
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -54,6 +54,22 @@
 
             const payload = JSON.parse(atob(data.accessToken.split(".")[1]));
             const userRole = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            // === EXTRAER SEDE DEL TOKEN ===
+            // === GUARDAR USUARIO ID ===
+            if (payload.uid) {
+                sessionStorage.setItem("usuarioId", payload.uid);
+                console.log("👤 usuarioId:", payload.uid);
+            } else {
+                console.warn("⚠️ No se encontró uid en el token.");
+            }
+
+            let sedeId = payload["sedeId"] || payload["sedeid"];
+            if (sedeId) {
+                sessionStorage.setItem("sedeId", sedeId);
+                console.log("🏬 Sede del usuario:", sedeId);
+            } else {
+                console.warn("⚠️ No se encontró sedeId en el token.");
+            }
 
             // 🔹 Obtener perfil completo y guardarlo en localStorage
             try {

@@ -6,7 +6,7 @@
     "proPrecioVenta"
   ];
 
-  const RESERVED = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "INTO"];
+  const RESERVED = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"];
   const MAX_CHARS = 15;
   const MAX_DESC = 70; // nuevo límite para descripción
 
