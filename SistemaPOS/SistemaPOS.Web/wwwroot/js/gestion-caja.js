@@ -1,7 +1,6 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
   // --- BOTÓN CERRAR SESIÓN ---
   const logoutBtn = document.getElementById("logoutBtn");
-  //const API_URL = window.API_URL || "http://localhost:5289/api"; // por si viene de config.js
 
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
@@ -14,7 +13,7 @@
       }
 
       try {
-        const res = await fetch(`${API_URL}/auth/logout`, {
+        await fetch(`${API_URL}/auth/logout`, {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -22,7 +21,6 @@
           }
         });
 
-        // Limpia la sesión y redirige sin importar el estado
         sessionStorage.clear();
         window.location.href = "index.html";
       } catch (err) {
@@ -37,7 +35,6 @@
 
   if (btnCrearVenta) {
     btnCrearVenta.addEventListener("click", () => {
-      // Verifica si hay sesión
       const token = sessionStorage.getItem("token");
 
       if (!token) {
@@ -46,8 +43,126 @@
         return;
       }
 
-      // Redirige a la página de crear venta
       window.location.href = "crear_venta.html";
     });
   }
+
+  // ===============================
+  // NUEVO: Cargar estado de caja (calculado)
+  // ===============================
+  cargarEstadoCaja();
+
+  // ===============================
+  // NUEVO: Botón cerrar caja
+  // ===============================
+  const btnCerrarCaja = document.getElementById("btn-cerrar-caja");
+  if (btnCerrarCaja) {
+    btnCerrarCaja.addEventListener("click", cerrarCaja);
+  }
 });
+
+// ===============================
+// Helpers
+// ===============================
+function money(n) {
+  return `$${Number(n || 0).toLocaleString("es-CO")}`;
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function pintarCajaEnCero() {
+  setText("saldo-inicial", money(0));
+  setText("ventas-netas", money(0));
+  setText("ingresos-adicionales", money(0));
+  setText("egresos", money(0));
+  setText("saldo-final", money(0));
+}
+
+// ===============================
+// NUEVO: consumir endpoint NUEVO de estado
+// GET /api/Caja/abierta/estado/{sedeId}
+// ===============================
+async function cargarEstadoCaja() {
+  try {
+    const token = sessionStorage.getItem("token");
+    const sedeId = sessionStorage.getItem("sedeId");
+
+    if (!token || !sedeId) {
+      pintarCajaEnCero();
+      return;
+    }
+
+    const res = await fetch(`${API_URL}/Caja/abierta/estado/${sedeId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    // Si falla o no existe endpoint aún, no rompemos la pantalla
+    if (!res.ok) {
+      console.warn("No se pudo cargar estado de caja:", res.status);
+      pintarCajaEnCero();
+      return;
+    }
+
+    const data = await res.json();
+
+    // Si no hay caja abierta -> null
+    if (!data) {
+      pintarCajaEnCero();
+      return;
+    }
+
+    setText("saldo-inicial", money(data.montoInicial));
+    setText("ventas-netas", money(data.ventasNetas));
+    setText("ingresos-adicionales", money(data.ingresosAdicionales));
+    setText("egresos", money(data.egresos));
+    setText("saldo-final", money(data.saldoFinalEstimado));
+  } catch (err) {
+    console.error("Error cargando estado de caja:", err);
+    pintarCajaEnCero();
+  }
+}
+
+// ===============================
+// NUEVO: cerrar caja usando endpoint NUEVO
+// POST /api/Caja/cerrar/{sedeId}
+// ===============================
+async function cerrarCaja() {
+  try {
+    const token = sessionStorage.getItem("token");
+    const sedeId = sessionStorage.getItem("sedeId");
+
+    if (!token || !sedeId) {
+      alert("No hay sesión activa.");
+      return;
+    }
+
+    const res = await fetch(`${API_URL}/Caja/cerrar/${sedeId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    const json = await res.json().catch(() => null);
+
+    if (!res.ok) {
+      alert(json?.mensaje || "Error al cerrar caja");
+      return;
+    }
+
+    alert(`Caja cerrada. Monto final: ${money(json?.montoFinal)}`);
+
+    // Como ya no hay caja abierta, vuelve a 0 visualmente
+    await cargarEstadoCaja();
+  } catch (err) {
+    console.error("Error al cerrar caja:", err);
+    alert("Error al cerrar caja. Intenta nuevamente.");
+  }
+}
