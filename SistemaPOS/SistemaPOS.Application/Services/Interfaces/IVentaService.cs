@@ -9,5 +9,7 @@ namespace SistemaPOS.Application.Services.Interfaces
         Task<Venta> CrearVentaAsync(VentaCreateDto dto);
         Task<IEnumerable<Venta>> ObtenerVentasAsync();
         Task<Venta?> ObtenerVentaPorIdAsync(int id);
+        Task<IEnumerable<Venta>> ObtenerVentasPorRangoAsync(DateTime desde, DateTime hasta);
+
     }
 }
