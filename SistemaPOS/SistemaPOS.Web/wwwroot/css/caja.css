@@ -1,7 +1,7 @@
 /* ===========================
       MODAL - OVERLAY
    =========================== */
-.modal {
+.modal-caja {
     position: fixed;
     top: 0;
     left: 0;
@@ -153,6 +153,7 @@ textarea::placeholder {
 
 .btn-primary,
 .btn-secondary {
+    margin: 0.2rem;
     padding: 0.9rem 2.8rem;
     border-radius: 10px;
     font-size: 1rem;

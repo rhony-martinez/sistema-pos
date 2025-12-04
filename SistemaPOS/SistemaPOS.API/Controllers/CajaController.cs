@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SistemaPOS.Infrastructure.Data;
-using SistemaPOS.Domain.Entities;
+using QuestPDF.Fluent;
+using SistemaPOS.API.Reports;
 using SistemaPOS.Application.DTOs.Caja;
+using SistemaPOS.Domain.Entities;
+using SistemaPOS.Infrastructure.Data;
 
 namespace SistemaPOS.API.Controllers
 {
@@ -123,5 +125,206 @@ namespace SistemaPOS.API.Controllers
             return Ok(nuevaCaja);
         }
 
+        [HttpGet("abierta/estado/{sedeId}")]
+        public async Task<IActionResult> GetEstadoCajaAbierta(int sedeId)
+        {
+            var caja = await _context.Cajas
+                .Where(c => c.SedeId == sedeId && c.CajaEstado.Trim().ToUpper() == "ABIERTA")
+                .FirstOrDefaultAsync();
+
+            if (caja == null) return Ok(null);
+
+            var ventasNetas = await _context.Ventas
+                .Where(v => v.CajaId == caja.CajaId)
+                .SumAsync(v => (decimal?)v.VenTotal) ?? 0m;
+
+            var montoInicial = caja.CajaMontoInicial ?? 0m;
+
+            // Si aún no tienes ingresos/egresos, quedan en 0
+            var ingresosAdicionales = 0m;
+            var egresos = 0m;
+
+            var saldoFinalEstimado = montoInicial + ventasNetas + ingresosAdicionales - egresos;
+
+            return Ok(new
+            {
+                cajaId = caja.CajaId,
+                sedeId = caja.SedeId,
+                fechaApertura = caja.CajaFechaApertura,
+                montoInicial,
+                ventasNetas,
+                ingresosAdicionales,
+                egresos,
+                saldoFinalEstimado
+            });
+        }
+        [HttpPost("cerrar/{sedeId}")]
+        public async Task<IActionResult> CerrarCaja(int sedeId)
+        {
+            var caja = await _context.Cajas
+                .Where(c => c.SedeId == sedeId && c.CajaEstado.Trim().ToUpper() == "ABIERTA")
+                .FirstOrDefaultAsync();
+
+            if (caja == null) return BadRequest(new { mensaje = "No hay caja abierta para cerrar." });
+
+            var ventasNetas = await _context.Ventas
+                .Where(v => v.CajaId == caja.CajaId)
+                .SumAsync(v => (decimal?)v.VenTotal) ?? 0m;
+
+            var montoInicial = caja.CajaMontoInicial ?? 0m;
+
+            caja.CajaFechaCierre = DateTime.Now;
+            caja.CajaMontoFinal = montoInicial + ventasNetas; // luego + ingresos - egresos
+            caja.CajaEstado = "CERRADA";
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                cajaId = caja.CajaId,
+                montoInicial,
+                ventasNetas,
+                montoFinal = caja.CajaMontoFinal
+            });
+        }
+
+    [HttpPost("cerrar/{sedeId}/reporte/pdf")]
+    public async Task<IActionResult> CerrarCajaYReportePdf(int sedeId)
+    {
+        var caja = await _context.Cajas
+            .Where(c => c.SedeId == sedeId && c.CajaEstado.Trim().ToUpper() == "ABIERTA")
+            .OrderByDescending(c => c.CajaFechaApertura)
+            .FirstOrDefaultAsync();
+
+        if (caja == null)
+            return BadRequest(new { mensaje = "No hay caja abierta para cerrar." });
+
+        var ventas = await _context.Ventas
+            .Where(v => v.CajaId == caja.CajaId)
+            .Include(v => v.Detalles)
+                .ThenInclude(d => d.Producto)
+            .OrderBy(v => v.FechaVenta)
+            .ToListAsync();
+
+        var ventasNetas = ventas.Sum(v => v.VenTotal);
+        var ventasEfectivo = ventas.Where(v => v.VenMetodoPago == "Efectivo").Sum(v => v.VenTotal);
+        var ventasTarjeta = ventas.Where(v => v.VenMetodoPago == "Tarjeta").Sum(v => v.VenTotal);
+        var ventasTransferencia = ventas.Where(v => v.VenMetodoPago == "Transferencia").Sum(v => v.VenTotal);
+
+        var montoInicial = caja.CajaMontoInicial ?? 0m;
+        var montoFinal = montoInicial + ventasNetas;
+
+        // Cierra la caja
+        caja.CajaFechaCierre = DateTime.Now;
+        caja.CajaMontoFinal = montoFinal;
+        caja.CajaEstado = "CERRADA";
+        await _context.SaveChangesAsync();
+
+        // Agrupa productos desde DetalleVenta
+        var productos = ventas
+            .SelectMany(v => v.Detalles ?? new List<DetalleVenta>())
+            .GroupBy(d => new { d.ProId, Nombre = d.Producto != null ? d.Producto.ProNombre : "—" })
+            .Select(g => new CajaCierreReportData.ProductoRow
+            {
+                ProId = g.Key.ProId,
+                Nombre = g.Key.Nombre,
+                Cantidad = g.Sum(x => x.DetCantidad),
+                TotalVendido = g.Sum(x => x.DetSubtotal) // usa tu propiedad calculada
+            })
+            .ToList();
+
+        var data = new CajaCierreReportData
+        {
+            CajaId = caja.CajaId,
+            SedeId = caja.SedeId,
+            FechaApertura = caja.CajaFechaApertura,
+            FechaCierre = caja.CajaFechaCierre,
+
+            MontoInicial = montoInicial,
+            VentasNetas = ventasNetas,
+            VentasEfectivo = ventasEfectivo,
+            VentasTarjeta = ventasTarjeta,
+            VentasTransferencia = ventasTransferencia,
+
+            CantidadVentas = ventas.Count,
+            TicketPromedio = ventas.Count > 0 ? ventasNetas / ventas.Count : 0m,
+            MontoFinal = montoFinal,
+
+            Ventas = ventas.Select(v => new CajaCierreReportData.VentaRow
+            {
+                VenId = v.VenId,
+                FechaVenta = v.FechaVenta,
+                MetodoPago = v.VenMetodoPago,
+                Total = v.VenTotal
+            }).ToList(),
+
+            Productos = productos
+        };
+
+        var pdfBytes = new CajaCierreReportPdf(data).GeneratePdf();
+        var fileName = $"CierreCaja_Sede{caja.SedeId}_Caja{caja.CajaId}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
+
+        return File(pdfBytes, "application/pdf", fileName);
+    }
+
+        [HttpGet("abierta/metodos/{sedeId}")]
+        public async Task<IActionResult> ObtenerMontosPorMetodoPago(int sedeId)
+        {
+            try
+            {
+                // 1. Buscar caja abierta
+                var cajaAbierta = await _context.Cajas
+                    .Where(c => c.SedeId == sedeId && c.CajaEstado == "ABIERTA")
+                    .OrderByDescending(c => c.CajaId)
+                    .FirstOrDefaultAsync();
+
+                if (cajaAbierta == null)
+                    return Ok(null); // No hay caja abierta
+
+                var cajaId = cajaAbierta.CajaId;
+
+                // 2. Buscar ventas asociadas a la caja
+                var ventas = await _context.Ventas
+                    .Where(v => v.CajaId == cajaId)
+                    .ToListAsync();
+
+                if (!ventas.Any())
+                {
+                    return Ok(new
+                    {
+                        efectivo = 0,
+                        tarjeta = 0,
+                        transferencia = 0
+                    });
+                }
+
+                // 3. Agrupar por método de pago
+                decimal efectivo = ventas
+                    .Where(v => v.VenMetodoPago == "Efectivo")
+                    .Sum(v => v.VenTotal);
+
+                decimal tarjeta = ventas
+                    .Where(v => v.VenMetodoPago == "Tarjeta")
+                    .Sum(v => v.VenTotal);
+
+                decimal transferencia = ventas
+                    .Where(v => v.VenMetodoPago == "Transferencia")
+                    .Sum(v => v.VenTotal);
+
+                // 4. Respuesta
+                return Ok(new
+                {
+                    efectivo,
+                    tarjeta,
+                    transferencia
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error en servidor", detalle = ex.Message });
+            }
+        }
+
     }
 }
+
