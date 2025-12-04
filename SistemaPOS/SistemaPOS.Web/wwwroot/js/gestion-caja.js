@@ -142,27 +142,43 @@ async function cerrarCaja() {
       return;
     }
 
-    const res = await fetch(`${API_URL}/Caja/cerrar/${sedeId}`, {
+    const res = await fetch(`${API_URL}/Caja/cerrar/${sedeId}/reporte/pdf`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
+        // NO Content-Type, no estás enviando body
       }
     });
 
-    const json = await res.json().catch(() => null);
-
     if (!res.ok) {
-      alert(json?.mensaje || "Error al cerrar caja");
+      // si tu backend devuelve JSON de error, intentamos leerlo
+      const err = await res.json().catch(() => null);
+      alert(err?.mensaje || "Error al cerrar caja");
       return;
     }
 
-    alert(`Caja cerrada. Monto final: ${money(json?.montoFinal)}`);
+    // ✅ Descargar PDF
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
 
-    // Como ya no hay caja abierta, vuelve a 0 visualmente
+    const a = document.createElement("a");
+    a.href = url;
+
+    // Si el backend envía Content-Disposition con filename, mejor,
+    // pero aquí ponemos uno fijo:
+    a.download = `cierre_caja_sede_${sedeId}.pdf`;
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+
+    // Ya no hay caja abierta => queda en 0 (o lo que pinte tu endpoint)
     await cargarEstadoCaja();
+
   } catch (err) {
     console.error("Error al cerrar caja:", err);
     alert("Error al cerrar caja. Intenta nuevamente.");
   }
 }
+

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SistemaPOS.Infrastructure.Data;
-using SistemaPOS.Domain.Entities;
+using QuestPDF.Fluent;
+using SistemaPOS.API.Reports;
 using SistemaPOS.Application.DTOs.Caja;
+using SistemaPOS.Domain.Entities;
+using SistemaPOS.Infrastructure.Data;
 
 namespace SistemaPOS.API.Controllers
 {
@@ -186,6 +188,84 @@ namespace SistemaPOS.API.Controllers
             });
         }
 
+    [HttpPost("cerrar/{sedeId}/reporte/pdf")]
+    public async Task<IActionResult> CerrarCajaYReportePdf(int sedeId)
+    {
+        var caja = await _context.Cajas
+            .Where(c => c.SedeId == sedeId && c.CajaEstado.Trim().ToUpper() == "ABIERTA")
+            .OrderByDescending(c => c.CajaFechaApertura)
+            .FirstOrDefaultAsync();
 
+        if (caja == null)
+            return BadRequest(new { mensaje = "No hay caja abierta para cerrar." });
+
+        var ventas = await _context.Ventas
+            .Where(v => v.CajaId == caja.CajaId)
+            .Include(v => v.Detalles)
+                .ThenInclude(d => d.Producto)
+            .OrderBy(v => v.FechaVenta)
+            .ToListAsync();
+
+        var ventasNetas = ventas.Sum(v => v.VenTotal);
+        var ventasEfectivo = ventas.Where(v => v.VenMetodoPago == "Efectivo").Sum(v => v.VenTotal);
+        var ventasTarjeta = ventas.Where(v => v.VenMetodoPago == "Tarjeta").Sum(v => v.VenTotal);
+        var ventasTransferencia = ventas.Where(v => v.VenMetodoPago == "Transferencia").Sum(v => v.VenTotal);
+
+        var montoInicial = caja.CajaMontoInicial ?? 0m;
+        var montoFinal = montoInicial + ventasNetas;
+
+        // Cierra la caja
+        caja.CajaFechaCierre = DateTime.Now;
+        caja.CajaMontoFinal = montoFinal;
+        caja.CajaEstado = "CERRADA";
+        await _context.SaveChangesAsync();
+
+        // Agrupa productos desde DetalleVenta
+        var productos = ventas
+            .SelectMany(v => v.Detalles ?? new List<DetalleVenta>())
+            .GroupBy(d => new { d.ProId, Nombre = d.Producto != null ? d.Producto.ProNombre : "—" })
+            .Select(g => new CajaCierreReportData.ProductoRow
+            {
+                ProId = g.Key.ProId,
+                Nombre = g.Key.Nombre,
+                Cantidad = g.Sum(x => x.DetCantidad),
+                TotalVendido = g.Sum(x => x.DetSubtotal) // usa tu propiedad calculada
+            })
+            .ToList();
+
+        var data = new CajaCierreReportData
+        {
+            CajaId = caja.CajaId,
+            SedeId = caja.SedeId,
+            FechaApertura = caja.CajaFechaApertura,
+            FechaCierre = caja.CajaFechaCierre,
+
+            MontoInicial = montoInicial,
+            VentasNetas = ventasNetas,
+            VentasEfectivo = ventasEfectivo,
+            VentasTarjeta = ventasTarjeta,
+            VentasTransferencia = ventasTransferencia,
+
+            CantidadVentas = ventas.Count,
+            TicketPromedio = ventas.Count > 0 ? ventasNetas / ventas.Count : 0m,
+            MontoFinal = montoFinal,
+
+            Ventas = ventas.Select(v => new CajaCierreReportData.VentaRow
+            {
+                VenId = v.VenId,
+                FechaVenta = v.FechaVenta,
+                MetodoPago = v.VenMetodoPago,
+                Total = v.VenTotal
+            }).ToList(),
+
+            Productos = productos
+        };
+
+        var pdfBytes = new CajaCierreReportPdf(data).GeneratePdf();
+        var fileName = $"CierreCaja_Sede{caja.SedeId}_Caja{caja.CajaId}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
+
+        return File(pdfBytes, "application/pdf", fileName);
     }
+
+}
 }

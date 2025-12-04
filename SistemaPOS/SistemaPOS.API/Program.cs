@@ -15,6 +15,10 @@ using SistemaPOS.Infrastructure.Persistence;
 using SistemaPOS.Infrastructure.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using QuestPDF.Infrastructure;
+
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 // Crear el builder
 var builder = WebApplication.CreateBuilder(args);
