@@ -98,5 +98,14 @@ namespace SistemaPOS.Application.Services.Implementations
                 throw;
             }
         }
+        public async Task<IEnumerable<Venta>> ObtenerVentasPorRangoAsync(DateTime desde, DateTime hasta)
+        {
+            return await _context.Ventas
+                .Where(v => v.FechaVenta >= desde && v.FechaVenta <= hasta)
+                .Include(v => v.Detalles)
+                    .ThenInclude(d => d.Producto)
+                .ToListAsync();
+        }
+
     }
 }
