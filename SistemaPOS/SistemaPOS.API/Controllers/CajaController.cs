@@ -123,5 +123,69 @@ namespace SistemaPOS.API.Controllers
             return Ok(nuevaCaja);
         }
 
+        [HttpGet("abierta/estado/{sedeId}")]
+        public async Task<IActionResult> GetEstadoCajaAbierta(int sedeId)
+        {
+            var caja = await _context.Cajas
+                .Where(c => c.SedeId == sedeId && c.CajaEstado.Trim().ToUpper() == "ABIERTA")
+                .FirstOrDefaultAsync();
+
+            if (caja == null) return Ok(null);
+
+            var ventasNetas = await _context.Ventas
+                .Where(v => v.CajaId == caja.CajaId)
+                .SumAsync(v => (decimal?)v.VenTotal) ?? 0m;
+
+            var montoInicial = caja.CajaMontoInicial ?? 0m;
+
+            // Si aún no tienes ingresos/egresos, quedan en 0
+            var ingresosAdicionales = 0m;
+            var egresos = 0m;
+
+            var saldoFinalEstimado = montoInicial + ventasNetas + ingresosAdicionales - egresos;
+
+            return Ok(new
+            {
+                cajaId = caja.CajaId,
+                sedeId = caja.SedeId,
+                fechaApertura = caja.CajaFechaApertura,
+                montoInicial,
+                ventasNetas,
+                ingresosAdicionales,
+                egresos,
+                saldoFinalEstimado
+            });
+        }
+        [HttpPost("cerrar/{sedeId}")]
+        public async Task<IActionResult> CerrarCaja(int sedeId)
+        {
+            var caja = await _context.Cajas
+                .Where(c => c.SedeId == sedeId && c.CajaEstado.Trim().ToUpper() == "ABIERTA")
+                .FirstOrDefaultAsync();
+
+            if (caja == null) return BadRequest(new { mensaje = "No hay caja abierta para cerrar." });
+
+            var ventasNetas = await _context.Ventas
+                .Where(v => v.CajaId == caja.CajaId)
+                .SumAsync(v => (decimal?)v.VenTotal) ?? 0m;
+
+            var montoInicial = caja.CajaMontoInicial ?? 0m;
+
+            caja.CajaFechaCierre = DateTime.Now;
+            caja.CajaMontoFinal = montoInicial + ventasNetas; // luego + ingresos - egresos
+            caja.CajaEstado = "CERRADA";
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                cajaId = caja.CajaId,
+                montoInicial,
+                ventasNetas,
+                montoFinal = caja.CajaMontoFinal
+            });
+        }
+
+
     }
 }
