@@ -1,4 +1,36 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
+  // --- MODAL PERSONALIZADO ---
+  function showModal(message, showConfirm = false) {
+    modalMessage.textContent = message;
+
+    modalButtons.innerHTML = showConfirm
+      ? `
+          <button id="modalCancel" class="btn btn-secondary">Cancelar</button>
+          <button id="modalConfirm" class="btn btn-primary">Aceptar</button>
+        `
+      : `<button id="modalOk" class="btn btn-primary">OK</button>`;
+
+    customModal.style.display = "flex";
+
+    return new Promise(resolve => {
+      if (showConfirm) {
+        document.getElementById("modalCancel").onclick = () => {
+          customModal.style.display = "none";
+          resolve(false);
+        };
+        document.getElementById("modalConfirm").onclick = () => {
+          customModal.style.display = "none";
+          resolve(true);
+        };
+      } else {
+        document.getElementById("modalOk").onclick = () => {
+          customModal.style.display = "none";
+          resolve(true);
+        };
+      }
+    });
+  }
+
   // --- BOTÓN CERRAR SESIÓN ---
   const logoutBtn = document.getElementById("logoutBtn");
 
@@ -25,7 +57,7 @@
         window.location.href = "index.html";
       } catch (err) {
         console.error("Error al cerrar sesión:", err);
-        alert("Error al cerrar sesión. Intenta nuevamente.");
+        await showModal("Error al cerrar sesión. Intenta nuevamente.");
       }
     });
   }
@@ -34,11 +66,11 @@
   const btnCrearVenta = document.getElementById("btn-crear-venta");
 
   if (btnCrearVenta) {
-    btnCrearVenta.addEventListener("click", () => {
+    btnCrearVenta.addEventListener("click", async () => {
       const token = sessionStorage.getItem("token");
 
       if (!token) {
-        alert("Debe iniciar sesión para crear una venta.");
+        await showModal("Debe iniciar sesión para crear una venta.");
         window.location.href = "index.html";
         return;
       }
@@ -47,23 +79,16 @@
     });
   }
 
-  // ===============================
-  // NUEVO: Cargar estado de caja (calculado)
-  // ===============================
   cargarEstadoCaja();
 
-  // ===============================
-  // NUEVO: Botón cerrar caja
-  // ===============================
+  // --- BOTÓN CERRAR CAJA ---
   const btnCerrarCaja = document.getElementById("btn-cerrar-caja");
   if (btnCerrarCaja) {
     btnCerrarCaja.addEventListener("click", cerrarCaja);
   }
 });
 
-// ===============================
 // Helpers
-// ===============================
 function money(n) {
   return `$${Number(n || 0).toLocaleString("es-CO")}`;
 }
@@ -81,10 +106,7 @@ function pintarCajaEnCero() {
   setText("saldo-final", money(0));
 }
 
-// ===============================
-// NUEVO: consumir endpoint NUEVO de estado
-// GET /api/Caja/abierta/estado/{sedeId}
-// ===============================
+// Cargar estado de caja
 async function cargarEstadoCaja() {
   try {
     const token = sessionStorage.getItem("token");
@@ -102,16 +124,13 @@ async function cargarEstadoCaja() {
       }
     });
 
-    // Si falla o no existe endpoint aún, no rompemos la pantalla
     if (!res.ok) {
-      console.warn("No se pudo cargar estado de caja:", res.status);
       pintarCajaEnCero();
       return;
     }
 
     const data = await res.json();
 
-    // Si no hay caja abierta -> null
     if (!data) {
       pintarCajaEnCero();
       return;
@@ -123,22 +142,18 @@ async function cargarEstadoCaja() {
     setText("egresos", money(data.egresos));
     setText("saldo-final", money(data.saldoFinalEstimado));
   } catch (err) {
-    console.error("Error cargando estado de caja:", err);
     pintarCajaEnCero();
   }
 }
 
-// ===============================
-// NUEVO: cerrar caja usando endpoint NUEVO
-// POST /api/Caja/cerrar/{sedeId}
-// ===============================
+// Cerrar caja
 async function cerrarCaja() {
   try {
     const token = sessionStorage.getItem("token");
     const sedeId = sessionStorage.getItem("sedeId");
 
     if (!token || !sedeId) {
-      alert("No hay sesión activa.");
+      await showModal("No hay sesión activa.");
       return;
     }
 
@@ -153,16 +168,14 @@ async function cerrarCaja() {
     const json = await res.json().catch(() => null);
 
     if (!res.ok) {
-      alert(json?.mensaje || "Error al cerrar caja");
+      await showModal(json?.mensaje || "Error al cerrar caja");
       return;
     }
 
-    alert(`Caja cerrada. Monto final: ${money(json?.montoFinal)}`);
+    await showModal(`Caja cerrada. Monto final: ${money(json?.montoFinal)}`);
 
-    // Como ya no hay caja abierta, vuelve a 0 visualmente
     await cargarEstadoCaja();
   } catch (err) {
-    console.error("Error al cerrar caja:", err);
-    alert("Error al cerrar caja. Intenta nuevamente.");
+    await showModal("Error al cerrar caja. Intenta nuevamente.");
   }
 }
