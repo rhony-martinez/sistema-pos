@@ -57,7 +57,7 @@
               <p id="saldo-final">$0</p>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%;">Arquear Caja</button>
+            <button id="btn-arquear-caja" class="btn btn-primary" style="width: 100%;">Arquear Caja</button>
           </div>
       </section>
     </main>
@@ -109,7 +109,94 @@
     </div>
   </div>
 
-  <!-- Modal Genérico -->
+  <!-- ===========================
+      MODAL ARQUEO - MONTOS REALES
+  =========================== -->
+  <div id="modalArqueoReales" class="modal-caja oculto">
+    <div class="modal-content modal-medium">
+
+      <div class="form-header">
+        <img src="assets/pos-logo.png" class="logo">
+        <div>
+          <h1>Arqueo de Caja</h1>
+          <p>Ingrese los montos reales</p>
+        </div>
+      </div>
+
+      <form class="register-form">
+
+        <div class="form-group">
+          <label>Efectivo</label>
+          <input type="number" id="realEfectivo" placeholder="$0">
+        </div>
+
+        <div class="form-group">
+          <label>Tarjeta</label>
+          <input type="number" id="realTarjeta" placeholder="$0">
+        </div>
+
+        <div class="form-group">
+          <label>Transferencia</label>
+          <input type="number" id="realTransferencia" placeholder="$0">
+        </div>
+
+        <div class="btn-container">
+          <button type="button" id="btnCancelarArqueoReales" class="btn-secondary">Cancelar</button>
+          <button type="button" id="btnConfirmarArqueoReales" class="btn-primary">Arquear</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ===========================
+      MODAL ARQUEO - RESULTADOS
+  =========================== -->
+  <div id="modalResultadoArqueo" class="modal-caja oculto">
+  <div class="modal-content modal-large">
+
+    <div class="form-header">
+      <img src="assets/pos-logo.png" class="logo">
+      <div>
+        <h1>Arqueo de Caja</h1>
+        <p>Resultado respecto a montos teóricos</p>
+      </div>
+    </div>
+
+    <div class="resultado-grid">
+
+      <div>
+        <h3>Montos reales</h3>
+        <p>Efectivo: <span id="resRealEfectivo"></span></p>
+        <p>Tarjeta: <span id="resRealTarjeta"></span></p>
+        <p>Transferencia: <span id="resRealTransferencia"></span></p>
+      </div>
+
+      <div>
+        <h3>Montos teóricos</h3>
+        <p>Efectivo: <span id="resTeoricoEfectivo"></span></p>
+        <p>Tarjeta: <span id="resTeoricoTarjeta"></span></p>
+        <p>Transferencia: <span id="resTeoricoTransferencia"></span></p>
+      </div>
+
+      <div>
+        <h3>Faltantes</h3>
+        <p>Efectivo: <span id="resFaltaEfectivo"></span></p>
+        <p>Tarjeta: <span id="resFaltaTarjeta"></span></p>
+        <p>Transferencia: <span id="resFaltaTransferencia"></span></p>
+      </div>
+
+    </div>
+
+    <div class="btn-container">
+      <button class="btn-primary" id="btnCerrarResultadoArqueo">Aceptar</button>
+    </div>
+
+  </div>
+</div>
+
+  <!-- Modales Genéricos -->
   <div id="customModal" class="modal">
     <div class="modal-content">
       <p id="modalMessage"></p>
@@ -120,10 +207,19 @@
     </div>
   </div>
 
+  <div id="modalMensaje" class="modal oculto">
+    <div class="modal-content modal-small">
+      <p id="modalMensajeTexto" style="margin-bottom: 20px;"></p>
+      <button class="btn-primary" onclick="cerrarModal('modalMensaje')">Aceptar</button>
+    </div>
+  </div>
+
+
   <!-- Scripts (al final del body para no bloquear el render) -->
   <script src="js/auth.js"></script>
   <script src="js/gestion-caja.js"></script>
   <script src="js/abrir-caja.js"></script>
+  <script src="js/arqueo-caja.js"></script>
 </body>
 
 </html>

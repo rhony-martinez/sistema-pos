@@ -267,7 +267,64 @@ namespace SistemaPOS.API.Controllers
         return File(pdfBytes, "application/pdf", fileName);
     }
 
+        [HttpGet("abierta/metodos/{sedeId}")]
+        public async Task<IActionResult> ObtenerMontosPorMetodoPago(int sedeId)
+        {
+            try
+            {
+                // 1. Buscar caja abierta
+                var cajaAbierta = await _context.Cajas
+                    .Where(c => c.SedeId == sedeId && c.CajaEstado == "ABIERTA")
+                    .OrderByDescending(c => c.CajaId)
+                    .FirstOrDefaultAsync();
 
-}
+                if (cajaAbierta == null)
+                    return Ok(null); // No hay caja abierta
+
+                var cajaId = cajaAbierta.CajaId;
+
+                // 2. Buscar ventas asociadas a la caja
+                var ventas = await _context.Ventas
+                    .Where(v => v.CajaId == cajaId)
+                    .ToListAsync();
+
+                if (!ventas.Any())
+                {
+                    return Ok(new
+                    {
+                        efectivo = 0,
+                        tarjeta = 0,
+                        transferencia = 0
+                    });
+                }
+
+                // 3. Agrupar por método de pago
+                decimal efectivo = ventas
+                    .Where(v => v.VenMetodoPago == "Efectivo")
+                    .Sum(v => v.VenTotal);
+
+                decimal tarjeta = ventas
+                    .Where(v => v.VenMetodoPago == "Tarjeta")
+                    .Sum(v => v.VenTotal);
+
+                decimal transferencia = ventas
+                    .Where(v => v.VenMetodoPago == "Transferencia")
+                    .Sum(v => v.VenTotal);
+
+                // 4. Respuesta
+                return Ok(new
+                {
+                    efectivo,
+                    tarjeta,
+                    transferencia
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error en servidor", detalle = ex.Message });
+            }
+        }
+
+    }
 }
 
