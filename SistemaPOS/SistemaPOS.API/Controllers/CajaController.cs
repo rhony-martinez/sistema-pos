@@ -266,6 +266,10 @@ namespace SistemaPOS.API.Controllers
 
         return File(pdfBytes, "application/pdf", fileName);
     }
+<<<<<<< HEAD
 
 }
 }
+=======
+}
+>>>>>>> 43707e17bc7b536dd5601554baba0a254e147624

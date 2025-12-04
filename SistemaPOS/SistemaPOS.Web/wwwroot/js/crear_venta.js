@@ -1,4 +1,4 @@
-﻿import { aplicarValidacionesGlobales } from "./validaciones_ventas.js";
+﻿﻿import { aplicarValidacionesGlobales } from "./validaciones_ventas.js";
 //const API_URL = "http://localhost:5289/api";
 //const headers = { "Content-Type": "application/json" };
 
