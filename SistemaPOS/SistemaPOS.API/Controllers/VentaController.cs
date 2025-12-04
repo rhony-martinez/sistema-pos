@@ -113,6 +113,25 @@ namespace SistemaPOS.API.Controllers
             var fileName = $"ReporteVentas_{start:yyyyMMdd}_a_{end:yyyyMMdd}.pdf";
             return File(pdfBytes, "application/pdf", fileName);
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var ok = await _ventaService.EliminarVentaAsync(id);
+                if (!ok) return NotFound(new { mensaje = $"No se encontró la venta con ID {id}." });
+
+                return Ok(new { mensaje = "Venta eliminada con éxito." });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error interno del servidor.", detalle = ex.Message });
+            }
+        }
 
 
     }

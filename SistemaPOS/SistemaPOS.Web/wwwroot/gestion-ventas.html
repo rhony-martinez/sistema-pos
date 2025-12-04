@@ -72,9 +72,31 @@
       </section>
     </main>
   </div>
+  
+  <!-- ===== MODAL CONFIRM (Cancelar / Sí, eliminar) ===== -->
+<div id="ui-confirm" class="m-overlay hidden">
+  <div class="m-card">
+    <p id="ui-ctext" class="m-text">¿Seguro?</p>
+    <div class="m-actions two">
+      <button id="ui-cancel" class="m-btn m-btn-gray" type="button">Cancelar</button>
+      <button id="ui-yes" class="m-btn m-btn-danger" type="button">Sí, eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL MENSAJE (OK) ===== -->
+<div id="ui-modal" class="m-overlay hidden">
+  <div class="m-card">
+    <p id="ui-text" class="m-text">Mensaje</p>
+    <div class="m-actions one">
+      <button id="ui-ok" class="m-btn m-btn-primary" type="button">OK</button>
+    </div>
+  </div>
+</div>
 
   <!-- Scripts -->
   <script src="js/config.js"></script>
   <script src="js/gestion-ventas.js"></script>
+
 </body>
 </html>

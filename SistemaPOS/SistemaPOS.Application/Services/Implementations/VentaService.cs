@@ -106,6 +106,32 @@ namespace SistemaPOS.Application.Services.Implementations
                     .ThenInclude(d => d.Producto)
                 .ToListAsync();
         }
+        public async Task<bool> EliminarVentaAsync(int venId)
+        {
+            // Trae la venta con detalles
+            var venta = await _context.Ventas
+                .Include(v => v.Detalles)
+                .FirstOrDefaultAsync(v => v.VenId == venId);
+
+            if (venta == null) return false;
+
+            // Regla opcional (recomendada): no permitir borrar si la caja ya está cerrada
+            // (si NO quieres esa regla, borra este bloque)
+            var caja = await _context.Cajas.FirstOrDefaultAsync(c => c.CajaId == venta.CajaId);
+            if (caja != null && caja.CajaEstado.Trim().ToUpper() == "CERRADA")
+                throw new InvalidOperationException("No se puede eliminar una venta de una caja cerrada.");
+
+            // Eliminar detalles (evita error FK)
+            if (venta.Detalles != null && venta.Detalles.Any())
+                _context.DetallesVenta.RemoveRange(venta.Detalles);
+
+            // Eliminar venta
+            _context.Ventas.Remove(venta);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
 
     }
 }

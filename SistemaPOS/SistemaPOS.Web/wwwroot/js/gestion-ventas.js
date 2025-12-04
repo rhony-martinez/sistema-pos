@@ -1,7 +1,8 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
   const token = sessionStorage.getItem("token");
   if (!token) {
-    alert("Debes iniciar sesión.");
+    // si no existen modales aún, caerá a alert por fallback
+    showModal("Debes iniciar sesión.");
     window.location.href = "index.html";
     return;
   }
@@ -112,11 +113,7 @@ async function cargarVentas() {
     });
 
     if (!filtradas.length) {
-<<<<<<< HEAD
-      tbody.innerHTML = `<tr><td colspan="6">No hay ventas para mostrar en ese rango.</td></tr>`;
-=======
       tbody.innerHTML = `<tr><td colspan="5">No hay ventas para mostrar.</td></tr>`;
->>>>>>> 2f49b98c52e361d46c644fd708deee7e3beb33b0
       return;
     }
 
@@ -150,12 +147,37 @@ async function cargarVentas() {
       const action = btn.dataset.action;
       const id = btn.dataset.id;
 
-      if (action === "factura") {
-        window.location.href = `factura.html?venId=${id}`;
-      }
-
       if (action === "eliminar") {
-        alert("Aún no está implementado eliminar (falta endpoint DELETE en backend).");
+        const ok = await showConfirm(
+          `¿Seguro que deseas eliminar la venta #${id}? Esta acción NO se puede deshacer.`,
+          "Sí, eliminar",
+          "Cancelar"
+        );
+
+        if (!ok) return;
+
+        try {
+          const res = await fetch(`${API_URL}/Venta/${id}`, {
+            method: "DELETE",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+            }
+          });
+
+          const json = await res.json().catch(() => null);
+
+          if (!res.ok) {
+            showModal(json?.mensaje || "No se pudo eliminar la venta.");
+            return;
+          }
+
+          showModal("Venta eliminada correctamente.");
+          await cargarVentas(); // refresca tabla con el mismo filtro por fechas
+        } catch (err) {
+          console.error(err);
+          showModal("Error de conexión eliminando la venta.");
+        }
       }
     };
   } catch (err) {
@@ -170,7 +192,7 @@ async function generarInformeVentasPdf() {
   const hasta = document.getElementById("fecha-hasta")?.value;
 
   if (!token) {
-    alert("Debes iniciar sesión.");
+    showModal("Debes iniciar sesión.");
     return;
   }
 
@@ -184,7 +206,7 @@ async function generarInformeVentasPdf() {
 
   if (!res.ok) {
     const err = await res.json().catch(() => null);
-    alert(err?.mensaje || "Error generando reporte");
+    showModal(err?.mensaje || "Error generando reporte");
     return;
   }
 
@@ -198,4 +220,53 @@ async function generarInformeVentasPdf() {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
+}
+
+/* ===========================
+   MODALES BONITAS
+   Requiere HTML:
+   #ui-modal (OK) y #ui-confirm (Confirm)
+=========================== */
+
+function showModal(text = "Mensaje") {
+  const modal = document.getElementById("ui-modal");
+  const p = document.getElementById("ui-text");
+  const ok = document.getElementById("ui-ok");
+
+  if (!modal || !p || !ok) { alert(text); return; } // fallback
+
+  p.textContent = text;
+
+  const hide = () => modal.classList.add("hidden");
+
+  ok.onclick = (e) => { e.stopPropagation(); hide(); };
+  modal.onclick = (e) => { if (e.target === modal) hide(); };
+
+  modal.classList.remove("hidden");
+}
+
+function showConfirm(text = "¿Seguro?", yesText = "Sí", noText = "Cancelar") {
+  return new Promise((resolve) => {
+    const modal = document.getElementById("ui-confirm");
+    const p = document.getElementById("ui-ctext");
+    const yes = document.getElementById("ui-yes");
+    const cancel = document.getElementById("ui-cancel");
+
+    if (!modal || !p || !yes || !cancel) { resolve(confirm(text)); return; } // fallback
+
+    p.textContent = text;
+    yes.textContent = yesText;
+    cancel.textContent = noText;
+
+    const done = (v) => {
+      modal.classList.add("hidden");
+      resolve(v);
+    };
+
+    yes.onclick = (e) => { e.stopPropagation(); done(true); };
+    cancel.onclick = (e) => { e.stopPropagation(); done(false); };
+    modal.onclick = (e) => { if (e.target === modal) done(false); };
+
+    modal.classList.remove("hidden");
+  });
 }
