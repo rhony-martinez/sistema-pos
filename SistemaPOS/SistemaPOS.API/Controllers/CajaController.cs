@@ -288,18 +288,19 @@ namespace SistemaPOS.API.Controllers
                     .Where(v => v.CajaId == cajaId)
                     .ToListAsync();
 
+                // Si no hay ventas → efectivo teórico = monto inicial
                 if (!ventas.Any())
                 {
                     return Ok(new
                     {
-                        efectivo = 0,
+                        efectivo = cajaAbierta.CajaMontoInicial, 
                         tarjeta = 0,
                         transferencia = 0
                     });
                 }
 
                 // 3. Agrupar por método de pago
-                decimal efectivo = ventas
+                decimal efectivoVentas = ventas
                     .Where(v => v.VenMetodoPago == "Efectivo")
                     .Sum(v => v.VenTotal);
 
@@ -311,10 +312,12 @@ namespace SistemaPOS.API.Controllers
                     .Where(v => v.VenMetodoPago == "Transferencia")
                     .Sum(v => v.VenTotal);
 
-                // 4. Respuesta
+                // 4. Monto teórico ajustado (solo efectivo suma monto inicial)
+                decimal efectivoTotal = (cajaAbierta.CajaMontoInicial ?? 0) + efectivoVentas;
+
                 return Ok(new
                 {
-                    efectivo,
+                    efectivo = efectivoTotal,
                     tarjeta,
                     transferencia
                 });
@@ -324,6 +327,7 @@ namespace SistemaPOS.API.Controllers
                 return StatusCode(500, new { mensaje = "Error en servidor", detalle = ex.Message });
             }
         }
+
 
     }
 }
