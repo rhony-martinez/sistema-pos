@@ -1,3 +1,36 @@
+// ===============================
+// MODAL PERSONALIZADO PARA MENSAJES
+ // ===============================
+function showModal(message, showConfirm = false) {
+    modalMessage.textContent = message;  
+    modalButtons.innerHTML = showConfirm
+    ? `
+        <button id="modalCancel" class="btn btn-secondary">Cancelar</button>
+        <button id="modalConfirm" class="btn btn-primary">Aceptar</button>
+        `
+    : `<button id="modalOk" class="btn btn-primary">OK</button>`;
+
+    customModal.style.display = "flex";
+
+    return new Promise(resolve => {
+        if (showConfirm) {
+            document.getElementById("modalCancel").onclick = () => {
+                customModal.style.display = "none";
+                resolve(false);
+            };
+            document.getElementById("modalConfirm").onclick = () => {
+                customModal.style.display = "none";
+                resolve(true);
+            };
+        } else {
+            document.getElementById("modalOk").onclick = () => {
+                customModal.style.display = "none";
+                resolve(true);
+            };
+        }
+    });
+}
+
 // =============================================
 // MODAL ABRIR CAJA
 // =============================================
@@ -22,7 +55,7 @@ btnAbrirCaja.addEventListener("click", () => {
     const sedeId = sessionStorage.getItem("sedeId");
 
     if (!sedeId) {
-        alert("No se encontró el ID de la sede en la sesión.");
+        showModal("No se encontró el ID de la sede en la sesión.");
         return;
     }
 
@@ -59,7 +92,7 @@ formAbrirCaja.addEventListener("submit", async (e) => {
     const sedeId = sessionStorage.getItem("sedeId");
 
     if (!sedeId) {
-        alert("No se encontró sedeId en la sesión.");
+        await showModal("No se encontró sedeId en la sesión.");
         return;
     }
 
@@ -82,18 +115,18 @@ formAbrirCaja.addEventListener("submit", async (e) => {
 
         if (!res.ok) {
             const errorText = await res.text();
-            alert("⚠ Error: " + errorText);
+            showModal("⚠ Error: " + errorText);
             return;
         }
 
         const data = await res.json();
 
-        alert("Caja abierta exitosamente.");
+        await showModal("Caja abierta exitosamente.");
         modalAbrirCaja.classList.add("oculto");
         window.location.reload();
 
     } catch (err) {
         console.error(err);
-        alert("Error de comunicación con el servidor.");
+        await showModal("Error de comunicación con el servidor.");
     }
 });

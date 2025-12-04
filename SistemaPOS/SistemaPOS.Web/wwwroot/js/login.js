@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
+﻿﻿document.addEventListener("DOMContentLoaded", () => {
     aplicarValidacionesGlobales(); //  Activa las validaciones universales
     const form = document.querySelector("form");
     const usernameInput = document.getElementById("username");
