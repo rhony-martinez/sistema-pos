@@ -72,7 +72,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <td>${sede.sedeUbicacion}</td>
                 <td>${sede.sedeTelefono}</td>
                 <td>
-                    <button class="btn btn-action" title="Editar"><i class="fas fa-edit"></i></button>
                     <button class="btn btn-action btn-danger btn-eliminar" data-id="${sede.sedeId}" title="Eliminar">
                         <i class="fas fa-trash-alt"></i>
                     </button>
