@@ -146,6 +146,7 @@ async function cargarEstadoCaja() {
   }
 }
 
+
 // Cerrar caja
 async function cerrarCaja() {
   try {
@@ -157,25 +158,52 @@ async function cerrarCaja() {
       return;
     }
 
-    const res = await fetch(`${API_URL}/Caja/cerrar/${sedeId}`, {
+    const res = await fetch(`${API_URL}/Caja/cerrar/${sedeId}/reporte/pdf`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       }
     });
 
-    const json = await res.json().catch(() => null);
-
+    // Si hay error
     if (!res.ok) {
+      let json = null;
+      try { json = await res.json(); } catch (_) {}
+
       await showModal(json?.mensaje || "Error al cerrar caja");
       return;
     }
 
-    await showModal(`Caja cerrada. Monto final: ${money(json?.montoFinal)}`);
+    // Leer PDF como blob
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `cierre_caja_sede_${sedeId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+
+    // Intentar leer la respuesta como JSON aparte si trae datos
+    let json = null;
+    try {
+      json = await res.clone().json();
+    } catch (_) {}
+
+    // Mostrar modal de éxito
+    await showModal(
+      json?.montoFinal
+        ? `Caja cerrada. Monto final: ${money(json.montoFinal)}`
+        : "Caja cerrada exitosamente."
+    );
 
     await cargarEstadoCaja();
+
   } catch (err) {
     await showModal("Error al cerrar caja. Intenta nuevamente.");
   }
 }
+
+
