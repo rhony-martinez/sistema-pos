@@ -65,7 +65,7 @@ async function cargarVentas() {
     }
 
     if (!filtradas.length) {
-      tbody.innerHTML = `<tr><td colspan="6">No hay ventas para mostrar.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5">No hay ventas para mostrar.</td></tr>`;
       return;
     }
 
@@ -78,11 +78,7 @@ async function cargarVentas() {
         <td>${formatFecha(v.fechaVenta)}</td>
         <td>${money(v.venTotal)}</td>
         <td>${v.venMetodoPago || "—"}</td>
-        <td>${v.cajeroNombre || "—"}</td>
         <td>
-          <button class="btn btn-action" data-action="factura" data-id="${v.venId}">
-            <i class="fas fa-file-invoice"></i>
-          </button>
           <button class="btn btn-action btn-danger" data-action="eliminar" data-id="${v.venId}">
             <i class="fas fa-trash-alt"></i>
           </button>
