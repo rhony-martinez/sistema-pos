@@ -181,6 +181,39 @@
             </div>
         </div>
     </div>
+    <!-- 🔹 MODAL EDITAR PRECIO -->
+<div id="modal-editar-precio" class="modal oculto">
+  <div class="modal-content modal-medium">
+    <div class="form-header">
+      <img src="assets/pos-logo.png" alt="Logo POS" class="logo">
+      <div>
+        <h1>Editar precio</h1>
+        <p>Actualiza el precio de venta del producto</p>
+      </div>
+    </div>
+
+    <form id="form-editar-precio" class="register-form" novalidate>
+      <input type="hidden" id="editProId">
+
+      <div class="form-group">
+        <label>Producto</label>
+        <input type="text" id="editProNombre" class="input-readonly" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Nuevo precio*</label>
+        <input type="number" id="editProPrecio" min="1" placeholder="Ingrese el nuevo precio" required>
+        <p id="errorEditPrecio" class="error-msg oculto">Debe ingresar un precio válido</p>
+      </div>
+
+      <div class="btn-container">
+        <button type="button" class="btn-secondary" id="btn-cancelar-editar-precio">Cancelar</button>
+        <button type="submit" class="btn-primary" id="btn-guardar-editar-precio">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 </body>
 </html>

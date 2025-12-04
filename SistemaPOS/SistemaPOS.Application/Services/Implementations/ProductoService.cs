@@ -92,6 +92,19 @@ namespace SistemaPOS.Application.Services.Implementations
 
             return true;
         }
+        public async Task<bool> ActualizarPrecioAsync(int id, decimal nuevoPrecio)
+        {
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto == null) return false;
+
+            if (nuevoPrecio <= 0)
+                throw new InvalidOperationException("El precio debe ser mayor a 0.");
+
+            producto.ProPrecioVenta = nuevoPrecio;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
 
 
     }

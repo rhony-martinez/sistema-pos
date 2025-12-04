@@ -6,12 +6,28 @@
     return;
   }
 
-  const inputFecha = document.getElementById("filtro-fecha");
-  cargarVentas(); // carga inicial
+  // Inputs de rango (desde/hasta)
+  const desdeEl = document.getElementById("fecha-desde");
+  const hastaEl = document.getElementById("fecha-hasta");
 
-  if (inputFecha) {
-    inputFecha.addEventListener("change", () => cargarVentas());
-  }
+  // Defaults: últimos 30 días (igual que tu informe)
+  const hoy = new Date();
+  const hace30 = new Date();
+  hace30.setDate(hoy.getDate() - 30);
+
+  if (desdeEl && !desdeEl.value) desdeEl.value = isoDate(hace30);
+  if (hastaEl && !hastaEl.value) hastaEl.value = isoDate(hoy);
+
+  // Carga inicial
+  cargarVentas();
+
+  // Re-render cuando cambian las fechas
+  if (desdeEl) desdeEl.addEventListener("change", cargarVentas);
+  if (hastaEl) hastaEl.addEventListener("change", cargarVentas);
+
+  // Botón informe PDF
+  const btn = document.getElementById("btn-informe");
+  if (btn) btn.addEventListener("click", generarInformeVentasPdf);
 });
 
 function money(n) {
@@ -26,12 +42,50 @@ function formatFecha(fechaIso) {
   return `${fecha} ${hora}`;
 }
 
+function isoDate(d) {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function parseISOToDateStart(iso) {
+  // yyyy-mm-dd => 00:00:00.000
+  if (!iso) return null;
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d, 0, 0, 0, 0);
+}
+
+function parseISOToDateEnd(iso) {
+  // yyyy-mm-dd => 23:59:59.999
+  if (!iso) return null;
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d, 23, 59, 59, 999);
+}
+
 async function cargarVentas() {
   const tbody = document.getElementById("ventas-tbody");
-  const inputFecha = document.getElementById("filtro-fecha");
   const token = sessionStorage.getItem("token");
 
+  // rango
+  const desdeStr = document.getElementById("fecha-desde")?.value;
+  const hastaStr = document.getElementById("fecha-hasta")?.value;
+
   if (!tbody) return;
+
+  // Validación básica del rango
+  const desde = parseISOToDateStart(desdeStr);
+  const hasta = parseISOToDateEnd(hastaStr);
+
+  if (!desde || !hasta) {
+    tbody.innerHTML = `<tr><td colspan="6">Selecciona un rango de fechas válido.</td></tr>`;
+    return;
+  }
+
+  if (desde > hasta) {
+    tbody.innerHTML = `<tr><td colspan="6">La fecha "desde" no puede ser mayor que "hasta".</td></tr>`;
+    return;
+  }
 
   tbody.innerHTML = `<tr><td colspan="6">Cargando...</td></tr>`;
 
@@ -50,24 +104,20 @@ async function cargarVentas() {
 
     const ventas = await res.json();
 
-    // filtro opcional por día (yyyy-mm-dd)
-    let filtradas = ventas;
-    const fechaSeleccionada = inputFecha?.value; // "2025-04-22"
-    if (fechaSeleccionada) {
-      filtradas = ventas.filter(v => {
-        const f = new Date(v.fechaVenta);
-        if (isNaN(f.getTime())) return false;
-        const yyyy = f.getFullYear();
-        const mm = String(f.getMonth() + 1).padStart(2, "0");
-        const dd = String(f.getDate()).padStart(2, "0");
-        return `${yyyy}-${mm}-${dd}` === fechaSeleccionada;
-      });
-    }
+    // ✅ filtro por rango (incluye todo el día "hasta")
+    const filtradas = (ventas || []).filter(v => {
+      const f = new Date(v.fechaVenta);
+      if (isNaN(f.getTime())) return false;
+      return f >= desde && f <= hasta;
+    });
 
     if (!filtradas.length) {
-      tbody.innerHTML = `<tr><td colspan="6">No hay ventas para mostrar.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6">No hay ventas para mostrar en ese rango.</td></tr>`;
       return;
     }
+
+    // opcional: ordenar por fecha desc (más recientes arriba)
+    filtradas.sort((a, b) => new Date(b.fechaVenta) - new Date(a.fechaVenta));
 
     tbody.innerHTML = "";
     for (const v of filtradas) {
@@ -101,13 +151,10 @@ async function cargarVentas() {
       const id = btn.dataset.id;
 
       if (action === "factura") {
-        // Reutiliza tu modal de factura si quieres o redirige
-        // Ejemplo: redirigir a una vista "factura.html?id=123"
         window.location.href = `factura.html?venId=${id}`;
       }
 
       if (action === "eliminar") {
-        // OJO: solo si tienes DELETE /Venta/{id}
         alert("Aún no está implementado eliminar (falta endpoint DELETE en backend).");
       }
     };
@@ -117,60 +164,38 @@ async function cargarVentas() {
   }
 }
 
-function isoDate(d) {
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd}`;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const desde = document.getElementById("fecha-desde");
-    const hasta = document.getElementById("fecha-hasta");
-    const btn = document.getElementById("btn-informe");
-
-    const hoy = new Date();
-    const hace30 = new Date();
-    hace30.setDate(hoy.getDate() - 30);
-
-    if (desde && !desde.value) desde.value = isoDate(hace30);
-    if (hasta && !hasta.value) hasta.value = isoDate(hoy);
-
-    if (btn) btn.addEventListener("click", generarInformeVentasPdf);
-});
-
 async function generarInformeVentasPdf() {
-    const token = sessionStorage.getItem("token");
-    const desde = document.getElementById("fecha-desde")?.value;
-    const hasta = document.getElementById("fecha-hasta")?.value;
+  const token = sessionStorage.getItem("token");
+  const desde = document.getElementById("fecha-desde")?.value;
+  const hasta = document.getElementById("fecha-hasta")?.value;
 
-    if (!token) {
-        alert("Debes iniciar sesión.");
-        return;
-    }
+  if (!token) {
+    alert("Debes iniciar sesión.");
+    return;
+  }
 
-    const qs = new URLSearchParams();
-    if (desde) qs.set("desde", desde);
-    if (hasta) qs.set("hasta", hasta);
+  const qs = new URLSearchParams();
+  if (desde) qs.set("desde", desde);
+  if (hasta) qs.set("hasta", hasta);
 
-    const res = await fetch(`${API_URL}/Venta/reporte/pdf?${qs.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
+  const res = await fetch(`${API_URL}/Venta/reporte/pdf?${qs.toString()}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
 
-    if (!res.ok) {
-        const err = await res.json().catch(() => null);
-        alert(err?.mensaje || "Error generando reporte");
-        return;
-    }
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    alert(err?.mensaje || "Error generando reporte");
+    return;
+  }
 
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `reporte_ventas_${desde || "ultimos30"}_${hasta || ""}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `reporte_ventas_${desde || "ultimos30"}_${hasta || ""}.pdf`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
