@@ -758,3 +758,27 @@ tr:hover {
 .m-btn-primary{ background: #2f7df6; color: #fff; }
 .m-btn-gray{ background: #d8d8d8; color: #222; }
 .m-btn-danger{ background: #ff5a3c; color: #fff; }
+
+.loading-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.15); /* opcional */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.hidden{ display:none; }
+
+.spinner-logo{
+  width: 56px;        /* ajusta tamaño */
+  height: 56px;       /* ajusta tamaño */
+  animation: spin 1s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes spin{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
