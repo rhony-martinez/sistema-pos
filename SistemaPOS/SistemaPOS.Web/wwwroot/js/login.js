@@ -4,15 +4,12 @@
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
     const errorMsg = document.getElementById("error-message");
-    
-    
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
-
 
         if (!username || !password) {
             errorMsg.textContent = "Por favor, completa todos los campos.";
@@ -22,9 +19,6 @@
             return;
         }
 
-    
-    
-
         try {
             const response = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
@@ -32,9 +26,13 @@
                 body: JSON.stringify({ username, password })
             });
 
+            // ✅ CAMBIO: mostrar el mensaje real del backend (usuario inactivo / credenciales inválidas)
             if (!response.ok) {
-                // Mostrar error visual
-                errorMsg.textContent = "Usuario o contraseña incorrectos.";
+                const err = await response.json().catch(() => null);
+
+                // Si el backend envía { mensaje: "Usuario inactivo..." } lo mostramos,
+                // si no, caemos al genérico.
+                errorMsg.textContent = err?.mensaje || "Usuario o contraseña incorrectos.";
                 errorMsg.style.display = "block";
                 usernameInput.classList.add("input-error");
                 passwordInput.classList.add("input-error");

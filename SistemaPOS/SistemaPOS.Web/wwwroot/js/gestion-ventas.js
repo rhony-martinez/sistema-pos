@@ -1,32 +1,50 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
   const token = sessionStorage.getItem("token");
   if (!token) {
-    // si no existen modales aún, caerá a alert por fallback
     showModal("Debes iniciar sesión.");
     window.location.href = "index.html";
     return;
   }
 
-  // Inputs de rango (desde/hasta)
   const desdeEl = document.getElementById("fecha-desde");
   const hastaEl = document.getElementById("fecha-hasta");
 
-  // Defaults: últimos 30 días (igual que tu informe)
+  // ✅ límites requeridos
+  const MIN_DESDE = "2025-05-31";
   const hoy = new Date();
+  const HOY_ISO = isoDate(hoy);
+
+  if (desdeEl) {
+    desdeEl.min = MIN_DESDE;
+    desdeEl.max = HOY_ISO;
+  }
+  if (hastaEl) {
+    hastaEl.min = MIN_DESDE;
+    hastaEl.max = HOY_ISO;
+  }
+
+  // Defaults últimos 30, respetando min/max
   const hace30 = new Date();
   hace30.setDate(hoy.getDate() - 30);
 
   if (desdeEl && !desdeEl.value) desdeEl.value = isoDate(hace30);
-  if (hastaEl && !hastaEl.value) hastaEl.value = isoDate(hoy);
+  if (hastaEl && !hastaEl.value) hastaEl.value = HOY_ISO;
 
-  // Carga inicial
+  // forzar a rango válido al cargar
+  normalizarRangoFechas(desdeEl, hastaEl, MIN_DESDE, HOY_ISO);
+
   cargarVentas();
 
-  // Re-render cuando cambian las fechas
-  if (desdeEl) desdeEl.addEventListener("change", cargarVentas);
-  if (hastaEl) hastaEl.addEventListener("change", cargarVentas);
+  if (desdeEl) desdeEl.addEventListener("change", () => {
+    normalizarRangoFechas(desdeEl, hastaEl, MIN_DESDE, HOY_ISO);
+    cargarVentas();
+  });
 
-  // Botón informe PDF
+  if (hastaEl) hastaEl.addEventListener("change", () => {
+    normalizarRangoFechas(desdeEl, hastaEl, MIN_DESDE, HOY_ISO);
+    cargarVentas();
+  });
+
   const btn = document.getElementById("btn-informe");
   if (btn) btn.addEventListener("click", generarInformeVentasPdf);
 });
@@ -51,40 +69,118 @@ function isoDate(d) {
 }
 
 function parseISOToDateStart(iso) {
-  // yyyy-mm-dd => 00:00:00.000
   if (!iso) return null;
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(y, m - 1, d, 0, 0, 0, 0);
 }
 
 function parseISOToDateEnd(iso) {
-  // yyyy-mm-dd => 23:59:59.999
   if (!iso) return null;
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(y, m - 1, d, 23, 59, 59, 999);
+}
+
+/* ========= ✅ Error pequeño debajo (estilo productos) ========= */
+function attachErrorSpan(input) {
+  if (!input) return null;
+  if (input.dataset.errorSpan === "true") {
+    // ya existe
+    return input.nextElementSibling?.classList?.contains("error-msg") ? input.nextElementSibling : null;
+  }
+  input.dataset.errorSpan = "true";
+
+  const s = document.createElement("small");
+  s.classList.add("error-msg");
+  s.style.color = "red";
+  s.style.display = "none";
+  s.style.fontSize = "0.8rem";
+  s.style.marginTop = "2px";
+  input.insertAdjacentElement("afterend", s);
+  return s;
+}
+
+function setInputError(input, msg) {
+  const s = attachErrorSpan(input);
+  if (!input || !s) return;
+  s.textContent = msg;
+  s.style.display = "block";
+  input.classList.add("input-error");
+}
+
+function clearInputError(input) {
+  const s = attachErrorSpan(input);
+  if (!input || !s) return;
+  s.textContent = "";
+  s.style.display = "none";
+  input.classList.remove("input-error");
+}
+
+function normalizarRangoFechas(desdeEl, hastaEl, minIso, maxIso) {
+  if (!desdeEl || !hastaEl) return;
+
+  // limpiar errores
+  clearInputError(desdeEl);
+  clearInputError(hastaEl);
+
+  // clamp a min/max
+  if (desdeEl.value && desdeEl.value < minIso) {
+    desdeEl.value = minIso;
+    setInputError(desdeEl, `La fecha mínima es ${minIso}.`);
+  }
+  if (hastaEl.value && hastaEl.value < minIso) {
+    hastaEl.value = minIso;
+    setInputError(hastaEl, `La fecha mínima es ${minIso}.`);
+  }
+
+  if (desdeEl.value && desdeEl.value > maxIso) {
+    desdeEl.value = maxIso;
+    setInputError(desdeEl, `No puedes seleccionar una fecha mayor a hoy (${maxIso}).`);
+  }
+  if (hastaEl.value && hastaEl.value > maxIso) {
+    hastaEl.value = maxIso;
+    setInputError(hastaEl, `No puedes seleccionar una fecha mayor a hoy (${maxIso}).`);
+  }
+
+  // desde <= hasta
+  if (desdeEl.value && hastaEl.value && desdeEl.value > hastaEl.value) {
+    setInputError(desdeEl, `La fecha "desde" no puede ser mayor que "hasta".`);
+    setInputError(hastaEl, `La fecha "hasta" no puede ser menor que "desde".`);
+  }
+}
+
+function rangoFechasEsValido() {
+  const desdeEl = document.getElementById("fecha-desde");
+  const hastaEl = document.getElementById("fecha-hasta");
+  if (!desdeEl || !hastaEl) return true;
+
+  // si hay un error visible, no proceses
+  const s1 = desdeEl.nextElementSibling;
+  const s2 = hastaEl.nextElementSibling;
+  const err1 = s1 && s1.classList?.contains("error-msg") && s1.style.display !== "none";
+  const err2 = s2 && s2.classList?.contains("error-msg") && s2.style.display !== "none";
+  return !(err1 || err2);
 }
 
 async function cargarVentas() {
   const tbody = document.getElementById("ventas-tbody");
   const token = sessionStorage.getItem("token");
 
-  // rango
+  if (!tbody) return;
+
+  // ✅ si el rango tiene error, no cargues
+  if (!rangoFechasEsValido()) {
+    tbody.innerHTML = `<tr><td colspan="6">Corrige el rango de fechas para filtrar.</td></tr>`;
+    return;
+  }
+
   const desdeStr = document.getElementById("fecha-desde")?.value;
   const hastaStr = document.getElementById("fecha-hasta")?.value;
 
-  if (!tbody) return;
-
-  // Validación básica del rango
   const desde = parseISOToDateStart(desdeStr);
   const hasta = parseISOToDateEnd(hastaStr);
 
   if (!desde || !hasta) {
     tbody.innerHTML = `<tr><td colspan="6">Selecciona un rango de fechas válido.</td></tr>`;
-    return;
-  }
-
-  if (desde > hasta) {
-    tbody.innerHTML = `<tr><td colspan="6">La fecha "desde" no puede ser mayor que "hasta".</td></tr>`;
     return;
   }
 
@@ -105,7 +201,6 @@ async function cargarVentas() {
 
     const ventas = await res.json();
 
-    // ✅ filtro por rango (incluye todo el día "hasta")
     const filtradas = (ventas || []).filter(v => {
       const f = new Date(v.fechaVenta);
       if (isNaN(f.getTime())) return false;
@@ -117,13 +212,11 @@ async function cargarVentas() {
       return;
     }
 
-    // opcional: ordenar por fecha desc (más recientes arriba)
     filtradas.sort((a, b) => new Date(b.fechaVenta) - new Date(a.fechaVenta));
 
     tbody.innerHTML = "";
     for (const v of filtradas) {
       const tr = document.createElement("tr");
-
       tr.innerHTML = `
         <td>#V-${v.venId}</td>
         <td>${formatFecha(v.fechaVenta)}</td>
@@ -135,11 +228,9 @@ async function cargarVentas() {
           </button>
         </td>
       `;
-
       tbody.appendChild(tr);
     }
 
-    // acciones
     tbody.onclick = async (e) => {
       const btn = e.target.closest("button");
       if (!btn) return;
@@ -153,7 +244,6 @@ async function cargarVentas() {
           "Sí, eliminar",
           "Cancelar"
         );
-
         if (!ok) return;
 
         try {
@@ -173,7 +263,7 @@ async function cargarVentas() {
           }
 
           showModal("Venta eliminada correctamente.");
-          await cargarVentas(); // refresca tabla con el mismo filtro por fechas
+          await cargarVentas();
         } catch (err) {
           console.error(err);
           showModal("Error de conexión eliminando la venta.");
@@ -193,6 +283,12 @@ async function generarInformeVentasPdf() {
 
   if (!token) {
     showModal("Debes iniciar sesión.");
+    return;
+  }
+
+  // ✅ si rango inválido, no generes
+  if (!rangoFechasEsValido()) {
+    showModal("Corrige el rango de fechas antes de generar el informe.");
     return;
   }
 
@@ -222,23 +318,16 @@ async function generarInformeVentasPdf() {
   URL.revokeObjectURL(url);
 }
 
-/* ===========================
-   MODALES BONITAS
-   Requiere HTML:
-   #ui-modal (OK) y #ui-confirm (Confirm)
-=========================== */
-
+/* ===== Modales (los tuyos) ===== */
 function showModal(text = "Mensaje") {
   const modal = document.getElementById("ui-modal");
   const p = document.getElementById("ui-text");
   const ok = document.getElementById("ui-ok");
 
-  if (!modal || !p || !ok) { alert(text); return; } // fallback
-
+  if (!modal || !p || !ok) { alert(text); return; }
   p.textContent = text;
 
   const hide = () => modal.classList.add("hidden");
-
   ok.onclick = (e) => { e.stopPropagation(); hide(); };
   modal.onclick = (e) => { if (e.target === modal) hide(); };
 
@@ -252,7 +341,7 @@ function showConfirm(text = "¿Seguro?", yesText = "Sí", noText = "Cancelar") {
     const yes = document.getElementById("ui-yes");
     const cancel = document.getElementById("ui-cancel");
 
-    if (!modal || !p || !yes || !cancel) { resolve(confirm(text)); return; } // fallback
+    if (!modal || !p || !yes || !cancel) { resolve(confirm(text)); return; }
 
     p.textContent = text;
     yes.textContent = yesText;

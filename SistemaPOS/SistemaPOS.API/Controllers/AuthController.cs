@@ -17,11 +17,12 @@ public class AuthController : ControllerBase
             var res = await _auth.LoginAsync(req);
             return Ok(res);
         }
-        catch (UnauthorizedAccessException)
+        catch (UnauthorizedAccessException ex)
         {
-            return Unauthorized();
+            return Unauthorized(new { mensaje = ex.Message });
         }
     }
+
 
     [Authorize]
     [HttpPost("logout")]

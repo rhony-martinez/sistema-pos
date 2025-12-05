@@ -21,8 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify({ username, password })
             });
 
+            // ✅ CAMBIO: leer body también en error y mostrar mensaje del backend
             if (!response.ok) {
-                alert("Credenciales incorrectas o error en el servidor.");
+                const err = await response.json().catch(() => null);
+                alert(err?.mensaje || "Usuario o contraseña incorrectos.");
                 return;
             }
 
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Obtener rol desde el token
             const payload = JSON.parse(atob(data.accessToken.split(".")[1]));
             const userRole = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-            // === EXTRAER SEDE DEL TOKEN ===
+
             // === GUARDAR USUARIO ID DEL TOKEN ===
             if (payload.uid) {
                 sessionStorage.setItem("usuarioId", payload.uid);
@@ -51,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 console.warn("⚠️ No se encontró uid en el token.");
             }
-            
+
+            // === EXTRAER SEDE DEL TOKEN ===
             let sedeId = payload["sedeId"] || payload["sedeid"];
             if (sedeId) {
                 sessionStorage.setItem("sedeId", sedeId);
@@ -59,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 console.warn("⚠️ No se encontró sedeId en el token.");
             }
+
             // 🔹 Obtener perfil completo y guardarlo en localStorage
             try {
                 const perfilResponse = await fetch(`${API_URL}/Users/me`, {
@@ -67,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Content-Type": "application/json"
                     }
                 });
-            
+
                 if (perfilResponse.ok) {
                     const perfil = await perfilResponse.json();
                     console.log("✅ Perfil recibido:", perfil);
@@ -78,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (error) {
                 console.error("Error obteniendo perfil del usuario:", error);
             }
-            
 
             // Redirigir según el rol
             switch (userRole) {

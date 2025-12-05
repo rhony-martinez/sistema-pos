@@ -1,12 +1,110 @@
 let productosGlobal = [];
 
+/* =========================================================
+   ✅ VALIDACIÓN REUTILIZABLE (estilo productos)
+   - Solo números
+   - Máx dígitos (por defecto 10)
+   - Error rojo debajo + input-error
+========================================================= */
+function aplicarValidacionSoloNumeros(input, {
+  maxDigits = 10,
+  allowDecimal = false,
+  mensaje = "Solo se permiten números."
+} = {}) {
+  if (!input) return;
+  if (input.dataset.validacionActiva === "true") return;
+  input.dataset.validacionActiva = "true";
+
+  // crear span error (igual estilo)
+  let errorSpan = document.createElement("small");
+  errorSpan.classList.add("error-msg");
+  errorSpan.style.color = "red";
+  errorSpan.style.display = "none";
+  errorSpan.style.fontSize = "0.8rem";
+  errorSpan.style.marginTop = "2px";
+
+  input.insertAdjacentElement("afterend", errorSpan);
+
+  function setError(msg) {
+    errorSpan.textContent = msg;
+    errorSpan.style.display = "block";
+    input.classList.add("input-error");
+  }
+
+  function clearError() {
+    errorSpan.textContent = "";
+    errorSpan.style.display = "none";
+    input.classList.remove("input-error");
+  }
+
+  input.addEventListener("input", (e) => {
+    let value = String(e.target.value ?? "");
+
+    // limpiar caracteres no permitidos
+    if (allowDecimal) {
+      // solo numeros y un punto
+      value = value.replace(/[^0-9.]/g, "");
+      const parts = value.split(".");
+      if (parts.length > 2) value = parts[0] + "." + parts.slice(1).join("");
+    } else {
+      value = value.replace(/[^0-9]/g, "");
+    }
+
+    // max dígitos (sin contar el punto)
+    const digitsCount = value.replace(".", "").length;
+    if (digitsCount > maxDigits) {
+      // recortar al máximo permitido
+      let recortado = "";
+      let count = 0;
+      for (const ch of value) {
+        if (ch === ".") {
+          if (!allowDecimal || recortado.includes(".")) continue;
+          recortado += ch;
+          continue;
+        }
+        if (count >= maxDigits) break;
+        recortado += ch;
+        count++;
+      }
+      value = recortado;
+      setError(`Máximo ${maxDigits} números permitidos.`);
+    } else {
+      // si venía con caracteres raros, mostrar mensaje
+      if (String(e.target.value) !== value && value.length > 0) {
+        setError(mensaje);
+      } else {
+        clearError();
+      }
+    }
+
+    e.target.value = value;
+
+    // si queda vacío, no muestres error aquí (lo validas al enviar)
+    if (!value) {
+      clearError();
+    }
+  });
+
+  // también bloquea pegar basura
+  input.addEventListener("paste", (e) => {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData("text");
+    const cleaned = allowDecimal
+      ? text.replace(/[^0-9.]/g, "")
+      : text.replace(/[^0-9]/g, "");
+    document.execCommand("insertText", false, cleaned);
+  });
+
+  return {
+    setError, clearError
+  };
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   cargarProductos();
 
   const buscador = document.getElementById("buscarProducto");
-  if (buscador) {
-    buscador.addEventListener("input", filtrarProductos);
-  }
+  if (buscador) buscador.addEventListener("input", filtrarProductos);
 
   // ===== Modal registrar producto =====
   const btnCargar = document.getElementById("btnCargarProducto");
@@ -52,6 +150,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const formEdit = document.getElementById("form-editar-precio");
   if (formEdit) formEdit.addEventListener("submit", guardarNuevoPrecio);
+
+  // ✅ aplicar validación al input de editar precio (solo números max 10)
+  const editInput = document.getElementById("editProPrecio");
+  aplicarValidacionSoloNumeros(editInput, {
+    maxDigits: 10,
+    allowDecimal: false,
+    mensaje: "Solo se permiten números (máx 10)."
+  });
 
   // cerrar modal editar al click afuera
   const modalEdit = document.getElementById("modal-editar-precio");
@@ -110,9 +216,7 @@ async function registrarProducto() {
   try {
     const response = await fetch(`${API_URL}/Producto`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 
@@ -138,7 +242,6 @@ function abrirModal() {
   setTimeout(() => {
     if (typeof aplicarValidacionesProducto === "function") {
       aplicarValidacionesProducto();
-      console.log("Validaciones aplicadas");
     }
   }, 50);
 }
@@ -192,13 +295,11 @@ function renderizarTabla(productos) {
 
 function filtrarProductos(e) {
   const termino = e.target.value.toLowerCase().trim();
-
   const filtrados = productosGlobal.filter((p) => p.proNombre.toLowerCase().includes(termino));
   renderizarTabla(filtrados);
 }
 
 /* === FUNCIONALIDAD DE ELIMINAR PRODUCTO === */
-
 function eliminarProducto(id) {
   abrirModalConfirmacion(() => ejecutarEliminacion(id));
 }
@@ -220,15 +321,11 @@ function abrirModalConfirmacion(onConfirm) {
 
 async function ejecutarEliminacion(id) {
   try {
-    const response = await fetch(`${API_URL}/producto/${id}/inactivar`, {
-      method: "PUT",
-    });
-
+    const response = await fetch(`${API_URL}/producto/${id}/inactivar`, { method: "PUT" });
     if (!response.ok) {
       mostrarModalFalloConexion();
       return;
     }
-
     mostrarModalEliminado();
   } catch (error) {
     mostrarModalFalloConexion();
@@ -238,16 +335,12 @@ async function ejecutarEliminacion(id) {
 function mostrarModalCancelado() {
   const modal = document.getElementById("modal-cancelado");
   modal.classList.remove("oculto");
-
-  document.getElementById("btn-cerrar-cancelado").onclick = () => {
-    modal.classList.add("oculto");
-  };
+  document.getElementById("btn-cerrar-cancelado").onclick = () => modal.classList.add("oculto");
 }
 
 function mostrarModalEliminado() {
   const modal = document.getElementById("modal-eliminado");
   modal.classList.remove("oculto");
-
   document.getElementById("btn-cerrar-eliminado").onclick = () => {
     modal.classList.add("oculto");
     cargarProductos();
@@ -257,10 +350,7 @@ function mostrarModalEliminado() {
 function mostrarModalFalloConexion() {
   const modal = document.getElementById("modal-error-conexion");
   modal.classList.remove("oculto");
-
-  document.getElementById("btn-reintentar-eliminacion").onclick = () => {
-    modal.classList.add("oculto");
-  };
+  document.getElementById("btn-reintentar-eliminacion").onclick = () => modal.classList.add("oculto");
 }
 
 // ===============================
@@ -268,15 +358,13 @@ function mostrarModalFalloConexion() {
 // ===============================
 function abrirModalEditarPrecio(producto) {
   const modal = document.getElementById("modal-editar-precio");
-  if (!modal) {
-    console.warn("No existe el modal-editar-precio en el HTML.");
-    return;
-  }
+  if (!modal) return;
 
   document.getElementById("editProId").value = producto.proId;
   document.getElementById("editProNombre").value = producto.proNombre || "";
-  document.getElementById("editProPrecio").value = producto.proPrecioVenta || 0;
+  document.getElementById("editProPrecio").value = (producto.proPrecioVenta ?? "").toString();
 
+  // ocultar mensaje propio si existe
   document.getElementById("errorEditPrecio")?.classList.add("oculto");
   document.getElementById("editProPrecio")?.classList.remove("input-error");
 
@@ -294,13 +382,16 @@ function cerrarModalEditarPrecio() {
 async function guardarNuevoPrecio(e) {
   e.preventDefault();
 
-  const id = parseInt(document.getElementById("editProId").value);
+  const id = parseInt(document.getElementById("editProId").value); // ✅ arreglado
   const precioInput = document.getElementById("editProPrecio");
   const error = document.getElementById("errorEditPrecio");
 
-  const nuevoPrecio = parseFloat(precioInput.value);
+  const nuevoPrecioStr = (precioInput.value || "").trim();
+  const nuevoPrecio = Number(nuevoPrecioStr);
 
-  if (!nuevoPrecio || isNaN(nuevoPrecio) || nuevoPrecio <= 0) {
+  // ✅ validación final (vacío / 0 / NaN)
+  if (!nuevoPrecioStr || !Number.isFinite(nuevoPrecio) || nuevoPrecio <= 0) {
+    error && (error.textContent = "Ingresa un precio válido mayor que 0.");
     error?.classList.remove("oculto");
     precioInput.classList.add("input-error");
     return;
@@ -312,11 +403,7 @@ async function guardarNuevoPrecio(e) {
   try {
     const res = await fetch(`${API_URL}/Producto/${id}/precio`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        // Si tu API está protegida, descomenta:
-        // "Authorization": `Bearer ${sessionStorage.getItem("token")}`
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ proPrecioVenta: nuevoPrecio }),
     });
 
