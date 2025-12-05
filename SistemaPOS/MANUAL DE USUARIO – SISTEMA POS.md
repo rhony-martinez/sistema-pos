@@ -1,177 +1,467 @@
-# 🧾 MANUAL DE USUARIO – SISTEMA POS
+# MANUAL DE USUARIO — SISTEMA POS
 
-## 📘 Introducción
-El **Sistema POS (Point of Sale)** es una aplicación web diseñada para la **gestión integral de ventas, productos, usuarios y sedes** de una cadena de tiendas.  
-Permite a los **administradores generales**, **administradores locales** y **cajeros** realizar sus tareas de forma centralizada, segura y eficiente.
+## Introducción
+El **Sistema POS (Point of Sale)** es una aplicación web diseñada para la gestión integral de **ventas, productos, usuarios, sedes y caja** de una cadena de tiendas.
 
-Este manual tiene como objetivo guiar al usuario en el uso de las principales funcionalidades del sistema, explicando de forma sencilla cómo interactuar con cada módulo.
+Permite que **administradores generales**, **administradores locales** y **cajeros** puedan operar de forma ordenada, rápida y segura, centralizando las operaciones del punto de venta.
+
+Este manual incluye:
+- Inicio y cierre de sesión  
+- Gestión de catálogo  
+- Gestión de ventas  
+- Gestión de usuarios  
+- Gestión de sedes  
+- Apertura de caja  
+- Arqueo de caja  
+- Cierre de caja  
+- Registro y anulación de ventas  
+- Manejo de roles y seguridad  
+- Validaciones, advertencias y resolución de errores  
 
 ---
 
-## 🔐 Inicio de Sesión
+## Inicio de Sesión
 
 ### Acceso al sistema
-1. Ingrese a la URL oficial del sistema (`http://www.possistema.somee.com/index.html`).
-2. En la pantalla de inicio, introduzca:
-   - **Nombre de Usuario**
-   - **Contraseña**
-3. Presione el botón **“Iniciar sesión”**.
+1. Ingrese en la URL oficial:  
+   `http://www.possistema.somee.com/index.html`
+2. Introduzca:
+   - Nombre de usuario
+   - Contraseña
+3. Seleccione el botón **Iniciar sesión**.
 
-### Autenticación y roles
-Una vez autenticado, el sistema identifica su **rol** y lo redirige automáticamente al **panel correspondiente**:
+Si los datos son correctos, el sistema validará el token y lo dirigirá al panel correspondiente según su rol.
 
-| Rol de Usuario | Página inicial | Permisos principales |
-|----------------|----------------|----------------------|
-| **ADMIN_GENERAL** | Dashboard General | Gestión del sistema en administradores locales y sedes. |
-| **ADMIN_LOCAL** | Dashboard Local | Gestión de catálogo, ventas y cajeros de su sede |
-| **CAJERO** | Módulo de Ventas | Registro de ventas |
+### Roles del sistema
+| Rol | Área inicial | Funciones principales |
+|---|---|---|
+| **ADMIN_GENERAL** | Dashboard General | Gestión de sedes y administradores locales y usuarios generales |
+| **ADMIN_LOCAL** | Dashboard Local | Gestión del catálogo, caja, ventas y usuarios de su sede |
+| **CAJERO** | Ventas / Caja | Registrar ventas, arqueos y cierre de caja |
 
----
+### Cerrar sesión
+1. Haga clic en **Cerrar Sesión**.  
+2. El sistema elimina el token y regresa al login.
 
-## 🧭 Navegación General
-
-La aplicación posee una **barra lateral (sidebar)** desde donde puede acceder a los distintos módulos disponibles según su rol.
-
-### Estructura de la interfaz
-
-- **Barra lateral izquierda:** contiene los accesos principales (Dashboard, Catálogo, Ventas, Caja, Sedes, Usuarios).
-- **Barra superior:** muestra el buscador, botones de acción y el nombre del módulo activo.
-- **Sección principal:** despliega el contenido y las tablas dinámicas según la acción realizada.
+**Recomendación:** siempre cerrar sesión al terminar el turno.
 
 ---
 
-## 📦 Gestión de Catálogo (ADMIN_LOCAL)
+## Navegación General
+La interfaz del POS se organiza en:
 
-El módulo **Gestión de Catálogo** permite **visualizar, registrar y consultar productos** disponibles en la sede actual.
+### Barra lateral izquierda
+Accesos principales:
+- Dashboard
+- Gestión de Catálogo
+- Ventas
+- Sedes
+- Usuarios
 
-### 🔹 Visualización del catálogo
-1. Desde el menú lateral, seleccione **Gestión de Catálogo**.  
-2. Se mostrará una tabla con los productos registrados para su sede.  
-   - Columnas: ID, Nombre, Descripción, Precio y Categoría.
+### Barra superior
+Incluye:
+- Nombre del módulo activo
+- Buscador
+- Acciones rápidas
 
-### 🔍 Búsqueda de productos
-- Use la **barra de búsqueda** superior para filtrar productos por nombre de manera instantánea.
-
-### ➕ Registrar un nuevo producto
-1. Haga clic en el botón **“Cargar Producto”**.  
-2. Se abrirá un formulario modal donde debe ingresar:
-   - **Nombre del producto**
-   - **Descripción**
-   - **Unidad de medida**
-   - **Precio de venta**
-   - **Categoría** (seleccionable desde la lista desplegable)
-3. Presione **Registrar Producto** para guardar los cambios.
-
-📌 **Notas importantes:**
-- El sistema aplica validaciones automáticas para evitar caracteres no permitidos o palabras reservadas SQL.
-- En caso de error, los mensajes se mostrarán debajo de cada campo o a través de modales.
-- Una vez registrado, el producto se asocia automáticamente al **catálogo**.
-
----
-
-## 💰 Gestión de Ventas (CAJERO)
-
-El módulo de **Ventas** permite registrar operaciones de compra de forma rápida y controlada.
-
-### 🧾 Crear una nueva venta
-1. Seleccione **Crear Venta** en su página inicial.
-2. Agregue productos al carrito indicando:
-   - Cantidad
-   - Precio unitario (precargado desde el catálogo)
-   - Id del producto
-3. El sistema calcula automáticamente el **total de la venta**.
-
-### 💳 Finalizar venta
-1. Seleccione el **método de pago**:
-   - Efectivo
-   - Tarjeta
-   - Mixto
-2. Si el método es efectivo, el sistema mostrará el **cambio a entregar**.
-3. Presione **Finalizar Venta**.
-4. Se generará un **comprobante o factura** con los detalles de la transacción.
+### Área central de trabajo
+Aquí se muestran:
+- Tablas
+- Formularios
+- Ventanas modales
+- Reportes
+- Detalles de ventas
+- Información de caja
 
 ---
 
-## 👥 Gestión de Usuarios (ADMIN_GENERAL / ADMIN_LOCAL)
+# ADMIN_GENERAL
 
-### Crear un nuevo usuario
-1. Ingrese a **Gestión de Usuarios**.
-2. Haga clic en **Registrar Usuario (Admin Local o Cajero según aplique)**.
-3. Complete los datos requeridos:
-   - Nombre y apellido
-   - Correo electrónico
-   - Rol del usuario
-   - Sede (en caso de ADMIN_LOCAL)
-4. Presione **Guardar**.
+## Dashboard (Admin General)
 
-### Consultar o filtrar usuarios
-- Puede buscar usuarios por nombre mediante la barra de búsqueda.
+### 1) Objetivo
+El Dashboard permite al Admin General:
+- Consultar indicadores principales (**ventas**, **ingresos**, **usuarios** y **sedes**).
+- Navegar hacia los módulos de administración (**Sedes** y **Usuarios**).
+- Cerrar sesión de forma segura.
 
----
+### 2) Elementos de la pantalla
+**Barra superior**
+- Título: “Dashboard”.
+- Usuario conectado: “Admin_General”.
+- Botón **Cerrar sesión** (rojo): finaliza la sesión.
 
-## 🏬 Gestión de Sedes (ADMIN_GENERAL)
+**Menú lateral**
+- Dashboard
+- Gestión de Sedes
+- Gestión de Usuarios
 
-Permite administrar las sedes registradas en el sistema.
-
-### Crear una nueva sede
-1. Ingrese a **Gestión de Sedes**.
-2. Presione el botón **Registrar Sede**.
-3. Complete los campos:
-   - Nombre de la sede
-   - Dirección
-   - Ciudad
-   - Departamento
-4. Confirme la creación.
+**Tarjetas de indicadores**
+1. **Ventas Hoy**: total de ventas registradas en el día  
+2. **Ingresos del Mes**: total acumulado del mes  
+3. **Usuarios Activos**: usuarios activos/en operación  
+4. **Sedes Activas**: sedes en funcionamiento  
 
 ---
 
-## 💵 Gestión de Caja (CAJERO)
+## Gestión de Sedes (Admin General)
 
-### Funciones disponibles
-- **Crear Venta:** registra la venta del negocio.  
+### 1) Acceso al módulo
+1. Inicia sesión como **Admin General**.  
+2. En el menú lateral izquierdo, haz clic en **Gestión de Sedes**.
+
+### 2) Elementos de la pantalla
+**Encabezado**
+- **Consultar Sede**: buscar/consultar una sede registrada.
+- **Crear Sede**: registrar una nueva sede.
+
+**Tabla de sedes**
+- ID de Sede
+- Nombre
+- Dirección
+- Ubicación
+- Teléfono
+- Acciones (ícono para eliminar)
+
+### 3) Crear una sede
+1. Clic en **Crear Sede**.  
+2. Completa la información solicitada (ej. nombre, dirección, ubicación, teléfono).  
+3. Guarda/Confirma.
+
+**Resultado esperado:** la sede aparece en la tabla.
+
+### 4) Consultar una sede
+1. Clic en **Consultar Sede**.  
+2. Ingresa el dato de búsqueda (ID o nombre).  
+3. Visualiza el resultado.
+
+### 5) Eliminar una sede
+1. Ubica la sede.  
+2. Clic en el ícono de **eliminar** en Acciones.  
+3. Confirma.
+
+**Importante:** eliminar una sede puede afectar usuarios/ventas/inventario asociados.
 
 ---
 
-## ⚙️ Validaciones del Sistema
+## Gestión de Usuarios (Admin General)
 
-El sistema aplica **validaciones globales** y **por módulo** para mantener la integridad de los datos:
+### 1) Acceso al módulo
+1. Inicia sesión como **Admin General**.  
+2. En el menú lateral, selecciona **Gestión de Usuarios**.
+
+### 2) Elementos de la pantalla
+**Barra superior**
+- Buscador **“Buscar usuario…”** (usuario, nombre/apellido, ID usuario)
+- Botón **“+ Crear Admin Local”**
+
+**Tabla de usuarios**
+- Usuario
+- Nombre
+- Apellido
+- Email
+- Estado
+- Sede Id
+- Acciones (Editar / Eliminar)
+
+### 3) Buscar un usuario
+1. Clic en **Buscar usuario…**  
+2. Escribe el criterio (ej. juan, Perez, 2001).  
+3. Se filtra el listado.
+
+### 4) Crear Admin Local
+1. Clic en **+ Crear Admin Local**.  
+2. Completa datos (usuario, nombre, apellido, correo, sede, estado/credenciales).  
+3. Cancela/Confirma.
+
+### 5) Editar usuario
+1. Ubica el usuario.  
+2. Clic en **Editar**.  
+3. Modifica campos permitidos.  
+4. Guarda.
+
+### 6) Eliminar usuario
+1. Ubica el usuario.  
+2. Clic en **Eliminar**.  
+3. Confirma.
+
+**Importante:** eliminar un usuario puede impedir su acceso y afectar la operación.
+
+---
+
+# ADMIN_LOCAL
+
+## Dashboard (Admin Local)
+
+### 1) Objetivo
+Permite:
+- Ver indicadores clave de **su sede** (ventas, ingresos, cajeros activos y estado de caja).
+- Acceder a Catálogo, Usuarios y Ventas desde el menú.
+- Cerrar sesión.
+
+### 2) Elementos de la pantalla
+**Barra superior**
+- “Dashboard - Administrador Local”
+- Usuario conectado
+- Botón **Cerrar sesión**
+
+**Menú lateral**
+- Dashboard
+- Gestión de Catálogo
+- Gestión de Usuarios
+- Gestión de Ventas
+
+### 3) Tarjetas de indicadores
+1. **Ventas Hoy** (sede)  
+2. **Ingresos del Mes** (sede)  
+3. **Cajeros Activos** (sede)  
+4. **Caja Abierta** (sede)  
+
+---
+
+## Gestión de Catálogo (Admin Local)
+
+### 1) Acceso al módulo
+1. Inicia sesión como **Administrador Local**.  
+2. En el menú lateral, selecciona **Gestión de Catálogo**.
+
+### 2) Elementos de la pantalla
+**Barra superior**
+- Buscador **“Buscar producto…”** (por nombre)
+- Botón **“+ Cargar Producto”**
+
+**Tabla de productos**
+- ID Producto
+- Nombre
+- Descripción
+- Precio
+- Categoría
+- Acciones (Editar / Eliminar)
+
+### 3) Buscar un producto
+1. Clic en **Buscar producto…**  
+2. Escribe el dato (ej. “Martillo”).  
+3. Se filtra la tabla.
+
+### 4) Cargar producto
+1. Clic en **+ Cargar Producto**.  
+2. Completa datos (nombre, descripción, precio, categoría).  
+3. Cancela/Confirma.
+
+### 5) Editar producto
+1. Ubica el producto.  
+2. Clic en **Editar**.  
+3. Actualiza datos permitidos (ej. precio).  
+4. Guarda.
+
+### 6) Eliminar producto
+1. Ubica el producto.  
+2. Clic en **Eliminar**.  
+3. Confirma.
+
+**Importante:** al eliminar un producto puede dejar de estar disponible para ventas.
+
+---
+
+## Gestión de Usuarios (Admin Local)
+
+### 1) Acceso al módulo
+1. Inicia sesión como **Administrador Local**.  
+2. En el menú lateral, selecciona **Gestión de Usuarios**.
+
+### 2) Elementos de la pantalla
+**Barra superior**
+- Buscador **“Buscar usuario…”** (nombre/apellido, ID de usuario)
+- Botón **“+ Crear Cajero”**
+
+**Tabla de usuarios**
+- Usuario
+- Nombre
+- Apellido
+- Email
+- Estado (Activo/Inactivo)
+- Sede Id
+- Acciones
+
+### 3) Buscar un usuario
+1. Clic en **Buscar usuario…**  
+2. Escribe criterio (ej. juli, rojas, 205).  
+3. Se filtra la tabla.
+
+### 4) Crear cajero
+1. Clic en **+ Crear Cajero**.  
+2. Completa datos (usuario, nombre, apellido, email, estado).  
+   - **La sede se toma automáticamente** del admin_local logueado.
+3. Cancela/Confirma.
+
+### 5) Editar usuario
+1. Ubica el usuario.  
+2. Clic en **Editar**.  
+3. Modifica datos permitidos.  
+4. Guarda.
+
+### 6) Acciones (según íconos)
+- **Eliminar (cesta)**: desactiva al cajero (estado = Inactivo).  
+- **Prohibido (🚫)**: *no es botón*; solo indica visualmente que está inactivo.  
+- **Editar**: actualiza datos (incluye estado si está habilitado).
+
+---
+
+## Gestión de Ventas (Admin Local)
+
+### 1) Acceso al módulo
+1. Inicia sesión como **Administrador Local**.  
+2. En el menú lateral, haz clic en **Gestión de Ventas**.
+
+### 2) Elementos de la pantalla
+**Filtros por fechas**
+- **Desde**: fecha inicial del reporte/consulta.
+- **Hasta**: fecha final del reporte/consulta.
+
+**Botón “Generar Informe”**
+- Descarga automáticamente un **PDF** del rango de fechas seleccionado (Desde–Hasta).
+
+**Tabla de registro de ventas**
+- ID de venta
+- Fecha (fecha y hora)
+- Monto total
+- Método de pago (Efectivo/Tarjeta/Transferencia)
+- Acciones
+
+### 3) Generar informe PDF
+1. Selecciona **Desde**.  
+2. Selecciona **Hasta**.  
+3. Clic en **Generar Informe**.
+
+**Resultado:** descarga automática del PDF.
+
+### 4) Acción sobre una venta
+1. Ubica la venta.  
+2. Clic en el ícono en **Acciones**.  
+3. Confirma si el sistema lo solicita.
+
+---
+
+# CAJERO
+
+## Gestión de Caja (pantalla inicial)
+
+### 1) Objetivo
+Muestra el estado actual de la caja y concentra las acciones del cajero.
+
+### 2) Elementos de la pantalla
+**Acciones principales**
+- **Crear Venta**: abre el flujo de venta.
+- **Abrir Caja**: inicia turno ingresando saldo inicial.
+- **Cerrar Caja**: finaliza caja (recomendado tras arqueo).
+
+**Estado de Caja Actual**
+- Saldo Inicial
+- Ventas Netas
+- Saldo Final Estimado = Saldo Inicial + Ventas Netas
+
+**Arqueo de Caja**
+- Permite cuadrar efectivo real vs. estimado (recomendado antes de cerrar caja).
+
+**Cerrar sesión**
+- Finaliza el acceso del cajero.
+
+---
+
+## Crear Venta (Cajero)
+
+### 1) Datos del cliente
+Campos:
+- Cc. Documento
+- Nombre
+- Teléfono
+- Correo
+
+### 2) Agregar productos
+1. Ingresa el **ID del producto**.
+2. Clic en **+ Agregar**.
+3. Se agrega a la tabla:
+   - Producto
+   - Cantidad (ajustable)
+   - Precio
+   - IVA%
+   - Subtotal
+   - Acciones (eliminar ítem)
+
+> El subtotal se calcula automáticamente según cantidad, precio e IVA.
+
+### 3) Seleccionar medio de pago
+Opciones:
+- Efectivo
+- Tarjeta
+- Transferencia
+
+**Si es Efectivo**
+- Ingrese **Monto recibido**
+- El sistema calcula **Cambio**
+
+### 4) Resumen y observaciones
+En el panel Resumen:
+- Subtotal
+- IVA 19%
+- TOTAL  
+Además: campo **Observaciones**.
+
+### 5) Confirmar / Cancelar
+- **Cancelar**: no registra la venta.
+- **Confirmar**: registra y genera comprobante.
+
+### 6) Modal posterior a confirmar
+Opciones:
+- **Aceptar y volver a Gestión de Caja**
+- **Visualizar factura** (y luego volver a Gestión de Caja)
+
+---
+
+## Validaciones del Sistema
 - No se permiten caracteres especiales ni espacios dobles.
-- Los campos numéricos solo aceptan números.
-- Los correos no admiten espacios.
-- Las palabras reservadas SQL están bloqueadas para prevenir inyección de código.
-
-Los errores se muestran **debajo del campo correspondiente**, con mensajes claros y visualmente resaltados.
-
----
-
-## 🔒 Seguridad
-
-- El sistema utiliza **autenticación JWT** para proteger las rutas API.  
-- Cada usuario tiene un token con su información y sede asociada.  
-- El acceso a módulos y datos está **limitado por rol** y **sedeId**.
+- Campos numéricos: solo números.
+- Correos: sin espacios.
+- Palabras reservadas SQL bloqueadas (prevención de inyección).
+- Los errores se muestran debajo del campo correspondiente.
 
 ---
 
-## 🧰 Resolución de problemas comunes
+## Seguridad
+- Autenticación JWT para proteger rutas API.
+- Token con información del usuario y sede asociada.
+- Acceso a módulos/datos limitado por **rol** y **sedeId**.
 
+---
+
+## Resolución de problemas comunes
 | Situación | Posible causa | Solución |
-|------------|----------------|-----------|
+|---|---|---|
+| No puedo iniciar sesión | Usuario/contraseña incorrectos | Verifique credenciales (mayúsculas) e intente nuevamente |
+| No puedo iniciar sesión | Usuario desactivado/inactivo | Solicite al administrador activar el usuario |
+| La sesión se cierra automáticamente | Token vencido / inactividad | Vuelva a iniciar sesión |
+| No carga el Dashboard o un módulo | Conexión inestable / servidor no responde | Recargue la página; verifique internet; intente más tarde |
 | No carga el catálogo | Error de conexión o token expirado | Recargue la página e inicie sesión nuevamente |
-| No puedo registrar producto | Faltan campos obligatorios o duplicado | Revise los campos y el mensaje de error |
-| La sesión se cierra automáticamente | Token vencido | Vuelva a iniciar sesión |
-| No aparecen las categorías | El servidor no respondió correctamente | Verifique conexión o contacte al administrador |
+| No puedo cargar un producto | Faltan campos obligatorios | Complete todos los campos requeridos y guarde |
+| No puedo cargar un producto | Producto duplicado (ID o nombre) | Cambie el identificador o edite el producto existente |
+| No puedo editar un producto/usuario | Permisos insuficientes | Verifique el rol; contacte al Admin General si aplica |
+| No puedo abrir caja | Caja ya está abierta | Verifique el estado de caja; no abra una segunda caja |
+| No puedo crear venta | Caja cerrada | Abra caja antes de registrar ventas |
+| No puedo agregar producto a la venta | ID de producto no existe | Verifique el ID en Catálogo o consulte al Admin Local |
+| El total/IVA no coincide | Cantidad o precio mal digitado | Revise cantidad, precio e IVA% del producto |
+| No calcula el cambio | No se ingresó “Monto recibido” | Digite el monto recibido; debe ser mayor o igual al total |
+| Cambio sale negativo | Monto recibido menor al total | Corrija el monto o cambie el método de pago |
+| No puedo confirmar la venta | No hay productos o faltan datos | Agregue al menos un producto y complete lo obligatorio |
+| Confirmé la venta y no aparece en registro | Filtro de fechas no incluye la venta | Ajuste Desde/Hasta para incluir la fecha correcta |
+| Generar Informe no descarga el PDF | Descargas bloqueadas | Habilite descargas y reintente “Generar Informe” |
+| El PDF sale vacío | No hay ventas en el rango | Seleccione un rango con ventas registradas |
 
 ---
 
-## 🧾 Créditos
-👨‍💻 **Equipo de Desarrollo**  
+## Créditos
+**Equipo de Desarrollo**  
+Proyecto: Sistema POS  
+Versión actual: **v3.0.0** – Publicación en producción  
+Última actualización: **Diciembre 2025**
 
-📦 **Proyecto:** Sistema POS  
-📍 **Versión actual:** v2.0.0 – *Publicación desplegada en producción*  
-🕓 **Última actualización:** Noviembre 2025
-
----
-
-> 💡 **Recomendación:**  
-> Mantenga su sesión activa solo mientras use el sistema y evite compartir sus credenciales.  
-> Para cualquier incidencia técnica, comuníquese con el equipo de soporte del proyecto.
+**Recomendación final:** mantenga su sesión activa solo mientras use el sistema y evite compartir sus credenciales.

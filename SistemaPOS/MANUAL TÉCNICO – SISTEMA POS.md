@@ -63,6 +63,110 @@ Permite la gestión de **ventas, productos, usuarios y sedes** de forma centrali
 
 ---
 
+### 🔸 Gestión de Usuarios
+
+- Controlador: `UsuarioController`
+- DTO: `UsuarioRequest / UsuarioUpdateRequest`
+- Servicio: `UsuarioService`
+
+Funcionalidad:
+
+- Creación de usuarios por rol:
+
+- Admin General: crea Admin Local (y asigna sede).
+
+- Admin Local: crea Cajero (asignado a su sede).
+
+Listado de usuarios con filtro/búsqueda (frontend).
+
+- Edición de datos del usuario (nombre, apellido, correo, etc.).
+
+- Desactivación de usuarios (cambio de estado a Inactivo).
+
+**Nota UI:** el ícono 🚫 solo indica inactivo; la acción la ejecuta el ícono 🗑.
+
+---
+
+### 🔸 Gestión de Sedes
+
+- Controlador: `SedeController`
+- DTO: `SedeRequest`
+- Servicio: `SedeService`
+- Funcionalidad:
+
+  - Creación y consulta/listado de sedes (Admin General).
+
+    - Persistencia de datos de sede: nombre, dirección, ubicación, teléfono.
+
+    - Eliminación de sede (según reglas del negocio y dependencias).
+
+    - Relación con usuarios y catálogo mediante sedeId.
+
+---
+
+### 🔸 Gestión de Caja
+
+- Controlador: `CajaController`
+- DTO: `CajaAperturaRequest / CajaCierreRequest / ArqueoRequest`
+- Servicio: `CajaService`
+- Funcionalidad:
+
+  - Apertura de caja con saldo inicial.
+
+  - Cálculo de ventas netas (sumatoria de ventas del turno).
+
+  - Cálculo de saldo final estimado = saldo inicial + ventas netas.
+
+  - Arqueo de caja para registrar/validar diferencias.
+
+  - Cierre de caja (finaliza el turno).
+
+---
+
+### 🔸 Gestión de Ventas
+
+- Controlador: `VentaController`
+- DTO: `VentaRequest / DetalleVentaRequest`
+- Servicio: `VentaService`
+- Funcionalidad:
+
+  - Registro de venta con detalle de productos (cantidad, precio, IVA).
+
+  - Cálculo automático de:
+
+  - Subtotal
+
+  - IVA (19%)
+
+  - Total
+
+  - Asociación de la venta a la sede usando sedeId del token.
+
+  - Registro del método de pago: Efectivo / Tarjeta / Transferencia.
+
+  - Acción de anulación/desactivación de venta (según permisos).
+
+  - Persistencia para reportes y auditoría.
+
+---
+
+### 🔸 Autorización y Seguridad (Roles)
+
+- Middleware / Filtros: Authorize + validación JWT
+- Funcionalidad:
+
+    - Validación de token JWT en cada request protegida.
+
+    - Restricción por rol:
+
+    - Admin General: gestión global (sedes/usuarios).
+
+    - Admin Local: gestión de sede (catálogo, cajeros, ventas).
+
+    - Cajero: caja y ventas.
+
+    - Extracción de claims del token: sedeId, rol, uid para lógica de negocio multi-sede.
+
 ## 🧮 Base de datos (modelo general)
 
 | Tabla | Descripción |
@@ -73,6 +177,9 @@ Permite la gestión de **ventas, productos, usuarios y sedes** de forma centrali
 | **PRODUCTO** | Datos de productos (nombre, descripción, precio, unidad, estado, categoría). |
 | **CATALOGO** | Asociación entre sede y producto. |
 | **VENTA / DETALLE_VENTA** | Registro de ventas y sus ítems. |
+| **CAJA** | Registro de apertura y cierre con montos. |
+| **REVOKED_TOKEN** | Tokens invalidados para autenticación. |
+
 
 ---
 
