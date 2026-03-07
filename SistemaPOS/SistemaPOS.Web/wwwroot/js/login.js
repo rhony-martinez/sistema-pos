@@ -4,15 +4,20 @@
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
     const errorMsg = document.getElementById("error-message");
-    
-    
+
+    // ✅ Spinner overlay
+    function showLoading(v) {
+        const overlay = document.getElementById("loadingOverlay");
+        if (!overlay) return;
+        overlay.classList.toggle("hidden", !v);
+        overlay.setAttribute("aria-hidden", (!v).toString());
+    }
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
-
 
         if (!username || !password) {
             errorMsg.textContent = "Por favor, completa todos los campos.";
@@ -22,19 +27,23 @@
             return;
         }
 
-    
-    
-
         try {
+            // ✅ mostrar spinner
+            showLoading(true);
+
             const response = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password })
             });
 
+            // ✅ CAMBIO: mostrar el mensaje real del backend (usuario inactivo / credenciales inválidas)
             if (!response.ok) {
-                // Mostrar error visual
-                errorMsg.textContent = "Usuario o contraseña incorrectos.";
+                const err = await response.json().catch(() => null);
+
+                // Si el backend envía { mensaje: "Usuario inactivo..." } lo mostramos,
+                // si no, caemos al genérico.
+                errorMsg.textContent = err?.mensaje || "Usuario o contraseña incorrectos.";
                 errorMsg.style.display = "block";
                 usernameInput.classList.add("input-error");
                 passwordInput.classList.add("input-error");
@@ -109,6 +118,9 @@
             console.error("Error de conexión:", error);
             errorMsg.textContent = "Error de conexión con el servidor.";
             errorMsg.style.display = "block";
+        } finally {
+            // ✅ ocultar spinner (pase lo que pase)
+            showLoading(false);
         }
     });
 });

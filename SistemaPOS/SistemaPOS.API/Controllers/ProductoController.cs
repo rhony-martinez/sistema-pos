@@ -84,6 +84,30 @@ namespace SistemaPOS.API.Controllers
                 return StatusCode(500, new { mensaje = "Error al inactivar el producto.", detalle = ex.Message });
             }
         }
+        [HttpPut("{id}/precio")]
+        public async Task<IActionResult> ActualizarPrecio(int id, [FromBody] ActualizarPrecioDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var ok = await _productoService.ActualizarPrecioAsync(id, dto.ProPrecioVenta);
+
+                if (!ok)
+                    return NotFound(new { mensaje = $"No se encontró el producto con ID {id}." });
+
+                return Ok(new { mensaje = "Precio actualizado con éxito." });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error interno del servidor.", detalle = ex.Message });
+            }
+        }
 
 
     }

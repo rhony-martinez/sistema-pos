@@ -22,29 +22,29 @@ public class AuthService : IAuthService
     public async Task<LoginResponse> LoginAsync(LoginRequest req)
     {
         var user = await _userRepo.GetByUsernameAsync(req.Username);
-        if (user == null) throw new UnauthorizedAccessException("Invalid credentials");
+        if (user == null) throw new UnauthorizedAccessException("Credenciales inválidas.");
+
+        // ✅ VALIDACIÓN: usuario inactivo no puede iniciar sesión
+        var estado = (user.UsuEstado ?? "").Trim().ToUpperInvariant();
+        if (estado != "ACTIVO")
+            throw new UnauthorizedAccessException("Usuario inactivo. Contacta al administrador.");
 
         if (!BCrypt.Net.BCrypt.Verify(req.Password, user.UsuClaveHash))
-            throw new UnauthorizedAccessException("Invalid credentials");
+            throw new UnauthorizedAccessException("Credenciales inválidas.");
 
         var expires = DateTime.UtcNow.AddMinutes(double.Parse(_config["Jwt:ExpireMinutes"] ?? "60"));
 
-        // Build JWT
         var claims = new List<Claim>
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.UsuUsername),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("uid", user.UsuId.ToString()),
-            new Claim(ClaimTypes.Role, user.UsuRol ?? "CAJERO"),
-            new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expires).ToUnixTimeSeconds().ToString())
-        };
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, user.UsuUsername),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim("uid", user.UsuId.ToString()),
+        new Claim(ClaimTypes.Role, user.UsuRol ?? "CAJERO"),
+        new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expires).ToUnixTimeSeconds().ToString())
+    };
 
-        // 🔹 Agregar el claim de sede solo si aplica
         if (user.SedeId.HasValue)
-        {
             claims.Add(new Claim("sedeId", user.SedeId.Value.ToString()));
-        }
-
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
