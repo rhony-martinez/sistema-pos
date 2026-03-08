@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === 1️⃣ Cargar usuarios al iniciar ===
     try {
-        const response = await fetch(`${API_URL}/Usuario/admins-locales`);
+        const response = await fetch(`${API_URL}/Users/admins-locales`);
         if (!response.ok) throw new Error("Error al obtener los administradores locales.");
         usuarios = await response.json();
 
