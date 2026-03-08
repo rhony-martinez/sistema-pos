@@ -4,7 +4,6 @@ using SistemaPOS.Domain.Entities;
 using SistemaPOS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 
 namespace SistemaPOS.Application.Services.Implementations
 {
@@ -22,16 +21,32 @@ namespace SistemaPOS.Application.Services.Implementations
         public async Task<IEnumerable<Venta>> ObtenerVentasAsync()
         {
             return await _context.Ventas
+                .AsNoTracking()
+                .Include(v => v.Caja) // ✅ para poder filtrar/usar sede si se necesita
                 .Include(v => v.Detalles)
-                .ThenInclude(d => d.Producto)
+                    .ThenInclude(d => d.Producto)
+                .ToListAsync();
+        }
+
+        // ✅ NUEVO: ventas filtradas por sede (usando Caja.SedeId)
+        public async Task<IEnumerable<Venta>> ObtenerVentasPorSedeAsync(int sedeId)
+        {
+            return await _context.Ventas
+                .AsNoTracking()
+                .Include(v => v.Caja)
+                .Include(v => v.Detalles)
+                    .ThenInclude(d => d.Producto)
+                .Where(v => v.Caja != null && v.Caja.SedeId == sedeId)
                 .ToListAsync();
         }
 
         public async Task<Venta?> ObtenerVentaPorIdAsync(int id)
         {
             return await _context.Ventas
+                .AsNoTracking()
+                .Include(v => v.Caja)
                 .Include(v => v.Detalles)
-                .ThenInclude(d => d.Producto)
+                    .ThenInclude(d => d.Producto)
                 .FirstOrDefaultAsync(v => v.VenId == id);
         }
 
@@ -40,7 +55,7 @@ namespace SistemaPOS.Application.Services.Implementations
             if (dto.Detalles == null || !dto.Detalles.Any())
                 throw new InvalidOperationException("La venta debe tener al menos un detalle.");
 
-            // 🔍 Obtener sede desde JWT (mediante IHttpContextAccessor)
+            // 🔍 Obtener sede desde JWT
             var user = _httpContextAccessor.HttpContext?.User;
             if (user == null)
                 throw new UnauthorizedAccessException("Usuario no autenticado.");
@@ -98,14 +113,50 @@ namespace SistemaPOS.Application.Services.Implementations
                 throw;
             }
         }
+
         public async Task<IEnumerable<Venta>> ObtenerVentasPorRangoAsync(DateTime desde, DateTime hasta)
         {
             return await _context.Ventas
-                .Where(v => v.FechaVenta >= desde && v.FechaVenta <= hasta)
+                .AsNoTracking()
+                .Include(v => v.Caja)
                 .Include(v => v.Detalles)
                     .ThenInclude(d => d.Producto)
+                .Where(v => v.FechaVenta >= desde && v.FechaVenta <= hasta)
                 .ToListAsync();
         }
 
+        // ✅ NUEVO: rango + sede
+        public async Task<IEnumerable<Venta>> ObtenerVentasPorRangoYSedeAsync(DateTime desde, DateTime hasta, int sedeId)
+        {
+            return await _context.Ventas
+                .AsNoTracking()
+                .Include(v => v.Caja)
+                .Include(v => v.Detalles)
+                    .ThenInclude(d => d.Producto)
+                .Where(v => v.FechaVenta >= desde && v.FechaVenta <= hasta)
+                .Where(v => v.Caja != null && v.Caja.SedeId == sedeId)
+                .ToListAsync();
+        }
+
+        public async Task<bool> EliminarVentaAsync(int venId)
+        {
+            var venta = await _context.Ventas
+                .Include(v => v.Detalles)
+                .FirstOrDefaultAsync(v => v.VenId == venId);
+
+            if (venta == null) return false;
+
+            var caja = await _context.Cajas.FirstOrDefaultAsync(c => c.CajaId == venta.CajaId);
+            if (caja != null && caja.CajaEstado.Trim().ToUpper() == "CERRADA")
+                throw new InvalidOperationException("No se puede eliminar una venta de una caja cerrada.");
+
+            if (venta.Detalles != null && venta.Detalles.Any())
+                _context.DetallesVenta.RemoveRange(venta.Detalles);
+
+            _context.Ventas.Remove(venta);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

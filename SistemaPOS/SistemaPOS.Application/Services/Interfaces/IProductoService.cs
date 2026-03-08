@@ -8,8 +8,8 @@ namespace SistemaPOS.Application.Services.Interfaces
         Task<Producto?> CrearProductoAsync(ProductoRequest request);
         Task<Producto?> GetByIdAsync(int id);
         Task<IEnumerable<ProductoResponse>> ObtenerProductosAsync();
-
-        // NUEVO
         Task<bool> InactivarProductoAsync(int id);
+        Task<bool> ActualizarPrecioAsync(int id, decimal nuevoPrecio);
+
     }
 }

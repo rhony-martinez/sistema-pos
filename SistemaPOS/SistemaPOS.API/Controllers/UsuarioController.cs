@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemaPOS.Infrastructure.Data;
 using SistemaPOS.Domain.Entities;
@@ -20,7 +20,6 @@ namespace SistemaPOS.API.Controllers
         }
 
         [HttpGet]
-        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -35,16 +34,16 @@ namespace SistemaPOS.API.Controllers
             return user == null ? NotFound(new { message = "User not found." }) : Ok(user);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> Create(Usuario usuario)
         {
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = usuario.UsuId }, usuario);
-        }
+        }*/
 
         // Update user
-        [HttpPut("{id}")]
+        /*[HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateUserRequest dto)
         {
             try
@@ -64,9 +63,9 @@ namespace SistemaPOS.API.Controllers
                     error = ex.Message
                 });
             }
-        }
+        }*/
 
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
@@ -75,9 +74,9 @@ namespace SistemaPOS.API.Controllers
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
             return NoContent();
-        }
+        }*/
 
-        [HttpGet("admins-locales")]
+        /*[HttpGet("admins-locales")]
         public async Task<IActionResult> GetAdminsLocales()
         {
             var adminsLocales = await _userService.GetUsersByRoleAsync("ADMIN_LOCAL");
@@ -89,7 +88,7 @@ namespace SistemaPOS.API.Controllers
         {
             var cajeros = await _userService.GetCajerosPorSedeAsync(sedeId);
             return Ok(cajeros);
-        }
-
+        }*/
+/*
     }
-}
+}*/

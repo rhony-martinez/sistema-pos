@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === Consultar datos del usuario desde la API ===
     try {
-        const response = await fetch(`${API_URL}/Usuario/${userId}`);
+        const response = await fetch(`${API_URL}/Users/${userId}`);
         if (!response.ok) throw new Error("Error al obtener los datos del usuario.");
         const user = await response.json();
 
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         guardarCambios();
 
         try {
-            const response = await fetch(`${API_URL}/Usuario/${userId}`, {
+            const response = await fetch(`${API_URL}/Users/${userId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedUser)
