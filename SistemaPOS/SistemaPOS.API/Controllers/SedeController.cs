@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SistemaPOS.Application.Sedes;
 using SistemaPOS.Application.Services;
 using SistemaPOS.Infrastructure.Data;
+//using static SistemaPOS.API.Controllers.SedesController;
+using SistemaPOS.Application.DTOs;
+//using SistemaPOS.Application.DTOs;
 
 namespace SistemaPOS.API.Controllers
 {
@@ -12,23 +16,34 @@ namespace SistemaPOS.API.Controllers
         private readonly SistemaPosContext _context;
         private readonly ISedeRepository _sedeRepository;
         private readonly ISedeService _sedeService;
+        private readonly ListarSedesQuery _listar;
+        private readonly CrearSedeCommand _crear;
 
         //Constructor
-        public SedeController(SistemaPosContext context, ISedeRepository sedeRepository, ISedeService sedeService)
+        public SedeController(
+            SistemaPosContext context,
+            ISedeRepository sedeRepository,
+            ISedeService sedeService,
+            ListarSedesQuery listar,
+            CrearSedeCommand crear)
         {
             _context = context;
             _sedeRepository = sedeRepository;
             _sedeService = sedeService;
+            _listar = listar;
+            _crear = crear;
         }
-
-
 
         // GET: api/Sede
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var sedes = await _context.Sedes.ToListAsync();
-            return Ok(sedes);
+            var res = await _listar.ExecuteAsync();
+
+            if (!res.Success)
+                return StatusCode(500, new { message = "Error al listar sedes" });
+
+            return Ok(res.Value);
         }
 
         [HttpGet("activas/count")]
@@ -47,7 +62,7 @@ namespace SistemaPOS.API.Controllers
             }
         }
 
-        // ✅ Endpoint para buscar una sede por ID o nombre
+        // Buscar sede
         [HttpGet("buscar")]
         public async Task<IActionResult> BuscarSede([FromQuery] int? id, [FromQuery] string? nombre)
         {
@@ -55,26 +70,21 @@ namespace SistemaPOS.API.Controllers
             Console.WriteLine($"🔍 DEBUG => id={id}, nombre={nombre}");
             Console.WriteLine("----------------------------------------------------");
 
-            // Validación: debe llegar al menos un parámetro
             if (id == null && string.IsNullOrWhiteSpace(nombre))
                 return BadRequest("Debe proporcionar el ID o el nombre de la sede.");
 
             try
             {
-                // Llamamos al repositorio con los parámetros
                 var sede = await _sedeRepository.BuscarSedeAsync(id, nombre);
 
-                // Verificamos si se encontró algo
                 if (sede == null)
                 {
-                    Console.WriteLine("⚠️ No se encontró la sede con los datos proporcionados.");
+                    Console.WriteLine("⚠️ No se encontró la sede.");
                     return NotFound("No se encontró la sede.");
                 }
 
-                // Log de éxito
                 Console.WriteLine($"✅ Sede encontrada: {sede.SedeNombre} (ID: {sede.SedeId})");
 
-                // Retornamos el objeto encontrado
                 return Ok(sede);
             }
             catch (Exception ex)
@@ -84,6 +94,41 @@ namespace SistemaPOS.API.Controllers
                 return StatusCode(500, "Ocurrió un error al procesar la solicitud.");
             }
         }
+
+        // Crear sede
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] SedeCreateDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Nombre))
+                return BadRequest(new { message = "El nombre es obligatorio." });
+
+            var result = await _crear.ExecuteAsync(
+                dto.Nombre!,
+                dto.Direccion,
+                dto.Ciudad,
+                dto.Departamento,
+                dto.Ubicacion,
+                dto.Telefono,
+                dto.Correo,
+                dto.Estado ?? "ACTIVA");
+
+            if (result.Success)
+            {
+                return CreatedAtAction(nameof(GetAll), new { id = result.Value }, new { id = result.Value });
+            }
+
+            var err = result.Error ?? string.Empty;
+
+            if (err.Equals(CrearSedeError.Duplicada.ToString(), StringComparison.OrdinalIgnoreCase))
+                return Conflict(new { message = "Sede duplicada." });
+
+            if (err.Equals(CrearSedeError.DatosInvalidos.ToString(), StringComparison.OrdinalIgnoreCase))
+                return BadRequest(new { message = "Datos inválidos." });
+
+            return StatusCode(500, new { message = "No se pudo crear la sede." });
+        }
+
+        // Inactivar sede
         [HttpPost("{id}/inactivar")]
         public async Task<IActionResult> InactivarSede(int id)
         {
@@ -97,6 +142,5 @@ namespace SistemaPOS.API.Controllers
                 return StatusCode(500, new { error = ex.Message });
             }
         }
-
     }
 }
