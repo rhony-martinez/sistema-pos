@@ -1,12 +1,34 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SistemaPOS.Application.DTOs;
+using SistemaPOS.Infrastructure.Data;
 
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
-    public UsersController(IUserService userService) { _userService = userService; }
+    private readonly SistemaPosContext _context;
+    public UsersController(SistemaPosContext context, IUserService userService)
+    {
+        _context = context;
+        _userService = userService;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var users = await _userService.GetAllUsersAsync();
+        return Ok(users);
+    }
+
+    // Get user by ID
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var user = await _userService.GetUserByIdAsync(id);
+        return user == null ? NotFound(new { message = "User not found." }) : Ok(user);
+    }
 
     // Crear usuario: requiere rol ADMIN_GENERAL o ADMIN_LOCAL
     //[Authorize(Roles = "ADMIN_GENERAL,ADMIN_LOCAL")]
@@ -49,17 +71,6 @@ public class UsersController : ControllerBase
         });
     }
 
-    [Authorize(Roles = "ADMIN_GENERAL")]
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
-    {
-        var user = await _userService.GetUserByIdAsync(id);
-        if (user == null)
-            return NotFound();
-
-        return Ok(user);
-    }
-
     [Authorize(Roles = "ADMIN_LOCAL")]
     [HttpGet("cajeros/activos/{sedeId}")]
     public async Task<IActionResult> GetCajerosActivosPorSede(int sedeId)
@@ -96,6 +107,43 @@ public class UsersController : ControllerBase
         return Ok(new { message = "Usuario desactivado correctamente" });
         // o si prefieres:
         // return NoContent();
+    }
+
+    // Update user
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateUserRequest dto)
+    {
+        try
+        {
+            var actualizado = await _userService.UpdateUserAsync(id, dto);
+
+            if (!actualizado)
+                return NotFound(new { message = "Usuario no encontrado." });
+
+            return Ok(new { message = "Usuario actualizado correctamente." });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new
+            {
+                message = "Error al actualizar el usuario.",
+                error = ex.Message
+            });
+        }
+    }
+
+    [HttpGet("admins-locales")]
+    public async Task<IActionResult> GetAdminsLocales()
+    {
+        var adminsLocales = await _userService.GetUsersByRoleAsync("ADMIN_LOCAL");
+        return Ok(adminsLocales);
+    }
+
+    [HttpGet("cajeros/{sedeId}")]
+    public async Task<IActionResult> GetCajerosPorSede(int sedeId)
+    {
+        var cajeros = await _userService.GetCajerosPorSedeAsync(sedeId);
+        return Ok(cajeros);
     }
 
 }

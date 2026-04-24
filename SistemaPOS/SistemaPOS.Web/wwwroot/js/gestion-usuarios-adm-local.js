@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const apiUrl = `${API_URL}/Usuario/cajeros/${profile.sedeId}`;
+    const apiUrl = `${API_URL}/Users/cajeros/${profile.sedeId}`;
     const tablaBody = document.querySelector("tbody");
     const searchInput = document.querySelector(".search-bar input"); // 🔍 Input de búsqueda
     let cajeros = []; // 🔹 Guardaremos los cajeros cargados aquí

@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tablaBody = document.querySelector("tbody");
     // const API_URL = "http://localhost:5289/api/Sede";
 
+    console.log("JS cargado");
+console.log("API:", API_URL);
+   
+
     // --- Función genérica para mostrar modal ---
     function showMessage(message, onAccept = null, showCancel = false) {
         const modal = document.getElementById("modal");
@@ -46,12 +50,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         showMessage(`❌ Hubo un error al eliminar la sede: ${msg}`);
     }
 
+    
+
+    const url = `${API_URL}/Sede`;
+console.log("Consultando:", url);
+
+const response = await fetch(url);
+console.log("Status:", response.status);
+
     try {
         const response = await fetch(`${API_URL}/Sede`);
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
+        
         const sedes = await response.json();
-        const sedesActivas = sedes.filter(s => s.sedeEstado === "ACTIVA");
+        console.log("Sedes:", sedes);
+        sedes.forEach(s => console.log("Estado:", s.estado)); 
+        
+        const sedesActivas = sedes.filter(s => s.estado === "ACTIVA");
         sedesActivas.sort((a, b) => a.sedeId - b.sedeId);
 
         tablaBody.innerHTML = "";
@@ -67,10 +83,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${sede.sedeId}</td>
-                <td>${sede.sedeNombre}</td>
-                <td>${sede.sedeDireccion}</td>
-                <td>${sede.sedeUbicacion}</td>
-                <td>${sede.sedeTelefono}</td>
+                <td>${sede.nombre}</td>
+                <td>${sede.direccion}</td>
+                <td>${sede.ubicacion}</td>
+                <td>${sede.telefono}</td>
                 <td>
                     <button class="btn btn-action btn-danger btn-eliminar" data-id="${sede.sedeId}" title="Eliminar">
                         <i class="fas fa-trash-alt"></i>
