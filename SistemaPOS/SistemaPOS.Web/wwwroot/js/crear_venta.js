@@ -328,7 +328,14 @@ btnCancelar.addEventListener("click", () => {
 // MOSTRAR FACTURA
 // ===============================
 async function mostrarFactura() {
-  const res = await fetch(`${API_URL}/Venta`);
+  const token = sessionStorage.getItem("token");
+  const res = await fetch(`${API_URL}/Venta`, {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+    }
+  });
   if (!res.ok) return showModal("Error al obtener las ventas");
 
   const ventas = await res.json();

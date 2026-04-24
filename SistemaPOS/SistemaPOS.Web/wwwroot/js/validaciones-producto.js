@@ -6,9 +6,9 @@
     "proPrecioVenta"
   ];
 
-  const RESERVED = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"];
-  const MAX_CHARS = 15;
-  const MAX_DESC = 70; // nuevo límite para descripción
+  const RESERVED = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "VALUES"];
+  const MAX_CHARS = 30;
+  const MAX_DESC = 100; // nuevo límite para descripción
 
   inputsProducto.forEach(id => {
     const input = document.getElementById(id);

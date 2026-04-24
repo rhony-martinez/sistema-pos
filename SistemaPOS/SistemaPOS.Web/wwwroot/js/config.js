@@ -4,9 +4,9 @@
 //const API_URL = "http://www.possistema.somee.com/api"; // ← para producción en Somee
 
 // ==================== VALIDACIONES GLOBALES ====================
-const RESERVED_WORDS = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "UNION", "ALL", "AND", "OR", "NOT", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "ON", "AS", "INTO", "VALUES", "SET"];
-const MAX_LENGTH = 15;
-const MAX_EMAIL_LENGTH = 25;
+const RESERVED_WORDS = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "DROP", "CREATE", "ALTER", "TRUNCATE", "EXEC", "NULL", "JOIN", "INNER", "LEFT", "RIGHT", "VALUES"];
+const MAX_LENGTH = 20;
+const MAX_EMAIL_LENGTH = 35;
 
 /**
  * Muestra mensajes en el modal principal del sistema POS
